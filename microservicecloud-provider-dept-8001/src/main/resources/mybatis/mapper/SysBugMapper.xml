@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.springcloud.SysBug.Dao.SysBugDao">
+
+	
+	<select id="findSysBugList" resultType="SysBug" parameterType="PageUtil">
+		select bug_id,
+		       module_name,
+		       bug_type,
+		       status,
+		       create_username,
+		       modify_username 
+		from sys_bug LIMIT ${pageSize} offset ${tempVal}   
+	</select>
+
+   <select id="countSysBugList" resultType="Integer">
+		select count(1) from sys_bug
+	</select>
+
+
+</mapper>
+ 
+

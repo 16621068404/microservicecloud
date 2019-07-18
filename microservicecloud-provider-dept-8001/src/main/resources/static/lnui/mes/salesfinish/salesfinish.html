@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>年度销售订单出货率</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes"
+	name="viewport">
+
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+
+<style type="text/css">
+  .mask {
+      position: absolute; top: 0px; filter: alpha(opacity=60); background-color: #777;
+      z-index: 1002; left: 0px;
+      opacity:0.5; -moz-opacity:0.5;
+    }
+
+</style>
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+<div id="mask" class="mask" style="height:100px; width:100px;  text-align:center; line-height:100px; display: none" ><font color="white"><h3>正在加载图表，请稍后...</h3></font></div>
+	 <div class="row">
+		<section class="content-header">
+			<!-- <h1>&nbsp;</h1>
+			<ol class="breadcrumb">
+				<li><i class="fa fa-home"></i></li>
+				<li class="active">查询图表</li>
+				<li class="active">年度销售订单出货率</li>
+				<li class="active"></li>
+			</ol> -->
+		</section>
+	</div>
+
+	<div class="col-sm-12">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">年度产品完工率</h3>
+				<div class="box-tools pull-right">
+					<button class="btn btn-box-tool" data-widget="collapse">
+						<i class="fa fa-minus"></i>
+					</button>
+				</div>
+			</div>
+			<div class="box-body">
+				<form class="form-horizontal" id="chartForm">
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="year">请填写年份</label>
+
+						<div class="col-sm-2 ">
+						<input class="form-control" id="year"
+									name="year" type="text" placeholder="年份"
+									style="width: 150px" />
+							<!--  <select class="form-control" id="year" name="year"  onchange="queryChartByYears()"></select>-->
+
+						</div>
+						 
+						<span><button type="button" class="btn btn-sm btn-primary"
+									onclick="queryChartByYears()" id="search">查询</button> </span>
+					</div>
+
+				</form>
+			<div id="salesfinish-container" align="center"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+				<div class="modal-body" id="tips"></div>
+				<div class="modal-footer" id="sure"></div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery 2.1.4 -->
+	<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../../../jslib/adminlte/js/app.min.js"></script>
+	<!-- InputMask -->
+	<script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+	<!-- DataTables -->
+	<script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+	<script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+	<script
+		src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+	<script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+	<script src="../../../jslib/fusioncharts/js/fusioncharts.js"></script>
+	<script src="../../../jslib/fusioncharts/js/fusioncharts.charts.js"></script>
+	<script src="salesfinish.js"></script>
+</body>
+</html>

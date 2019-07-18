@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>工单分配查看</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    name="viewport">
+<!-- Bootstrap 3.3.5 -->
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+<style type="text/css">
+.table-wrap {width:1000px;height:400px; overflow:auto;}
+</style>
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+    <section class="content">
+        <!-- 左边为4 -->
+        <div class="col-sm-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">工单分配查看</h3>&nbsp;
+
+
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                <form class="form-horizontal">
+			               <div class="form-group">
+
+
+	                       <label class="col-sm-2 control-label" for="productorid">产品</label>
+								<div class="col-sm-2 ">
+									<select id="productorid" name="productorid"
+											class="form-control select2" style="width: 100%">
+									</select>
+									<input type="hidden" name="productorname" id="productorname">
+								</div>
+
+							<label class="col-sm-1 control-label" for="productionorderid">工单号</label>
+								<div class="col-sm-2 ">
+									<select id="productionorderid" name="productionorderid"
+										class="form-control select2" style="width: 100%">
+									</select>
+									<input type="hidden" name="productionordernumber" id="productionordernumber">
+								</div>
+
+							 <div class=" col-sm-5 ">
+							 <button type="button" class="btn btn-primary" onclick="queryAllocationList();">查询</button>
+							</div>
+						<div>
+				 </form>
+				 
+				 <div class="col-sm-12">
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">分配</h3>&nbsp;						   
+						<div class="box-tools">
+							<button type="button" class="btn btn-box-tool"
+								data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+						</div>
+						</div>
+						<div class="box-body no-padding">
+							<table id="allocationDataTable"
+								class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+									<!-- 
+										<td style="width: 15px"><input type="checkbox" id="checkAll" class="regular-checkbox" onclick="com.leanway.dataTableCheckAll('allocationDataTable', 'checkAll', 'checkList');"><label for="checkAll"></label></td>
+										 -->
+										<td>产品</td>
+										<td>产品描述</td>
+										<td>分配类型</td>
+										<td>库存单位</td>
+										<td>工单号</td>
+										<td>库位</td>
+										<td>批次号</td>
+										<td>子批次号</td>
+										<td>序列号</td>
+										<td>数量</td>
+										<td>源产品</td>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+					
+                    
+            
+            <div class="overlay" id="mask" hidden="">
+                        <i class="fa fa-refresh fa-spin"></i>
+                      </div>
+                <!-- /.box-body -->
+            </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.box-body -->
+        <div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">提示</h4>
+                    </div>
+
+                    <div class="modal-body" id="tips"></div>
+                    <div class="modal-footer" id="sure"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- jQuery 2.1.4 -->
+    <script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+    <script
+        src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js">
+
+    </script>
+    <script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js">
+
+    </script>
+    <!-- SlimScroll -->
+    <script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="../../../jslib/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../../jslib/adminlte/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../../jslib/adminlte/js/demo.js"></script>
+    <!-- InputMask -->
+    <script src="../../../jslib/input-mask/jquery.inputmask.js"></script>
+    <script type="text/javascript" src="../../../jslib/leanway/easypage.js"></script>
+    <!-- DataTables -->
+    <script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+    <script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+    <script type="text/javascript" src="productionallocation.js"></script>
+    	<!-- select2 -->
+	<script src="../../../jslib/select2/select2.full.min.js"></script>
+	<script src="../../../jslib/select2/i18n/zh-CN.js"></script>
+</body>
+</html>

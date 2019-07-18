@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>不合格原因</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+
+<!-- tree grid -->
+
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+
+
+	<!-- left信息  显示主要内容    boostraps 自带是12的页面布局-->
+	<!-- <div>
+		<section class="content-header">
+			<h1>&nbsp;</h1>
+			<ol class="breadcrumb">
+				<li><i class="fa fa-home"></i></li>
+				<li class="active">生产基础资料</li>
+				<li class="active">不合格原因维护</li>
+				<li class="active"></li>
+			</ol>
+		</section>
+	</div> -->
+ 	<section class="content">
+		<!-- 左边为4 -->
+		<div class="col-sm-4">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title">不合格原因</h3>&nbsp;
+					<button class="btn btn-default btn-flat btn-xs" onclick="addExceptionReason();"
+							id="addFun">新增</button>
+
+					<!-- <button class="btn btn-default btn-flat btn-xs" onclick="deleteExceptionReason();"
+							id="delFun">删除</button> -->
+					<div class="btn-group">
+			      		<button aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" class="btn btn-default btn-flat btn-xs dropdown-toggle" type="button" id="delFun">删除 <span class="caret"></span></button>
+			     			<ul class="dropdown-menu">
+						        <li><a onclick="deleteExceptionReason(1)" id="deleteCurrentFun">当前选中数据</a></li>
+			      			    <li><a onclick="deleteExceptionReason(2)" id="deleteAllFun">跨页选中数据</a></li>
+					      </ul>
+			    	</div>
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+				</div>
+				<div class="box-body">
+					<div class="form-horizontal clearfix">
+						<div class="col-lg-12 col-sm-12 input-group">
+							<input type="text" placeholder="请输入关键字" id="queryExceptionName"
+								name="queryExceptionName" class="input-sm form-control" /> <span
+								class="input-group-btn"><button type="button"
+									class="btn btn-sm btn-primary"
+									onclick="queryExceptionReasonName();">搜索</button> </span>
+						</div>
+					</div>
+					<table id="generalInfo"
+						class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<td style="width: 15px"><input type="checkbox"
+									id="checkAll"
+									onclick="com.leanway.dataTableCheckAll('generalInfo', 'checkAll', 'checkList')"
+									class="regular-checkbox"><label for="checkAll"></label></td>
+								<th>编码</th>
+								<th>短名</th>
+							</tr>
+						</thead>
+						<tbody id="bodygeneralInfo">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- 表体   右边为8 -->
+		<div class="col-sm-8">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title">不合格原因管理</h3>&nbsp;
+					<button class="btn btn-default btn-flat btn-xs" onclick="saveExceptionReason();"
+						id="saveOrUpdateAId">保存</button>
+
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+				</div>
+				<div class="box-body">
+					<div class="box-body">
+						<form class="form-horizontal" id="ExceptionReasonForm"
+							name="ExceptionReasonForm">
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="code">编码</label>
+								<div class="col-sm-4">
+									<input class="form-control" id="code" name="code" type="text"
+										placeholder="编码" />
+								</div>
+
+								<label class="col-sm-2 control-label" for="shortname">短名</label>
+								<div class="col-sm-4">
+									<input class="form-control" id="shortname" name="shortname" type="text"
+										placeholder="短名" />
+								</div>
+
+							</div>
+
+                           <div class="form-group">
+
+                               <label class="col-sm-2 control-label" for="name" id="exceptionreasontypelabel">不合格原因类型</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="name" name="name">
+										<option value="料废">料废</option>
+										<option value="工废">工废</option>
+										<option value="工艺废品">工艺废品</option>
+										<option value="存储废品">存储废品</option>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label" for="barcode">条码</label>
+								<div class="col-sm-4">
+									<input class="form-control" id="barcode" name="barcode" type="text"
+										placeholder="条码" />
+								</div>
+							</div>
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label" for="reason">详细原因描述</label>
+								<div class="col-sm-10">
+									<textarea class="form-control" rows="5" id="reason"
+										name="reason"></textarea>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+
+				<div class="modal-body" id="tips"></div>
+				<div class="modal-footer" id="sure"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- jQuery 2.1.4 -->
+	<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="../../../jslib/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../../../jslib/adminlte/js/app.min.js"></script>
+	<!-- InputMask -->
+	<script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+	<script src="../../../jslib/iCheck/icheck.js"></script>
+	<!-- DataTables -->
+	<script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+	<script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+	<script
+		src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+	<script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+	<script type="text/javascript" src="exceptionreason.js"></script>
+</body>
+</html>

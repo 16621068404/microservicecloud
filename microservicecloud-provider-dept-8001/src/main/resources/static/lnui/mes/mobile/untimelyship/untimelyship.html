@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>年度销售订单未及时出货率</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes"
+	name="viewport">
+
+<link rel="stylesheet" href="../../../../jslib/leanway/loader_datatables.css">
+
+<!-- tree grid -->
+
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+  <div class="container">
+		<ol class="breadcrumb"
+			style="background-color: #f5f5f5; margin-top: 20px;">
+			<li><font color="#777">年度销售订单未及时出货率</font></li>
+		</ol>
+	<div class="col-sm-12">
+		<div id="box">
+
+			<div class="box-body">
+			
+			
+			<form class="form-horizontal" id="chartForm">
+					<div class="form-group">
+						<div class="col-sm-2 ">
+							<input class="form-control" id="year" name="year" type="hidden"
+								placeholder="年份" style="width: 250px" />
+						</div>
+						<label class="col-sm-2 control-label" for="day">未及时出货额定天数</label>
+						<div class="col-sm-2 ">
+							<select class="form-control" id="day" name="day"
+								onchange="queryRate();">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			<div id="untimelyship-container" align="center"></div>
+				
+
+			</div>
+		</div>
+		</div>
+	</div>
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+				<div class="modal-body" id="tips"></div>
+				<div class="modal-footer" id="sure"></div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery 2.1.4 -->
+	<script src="../../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../../../../jslib/adminlte/js/app.min.js"></script>
+	<!-- InputMask -->
+	<script type="text/javascript" src="../../../../jslib/leanway/jn_common.js"></script>
+	<!-- DataTables -->
+	<script src="../../../../jslib/datatables/jquery.dataTables.js"></script>
+	<script src="../../../../jslib/datatables/dataTables.bootstrap.js"></script>
+	<!-- datetime -->
+	<script src="../../../../jslib/datetimepicker/jquery.datetimepicker.js"></script>
+	<script
+		src="../../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+	<script src="../../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+	<script src="../../../../jslib/fusioncharts/js/fusioncharts.js"></script>
+	<script src="../../../../jslib/fusioncharts/js/fusioncharts.charts.js"></script>
+	<!--Select2  -->
+	<script src="../../../../jslib/select2/select2.full.js"></script>
+	<script src="../../../../jslib/select2/i18n/zh-CN.js"></script>
+	<script src="untimelyship.js"></script>
+</body>
+</html>

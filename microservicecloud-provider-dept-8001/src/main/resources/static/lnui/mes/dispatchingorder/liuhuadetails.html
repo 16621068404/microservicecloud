@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>硫化明细单</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    name="viewport">
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+
+</head>
+
+<body class="hold-transition skin-blue-light sidebar-mini">
+   
+    <section class="content">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">硫化明细单</h3>
+                <button class="btn btn-default  btn-xs" onclick="deleteSplitOrder()" id="deleteSplitOrder">删除</button>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+          <div>
+            <form class="form-horizontal" id="sendDispatchingOrderForm">
+            <div class="form-group">
+             
+                 <label class="col-sm-1 control-label" for="dispatchingnumber">派工单号</label>
+                <div class="col-sm-2">
+                  <input class="form-control" id="dispatchingnumber" name="dispatchingnumber"
+                        type="text" placeholder="派工单号" />
+                </div>
+                <div class="col-sm-2">
+                      <select id="productorid" name="productorid" class="form-control select2" style="width: 100%; border-color: #3c8dbc"></select>
+                </div>
+                <div class="col-sm-2">
+                      <select id="mouldid" name="mouldid" class="form-control select2" style="width: 100%; border-color: #3c8dbc"></select>
+                </div>
+                <div class="col-sm-1">
+                    <input class="form-control" id="starttime" name="starttime" type="text" placeholder="开始区间-" />
+                </div>
+                 <div class="col-sm-1">
+                    <input class="form-control" id="starttime2" name="starttime2" type="text" placeholder="-开始区间" />
+                </div>
+                <div class="col-sm-1">
+                	<input class="form-control" id="endtime" name="endtime" type="text" placeholder="结束区间-" />
+                </div>
+                 <div class="col-sm-1">
+                    <input class="form-control" id="endtime2" name="endtime2" type="text" placeholder="-结束区间" />
+                </div>
+                <div class="col-sm-2">
+                	<a class="btn btn-sm btn-primary" onclick="searchResust();" id="searchResult">查询</a>
+                	<button type="button" class="btn btn-sm btn-default" onclick="culcanizationConfirm()" id="btn_confirm">确认</button>
+               	</div>
+            </div>
+        </form>
+          </div>
+            <div class="box-body">
+                <table class="table table-striped table-bordered table-hover" style="width: 100%" id="tableid">
+               <!--   <tbody id="tableBody">
+
+                    </tbody> -->
+                    <thead>
+                            <tr>
+                                <td style="width: 15px"><input type="checkbox"
+                                    id="checkAll"
+                                    onclick="com.leanway.dataTableCheckAll('tableid', 'checkAll', 'checkList')"
+                                    class="regular-checkbox"
+                                ><label for="checkAll"></label></td>
+
+                                <td>派工单号</td>
+                                <td>产品编码</td>
+                                <td>产品名称</td>
+                                <td>模具编码</td>
+                                <td>模具名称</td>
+                                <td>数量</td>
+                                <td>开始时间</td>                        
+                                <td>结束时间</td>
+                                <td>确认状态</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                </table>
+            </div>
+             <div class="overlay" id="mask" hidden="">
+              <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+
+                <div class="modal-body" id="tips"></div>
+                <div class="modal-footer" id="sure"></div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery 2.1.4 -->
+    <script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- datetime -->
+    <script type="text/javascript" src="../../../jslib/datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="../../../jslib/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <!-- FastClick -->
+    <script src="../../../jslib/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../../jslib/adminlte/js/app.min.js"></script>
+    <!-- InputMask -->
+    <script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+    <script src="../../../jslib/iCheck/icheck.js"></script>
+    <!-- DataTables -->
+    <script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+    <script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+    <!-- select2 -->
+    <script src="../../../jslib/select2/select2.full.min.js"></script>
+    <script src="../../../jslib/select2/i18n/zh-CN.js"></script>
+    <script
+        src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+    <script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+    <script type="text/javascript" src="liuhuadetails.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>工序工时分析表</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    name="viewport">
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+<style type="text/css">
+  .mask {
+      position: absolute; top: 0px; filter: alpha(opacity=60); background-color: #777;
+      z-index: 1002; left: 0px;
+      opacity:0.5; -moz-opacity:0.5;
+    }
+
+</style>
+</head>
+
+<body class="hold-transition skin-blue-light sidebar-mini">
+<div id="mask" class="mask" style="height:100px; width:100px;  text-align:center; line-height:100px; display: none" ><font color="white"><h3>正在加载中，请稍后...</h3></font></div>
+    <div>
+            <section class="content-header">
+        <h1>&nbsp;</h1>
+        <ol class="breadcrumb">
+            <li><i class="fa fa-home"></i></li>
+            <li class="active">生产查询图表</li>
+            <li class="active">工序工时分析表</li>
+            <li class="active"></li>
+    </ol>
+</section>
+    </div>
+
+
+
+<div class="col-sm-12">
+    <section class="content">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+            <div class="pull-left">
+                <h3 class="box-title">工序工时分析表</h3></div>
+                <div class="col-sm-3">
+                    <select id="productionsearchno" name="productionsearchno"
+                        class="form-control select2"
+                        style="width: 100%; border-color: #3c8dbc"></select> <input
+                        type="hidden" name="productionchildsearchnoView"
+                        id="productionsearchnoView" />
+                </div>
+                <div class="col-sm-1">
+                <a class="btn btn-primary btn-sm" onclick="findDispatchingOrderBySearchno();"><i class="fa fa-fw fa-search"></i>查询</a></div>
+                <div hidden="" id="count" class="col-sm-2">
+                                        共<font size="3" color="red"><em  id="countData"></em></font>条数据
+                </div>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover" id="tableid">
+                    <thead>
+                        <tr bgcolor="#F0F0F0">
+                        <td>派工单号</td>
+                        <td>生产子查询号</td>
+                        <td>工序</td>
+                        <td>工序行号</td>
+                        <td>标准时间</td>
+                        <td>计划时间</td>
+                        <td>实际时间</td>
+                        <td>实际-标准</td>
+                        <td>(实际-标准)/标准</td>
+                         <td>时间单位</td>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+    </div>
+
+
+    <div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+
+                <div class="modal-body" id="tips"></div>
+                <div class="modal-footer" id="sure"></div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery 2.1.4 -->
+    <script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- datetime -->
+    <script type="text/javascript" src="../../../jslib/datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="../../../jslib/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+    <!-- FastClick -->
+    <script src="../../../jslib/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../../jslib/adminlte/js/app.min.js"></script>
+    <!-- InputMask -->
+    <script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+    <!-- DataTables -->
+    <script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+    <script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+    <!-- select2 -->
+    <script src="../../../jslib/select2/select2.full.min.js"></script>
+    <script src="../../../jslib/select2/i18n/zh-CN.js"></script>
+    <script
+        src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+    <script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+    <script type="text/javascript"
+        src="../../../jslib/barcode/jquery-barcode.js"></script>
+    <script type="text/JavaScript"
+        src="../../../jslib/ritsc-printarea/demo/jquery.PrintArea.js"></script>
+    <script type="text/javascript" src="workinghours.js"></script>
+</body>
+</html>

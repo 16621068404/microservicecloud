@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="../../../jslib/leanway/loader_datatables.css">
+	<style>
+	div.div_table{
+		max-height: 200px;
+    	overflow-y: auto;
+	}
+	table.table_label{
+		width: 87%;
+	    max-width: 100%;
+	    margin-bottom: 20px;
+	    margin: 0px auto;
+	}
+	table.table_label td{
+		border: 1px solid #d2d6de;
+	}
+	table.table_label tr.tr_label_title td{
+		border-bottom: 0px;
+	}
+	.hide{
+		display: none;
+	}
+	.conversionrate{
+	    width: 80px;
+	    background-color: #fff;
+	    border: 1px solid #aaa;
+	    border-radius: 4px;
+	    padding: 0px 7px;
+	}
+	
+	</style>
+</head>
+
+<body style="overflow-x: hidden;">
+	<section class="content">
+		<div class="col-sm-7">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title">采购列表</h3>
+					&nbsp;
+					<button class="btn btn-default  btn-xs"
+						onclick="addPurchaseOrder();" id="addFun">新增</button>
+					<button class="btn btn-default  btn-xs"
+						onclick="updatePurchaseOrder();" id="editFun">修改</button>
+					<button class="btn btn-default  btn-xs"
+						onclick="checkPurchaseOrder();" id="checkFun">审核</button>
+
+					<div class="btn-group">
+						<button aria-expanded="false" aria-haspopup="true"
+							data-toggle="dropdown"
+							class="btn btn-default  btn-xs dropdown-toggle" type="button"
+							id="deleteFun">
+							删除 <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a onclick="deletePurchaseOrder(1)"
+								id="deleteCurrentFun">当前选中数据</a></li>
+							<li><a onclick="deletePurchaseOrder(2)" id="deleteAllFun">跨页选中数据</a></li>
+						</ul>
+					</div>
+
+					<button class="btn btn-default  btn-xs"
+						onclick="calPurchaseOrder();" id="calPurchaseOrder">计算采购需求</button>
+
+					&nbsp;&nbsp;&nbsp; <label class="radio-inline"> <input
+						type="radio" name="checkstatus" id="checkstatus0" value="0"
+						checked> 未审核
+					</label> <label class="radio-inline"> <input type="radio"
+						name="checkstatus" id="checkstatus1" value="1"> 已审核
+					</label>
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+				</div>
+				<div class="box-body">
+					<div class="form-horizontal clearfix">
+
+						<div class=" col-sm-6 input-group">
+							<input type="text" placeholder="请输入关键字" id="searchValue" name="searchValue" class="input-sm form-control"> 
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-sm btn-primary" onclick="searchPurchaseOrder()">
+									搜索
+								</button> 
+							</span>
+						</div>
+
+					</div>
+					<table id="purchaseOrderTable" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th style="width: 15px"><input type="checkbox"
+									id="checkAll" class="regular-checkbox"
+									onclick="com.leanway.dataTableCheckAll('purchaseOrderTable', 'checkAll', 'checkList');"><label
+									for="checkAll"></label></th>
+								<th style="width: 80px">订单号</th>
+								<th>采购日期</th>
+								<th>到货日期</th>
+								<th>金额</th>
+								<th>供应商</th>
+								<th>状态</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-5">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title">采购订单</h3>
+					&nbsp;
+					<button class="btn btn-default  btn-xs"
+						onclick="savePurchaseOrder();" id="saveFun">保存</button>
+
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+					<!-- /.box-tools -->
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<form class="form-horizontal" id="purchaseOrderForm"
+						name="purchaseOrderForm">
+
+						<input type="hidden" name="orderkind" id="orderkind" value="2" />
+						<input type="hidden" name="salesorderid" id="salesorderid" />
+
+						<div class="form-group" style="padding-top: 50px;">
+							<label class="col-sm-2 control-label" for="salesdate">采购日期</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="salesdate" name="salesdate"
+									type="text" placeholder="采购日期" readonly />
+							</div>
+
+						</div>
+
+						<div class="form-group">
+
+							<label class="col-sm-2 control-label" for="requestdate">到货日期</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="requestdate" name="requestdate"
+									type="text" placeholder="到货日期" readonly />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="companionid">供应商</label>
+							<div class="col-sm-6">
+								<select id="companionid" name="companionid"
+									class="form-control select2" style="width: 100%"></select>
+							</div>
+
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="deposit">定金</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="deposit" name="deposit"
+									type="deposit" placeholder="定金 " readonly />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="isexcess">可超收</label>
+							<div class="col-sm-6">
+								<label class="radio-inline"> <input type="radio"
+									name="isexcess" id="isexcess" value="0" checked="checked">否
+								</label> <label class="radio-inline"> <input type="radio"
+									name="isexcess" id="isexcess" value="1">是
+								</label>
+							</div>
+
+						</div>
+
+					</form>
+				</div>
+				<!-- /.box-body -->
+			</div>
+			<!-- /.box -->
+		</div>
+
+		<div class="col-sm-12">
+			<div class="box ">
+				<div class="box-header with-border">
+					<h3 class="box-title">采购产品</h3>
+					&nbsp;
+					<button type="button" id="addProductorButton"
+						class="btn btn-default btn-xs" onclick="addProductor()">
+						<i class="fa fa-plus"></i>&nbsp;新增
+					</button>
+					<button type="button" id="delProductorButton"
+						class="btn btn-default btn-xs" onclick="delProductor()">
+						<i class="fa fa-trash"></i>&nbsp;删除
+					</button>
+					<button type="button" id="printLabel"
+						class="btn btn-default btn-xs" onclick="printLabel()">
+						<i class="fa fa-fax"></i>&nbsp;打印
+					</button>
+					<button type="button" id="btn_warehousing"
+						class="btn btn-default btn-xs"
+						onclick="createLabel()">
+						<i class="fa fa-level-down"></i>&nbsp;入库
+					</button>
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+				</div>
+				<div class="box-body">
+					<table id="purchaseProductorTable"
+						class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th style="width: 15px"><input type="checkbox"
+									id="purchaseProductorCheckAll" name="purchaseProductorCheckAll"
+									class="regular-checkbox"
+									onclick="com.leanway.dataTableCheckAll('purchaseProductorTable', 'purchaseProductorCheckAll', 'purchaseProductorCheck');"><label
+									for="purchaseProductorCheckAll"></label></th>
+								<th>产品编码</th>
+								<th>产品名称</th>
+								<th>版本</th>
+								<th>数量</th>
+								<th>单价</th>
+								<th>总价</th>
+								<th>已收货数量</th>
+								<th>未收货数量</th>
+								<th>合同号</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" style="z-index: 99999999"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+				<div class="modal-body" id="tips"></div>
+				<div class="modal-footer" id="sure"></div>
+			</div>
+		</div>
+	</div>
+	<!-- 添加入库  -->
+	<div class="modal fade" id="warehousingModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">添加入库 </h4>
+				</div>
+
+				<div class="modal-body">
+					<form class="form-horizontal" id="form_addWarehousing">
+						<input type="hidden" name="plannumber2" id="plannumber2">
+						<input type="hidden" name="orderid2" id="orderid2">
+						<input type="hidden" name="productorid2" id="productorid2">
+						<input type="hidden" name="versionid2" id="versionid2">
+						<input type="hidden" name="currenttableheadname2" id="currenttableheadname2">
+						<input type="hidden" name="resource2" id="resource2">
+						<input type="hidden" name="productorkind2" id="productorkind2">
+						<div class="box-body">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">供应商</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="companioname2"
+											name="companioname2" type="text" placeholder="供应商" />
+									</div>
+								</div>
+								<input type="hidden" name="compid2" id="compid2"> 
+								<label class="col-sm-2 control-label">收货单位</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="compname2" 
+											ame="compname2" type="text" placeholder="收货单位" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">产品代码</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="productorname2" name="productorname2" type="text" placeholder="产品代码" />
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">产品名称</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="productordesc2" name="productordesc2" type="text" placeholder="产品名称" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">产品规格</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="material2" name="material2" type="text" placeholder="产品规格" />
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">订单号</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="code2" name="code2" type="text" placeholder="订单号" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">采购数</label>
+								<div class="col-sm-3 ">
+									<div>
+										<input class="form-control" id="number2" name="number2" type="text" placeholder="总数" />
+									</div>
+								</div>
+								<div class="col-sm-1 div_unitsname2"></div>
+								<div id="div_grossweight2">
+									<label class="col-sm-2 control-label">毛重</label>
+									<div class="col-sm-4 ">
+										<div>
+											<input class="form-control" id="grossweight2" name="grossweight2" type="text" placeholder="毛重" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">
+									<div id="div_netweight2">装箱数量</div>
+								</label>
+								<div class="col-sm-3 ">
+									<div>
+										<input class="form-control" id="netweight2" name="netweight2" type="text" placeholder="装箱数量" />
+									</div>
+								</div>
+								<div class="col-sm-1"></div>
+								<div id="div_casespecification2">
+									<label class="col-sm-2 control-label">装箱规格</label>
+									<div class="col-sm-4 ">
+										<div>
+											<input class="form-control" id="casespecification2" name="casespecification2" type="text" placeholder="装箱规格" />
+										</div>
+									</div>
+								</div>
+								<div id="div_environment2">
+									<label class="col-sm-2 control-label">存储环境</label>
+									<div class="col-sm-4 ">
+										<div>
+											<input class="form-control" id="environment2"
+												name="environment2" type="text" placeholder="存储环境" />
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">生产日期</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" id="producedate2" name="producedate2" type="text" placeholder="生产日期" />
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">供应商批号</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" id="batch2" name="batch2"
+											type="text" placeholder="供应商批号" />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">有效日期</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" id="retestdate2" name="retestdate2"
+											type="text" placeholder="有效日期" />
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">来料日期</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" id="incomingdate2"
+											name="incomingdate2" type="text" placeholder="来料日期" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">备注</label>
+								<div class="col-sm-10 ">
+									<textarea class="form-control" id="comments2" name="comments2"
+										placeholder="备注"></textarea>
+									<div class="col-sm-4 "></div>
+
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"
+						data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary"
+						onclick="saveLabel();">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 采购入库明细弹框  -->
+	<div class="modal fade" id="warehousingDetailModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">收货明细确认 </h4>
+				</div>
+
+				<div class="modal-body">
+					<form class="form-horizontal" id="form_addWarehousing">
+						<input type="hidden" name="plannumber2" id="plannumber2">
+						<input type="hidden" name="orderid2" id="orderid2">
+						<input type="hidden" name="productorid2" id="productorid2">
+						<div class="box-body">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">产品名称</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="label_productorshortname"
+											name="label_productorshortname" type="text" placeholder="产品名称" />
+									</div>
+								</div>
+								<input type="hidden" name="compid2" id="compid2"> 
+								<label class="col-sm-2 control-label">产品编码</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="label_productorname" 
+											name="label_productorname" type="text" placeholder="产品编码" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">产品批号</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="label_batch"
+											name="" type="text" placeholder="产品批号" />
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">总数量</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="label_count" 
+											name="label_count" type="number" placeholder="总数量" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">入库仓库</label>
+								<div class="col-sm-4 ">
+									<select class="form-control" id="select_map">
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label">交易类型</label>
+								<div class="col-sm-4 ">
+									<select class="form-control" id="tradetype">
+										<option value="4D-Cxx-001">--请选择--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group div_table">
+								<input type="hidden" id="detail_code" name="detail_code">
+								<table class="table table_label table-striped table-bordered table-hover dataTable no-footer">
+									<tr class="tr_label_title">
+										<td><input type="checkbox" onclick="detail_selectAll()" id="label_selectAll" name="label_selectAll"/></td>
+										<td>序号</td>
+										<td>箱号</td>
+										<td>数量</td>
+										<td>转换率</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"
+						data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary"
+						onclick="confirmDetail();">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="labelPrintDiv" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">标签数据填写</h4>
+				</div>
+
+				<div class="modal-body">
+					<form class="form-horizontal" id="labelPrintDivForm">
+						<div class="box-body">
+							<input type="hidden" name="productorid" id="productorid">
+							<input type="hidden" name="unitsid" id="unitsid"> <input
+								type="hidden" name="productorkind" id="productorkind"> <input
+								type="hidden" name="plannumber" id="plannumber"> <input
+								type="hidden" name="versionid" id="versionid"> <input
+								type="hidden" name="orderid" id="orderid"> <input
+								type="hidden" name="resource" id="resource"
+								value="purchasedetail"> <input type="hidden"
+								name="currenttableheadname" id="currenttableheadname"
+								value="purchase">
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="companioname">供应商</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="companioname"
+											name="companioname" type="text" placeholder="供应商" />
+									</div>
+								</div>
+
+								<input type="hidden" name="compid" id="compid"> <label
+									class="col-sm-2 control-label" for="compname">收货单位</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="compname"
+											name="compname" type="text" placeholder="收货单位" />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="productorname">产品代码</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="productorname"
+											name="productorname" type="text" placeholder="产品代码" />
+									</div>
+								</div>
+
+								<label class="col-sm-2 control-label" for="productordesc">产品名称</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="productordesc"
+											name="productordesc" type="text" placeholder="产品名称" />
+									</div>
+								</div>
+
+
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="material">产品规格</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="material"
+											name="material" type="text" placeholder="产品规格" />
+									</div>
+								</div>
+
+								<label class="col-sm-2 control-label" for="code">订单号</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" readonly="true" id="code"
+											name="code" type="text" placeholder="订单号" />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="number">采购数</label>
+								<div class="col-sm-3 ">
+									<div>
+										<input class="form-control" id="number" name="number"
+											type="text" placeholder="总数" />
+									</div>
+								</div>
+								<div class="col-sm-1" id="unitsname1"></div>
+
+
+								<div id="grossweight">
+									<label class="col-sm-2 control-label" for="grossweight">毛重</label>
+									<div class="col-sm-4 ">
+										<div>
+											<input class="form-control" id="grossweight"
+												name="grossweight" type="text" placeholder="毛重" />
+										</div>
+									</div>
+								</div>
+
+
+
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="netweight"><div
+										id="netweight1">装箱数量</div></label>
+
+								<div class="col-sm-3 ">
+									<div>
+										<input class="form-control" id="netweight" name="netweight"
+											type="text" placeholder="装箱数量" />
+									</div>
+								</div>
+								<div class="col-sm-1" id="unitsname"></div>
+
+
+								<div id="casespecification">
+									<label class="col-sm-2 control-label" for="casespecification">装箱规格</label>
+									<div class="col-sm-4 ">
+										<div>
+											<input class="form-control" id="casespecification"
+												name="casespecification" type="text" placeholder="装箱规格" />
+										</div>
+									</div>
+								</div>
+
+								<div id="environment">
+									<label class="col-sm-2 control-label" for="environment">存储环境</label>
+									<div class="col-sm-4 ">
+										<div>
+											<input class="form-control" id="environment"
+												name="environment" type="text" placeholder="存储环境" />
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="producedate">生产日期</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" id="producedate"
+											name="producedate" type="text" placeholder="生产日期" />
+									</div>
+								</div>
+								<label class="col-sm-2 control-label" for="batch">供应商批号</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" id="batch" name="batch"
+											type="text" placeholder="供应商批号" />
+									</div>
+								</div>
+
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="retestdate">有效日期</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" id="retestdate" name="retestdate"
+											type="text" placeholder="有效日期" />
+									</div>
+								</div>
+
+								<label class="col-sm-2 control-label" for="incomingdate">来料日期</label>
+								<div class="col-sm-4 ">
+									<div>
+										<input class="form-control" id="incomingdate"
+											name="incomingdate" type="text" placeholder="来料日期" />
+									</div>
+								</div>
+
+
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="comments">备注</label>
+								<div class="col-sm-10 ">
+									<textarea class="form-control" id="comments" name="comments"
+										placeholder="备注"></textarea>
+									<div class="col-sm-4 "></div>
+
+								</div>
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" id="modalClose"
+						data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="saveLabelDataFun"
+						onclick="saveLabelData();">保存</button>
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
+	
+	<!-- jQuery 2.1.4 -->
+	<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+	<!-- bootstrapValidator -->
+	<script
+		src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+	<script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+	<!-- SlimScroll -->
+	<script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="../../../jslib/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../../../jslib/adminlte/js/app.min.js"></script>
+	<!-- DateTime -->
+	<script type="text/javascript"
+		src="../../../jslib/datetimepicker/bootstrap-datetimepicker.js"
+		charset="UTF-8"></script>
+	<script type="text/javascript"
+		src="../../../jslib/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"
+		charset="UTF-8"></script>
+	<script src="../../../jslib/select2/select2.full.min.js"></script>
+	<script src="../../../jslib/select2/i18n/zh-CN.js"></script>
+	<!-- DataTables -->
+	<script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+	<script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+	<script src="../../../jslib/leanway/jn_common.js"></script>
+	<script type="text/javascript" src="purchaseorder.js"></script>
+</body>
+
+</html>

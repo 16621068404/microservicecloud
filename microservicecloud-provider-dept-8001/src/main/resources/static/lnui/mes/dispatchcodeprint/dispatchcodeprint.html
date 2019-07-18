@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>派工单条码打印</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+</head>
+
+<body class="hold-transition skin-blue-light sidebar-mini">
+	<div id= "titleheight">
+		<section class="content-header">
+			<!-- <h1>&nbsp;</h1>
+			<ol class="breadcrumb">
+				<li><i class="fa fa-home"></i></li>
+				<li class="active">打印导入导出</li>
+				<li class="active">派工单条码打印</li>
+				<li class="active"></li>
+			</ol> -->
+		</section>
+	</div>
+	   <div class="col-sm-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                    <h3 class="box-title">派工单条码打印</h3>&nbsp;
+                    <input type="checkbox" name="printstatus" id="printstatus0" class="regular-checkbox" onclick="CheckClick(this)" value="0"><label for="printstatus0"></label>未出票 &nbsp;
+                    <input type="checkbox" name="printstatus" id="printstatus1" class="regular-checkbox" onclick="CheckClick(this)" value="1"><label for="printstatus1"></label>已出票 &nbsp;
+                     <input type="checkbox" name="dispatchingstatus" id="dispatchingstatus0" class="regular-checkbox" onclick="CheckClick2(this)" value="2"><label for="dispatchingstatus0"></label>已开工 &nbsp;
+                    <input type="checkbox" name="dispatchingstatus" id="dispatchingstatus1" class="regular-checkbox" onclick="CheckClick2(this)" value="3"><label for="dispatchingstatus1"></label>已完工&nbsp;
+					<input type="checkbox" name="orderstatus" id="orderstatus0" class="regular-checkbox"  value="-1"><label for="orderstatus0"></label>下料 &nbsp;
+                    <input type="checkbox" name="orderstatus" id="orderstatus1" class="regular-checkbox"  value="0"><label for="orderstatus1"></label>非下料
+
+                   <!--  <label class="radio-inline">
+                              <input type="radio" name="printstatus"  value="0" checked="checked"> 未出票
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="printstatus" value="1"> 已出票
+                            </label>
+
+                            <label class="radio-inline">
+                              <input type="radio" name="dispatchingstatus" value="2" checked="checked"> 已开工
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="dispatchingstatus" value="3"> 已完工
+                            </label>-->
+                            &nbsp;
+                            <a class="btn btn-default btn-flat  btn-xs" onclick="viewIframeToPage();" id="search">查询</a>
+                        <div class="box-tools pull-right">
+                        <span id ="countview" style="display: none">共<font size="3" color="red"><em  id="countData"></em></font> 条数据</span>
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                    <div class="div-heightClass" id="formheightclass">
+                    <form class="form-horizontal" id="workOrderBarcodePrintForm"
+                        name="workOrderBarcodePrintForm">
+
+                       <!-- <div class="form-group">
+                            <label class="col-sm-2 control-label" for="mouldname">生产查询号</label>
+                            <div class="col-sm-3">
+                                <select id="productionsearchno" name="productionsearchno"
+                                    class="form-control select2"
+                                    style="width: 100%; border-color: #3c8dbc"></select> <input
+                                    type="hidden" name="productionsearchnoView"
+                                    id="productionsearchnoView" />
+                            </div>
+                            <label class="col-sm-2 control-label" for="groupid">工作中心组</label>
+                            <div class="col-sm-3">
+                                <!-- <input class="form-control" id="groupid" name="groupid" type="text" placeholder="工作中心组" /> -->
+                              <!-- <select id="groupid" name="groupid" class="form-control select2"
+                                    style="width: 100%; border-color: #3c8dbc"></select> <input
+                                    type="hidden" name="groupname" id="groupname" />
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-primary" onclick="printBarcodeChild();" id=printBarcode>打印</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="starttime">开始时间</label>
+                            <div class="col-sm-3">
+                                <input class="form-control" id="starttime" name="starttime"
+                                    type="text" placeholder="开始日期" />
+                            </div>
+                            <label class="col-sm-2 control-label" for="endtime">结束时间</label>
+                            <div class="col-sm-3">
+                                <input class="form-control" id="endtime" name="endtime" type="text"
+                                    placeholder="结束日期" />
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-primary" onclick="viewIframeToPage();">查询</a>
+                                <span id ="countview">共<font size="3" color="red"><em  id="countData"></em></font> 条数据</span>
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <div class="col-sm-1">
+                            </div>
+                            <div class="col-sm-2">
+                             <select id="groupid" name="groupid" class="form-control" onchange="queryWorkCenter();queryArtWorkCenter()">
+                                <option value="">-----工作组-----</option>
+                             </select>
+                            </div>
+                            <div class="col-sm-2">
+                             <select id="centerid" name="centerid" class="form-control" onchange="queryEquipment()" disabled="disabled">
+                                <option value="">--机器工作中心--</option>
+                             </select>
+                            </div>
+                            <div class="col-sm-2">
+                             <select id="equipmentid" name="equipmentid" class="form-control" disabled="disabled">
+                             <option value="">--设备台账--</option>
+                             </select>
+                            </div>
+                            <div class="col-sm-2">
+                             <select id="personcenterid" name="personcenterid" class="form-control" onchange="queryArtEquipment()" disabled="disabled">
+                                <option value="">--人工工作中心--</option>
+                             </select>
+                            </div>
+                            <div class="col-sm-2">
+                             <select id="personequipmentid" name="personequipmentid" class="form-control" disabled="disabled">
+                             <option value="">---雇员---</option>
+                             </select>
+                            </div>
+                            <div class="col-sm-1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-1">
+                            </div>
+                            <div class="col-sm-2">
+                             <select id="productionsearchno" name="productionsearchno" multiple="multiple" class="form-control select2">
+                             </select>
+                            </div>
+                            <div class="col-sm-2">
+                              <input class="form-control" id="starttime" name="starttime"type="text" placeholder="开始日期" />
+                            </div>
+                            <div class="col-sm-2">
+                              <input class="form-control" id="endtime" name="endtime"type="text" placeholder="结束日期" />
+                            </div>
+
+                            <div class="col-sm-4">
+                             <input id="searchValue" name="searchValue" class="form-control" placeholder="模糊查询,填写以后忽略除日期以外的其他条件" ></select>
+                            </div>
+
+                            <div class="col-sm-1">
+                                 <a class="btn btn-primary" onclick="printBarcodeChild();" id=printBarcode style="display: none">打印</a>
+                            </div>
+                        </div>
+
+
+                    </form>
+
+                </div>
+                <div id="viewiframe">
+                    <!-- 这里写iframe -->
+
+
+                </div>
+                    </div>
+                    <div class="overlay" id="mask" hidden="">
+              <i class="fa fa-refresh fa-spin"></i>
+            </div>
+                </div>
+            </div>
+
+
+
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+
+				<div class="modal-body" id="tips"></div>
+				<div class="modal-footer" id="sure"></div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery 2.1.4 -->
+	<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- datetime -->
+	<script type="text/javascript"
+		src="../../../jslib/datetimepicker/bootstrap-datetimepicker.js"
+		charset="UTF-8"></script>
+	<script type="text/javascript"
+		src="../../../jslib/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"
+		charset="UTF-8"></script>
+	<!-- FastClick -->
+	<script src="../../../jslib/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../../../jslib/adminlte/js/app.min.js"></script>
+	<!-- InputMask -->
+	<script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+	<script src="../../../jslib/iCheck/icheck.js"></script>
+	<!-- DataTables -->
+	<script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+	<script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+	<!-- select2 -->
+	<script src="../../../jslib/select2/select2.full.min.js"></script>
+	<script src="../../../jslib/select2/i18n/zh-CN.js"></script>
+	<script
+		src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+	<script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+	<script type="text/javascript"
+		src="../../../jslib/barcode/jquery-barcode.js"></script>
+	<!-- 	<script type="text/JavaScript"
+		src="../../../jslib/ritsc-printarea/demo/jquery.PrintArea.js"></script> -->
+	<script type="text/javascript" src="dispatchcodeprint.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>生产订单MPS</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+<style type="text/css">
+
+table th {
+    white-space: nowrap;
+}
+
+table td {
+    white-space: nowrap;
+}
+
+</style>
+
+<body class="hold-transition skin-blue-light sidebar-mini"  >
+	<!-- <ol class="breadcrumb">
+		<li><i class="fa fa-home"></i></li>
+		<li class="active">生产计划管理</li>
+		<li class="active">工单排产计划</li>
+		<li class="active"></li>
+	</ol> -->
+	<section class="content">
+			<div class="col-sm-8" >
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title">工单排产计划</h3>
+							<a class="btn btn-default btn-flat btn-xs" onclick="saveSalesOrderDetail();"  id="saveFun"><i class="fa fa-save">&nbsp;保存</i></a>&nbsp;
+							<a class="btn btn-default btn-flat btn-xs" onclick="editSalesOrderDetail();" id="editFun"><i class="fa fa-edit">&nbsp;修改</i></a>&nbsp; 
+							 <!--<button class="btn btn-default btn-flat btn-xs" onclick="createProductionOrder();"  id="createFun"><i class="fa fa-share" id="createFunInfo">&nbsp;生成生产订单</i></button>&nbsp;  --> 
+							<div class="box-tools pull-right">
+								<button class="btn btn-box-tool" data-widget="collapse">
+									<i class="fa fa-minus"></i>
+								</button>
+							</div>
+						<!-- /.box-tools -->
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body">
+			<!-- 			<div class="mailbox-controls" style="height: 55px;width: 100%;">
+						
+							
+						</div> -->
+						
+						<div class="form-horizontal clearfix">
+		                   <!--  <div class="col-lg-12 col-sm-4 input-group">
+		                          <input type="text" placeholder="请输入关键字" id ="searchValue"  name = "searchValue" class="input-sm form-control">
+		                          <span class="input-group-btn"><button type="button" class="btn btn-sm btn-primary" onclick="searchProductionOrder()"> 搜索</button> </span>
+		                    </div> -->
+		                    
+		                    <form class="form-horizontal" >
+								<div class="form-group">
+									<!-- <label class="col-sm-1 control-label" for="requestStartDate">交货日期</label> -->
+									
+									<div class="col-sm-4">
+										<!-- <label class="radio-inline" style="padding-left: 35px;">
+										  <input type="radio" name="selectDate" id="selectDate" value="1" checked="checked"> 交货日期
+										</label> -->
+										<label class="radio-inline" style="padding-left: 35px;">
+										  <input type="radio" name="selectDate" id="selectDate" value="2"  checked="checked"> 完工日期
+										</label>
+									</div>
+									
+									<div class="col-sm-2">
+										<input class="input-sm form-control" id="requestStartDate" name="requestStartDate"  type="text" placeholder="开始日期" />
+									</div>
+									<div class="col-sm-2">
+										<input class="input-sm form-control" id="requestEndDate" name="requestEndDate" type="text" placeholder="结束日期" />
+									</div>
+ 
+									<div class="col-sm-1">
+											<button class="btn btn-sm btn-primary" type="button" onclick="searchSalesOrderDetail()"><i class="fa fa-search">查询</i></button>
+									</div>
+								</div>
+							</form>
+			          
+		                </div>
+						<table id="productionMpsTable" class="table table-striped table-bordered table-hover" >
+							<thead>
+								<tr>
+									<td style="width: 15px"><input type="checkbox" id="checkAll" class="regular-checkbox"  onclick="com.leanway.dataTableCheckAll('productionMpsTable', 'checkAll', 'checkList');" ><label for="checkAll" ></label></td>
+									<th >生产线</th>
+									<th >订单类型</th>
+									<th >订单号</th>
+									<th >产品</th>
+									<th >图号</th>
+									<th >数量</th>
+									<th >完工日期</th>
+								<!-- 	<th >交货日期</th> -->
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+			</div>
+			
+			<div class="col-sm-4" >
+			<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title">工单统计汇总</h3>
+						<div class="box-tools pull-right">
+							<button class="btn btn-box-tool" data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+						</div>
+						<!-- /.box-tools -->
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body">
+						<div class="form-horizontal clearfix">
+							<div style="height: 45px;width: 100%;"></div>
+						
+						</div>
+						<table id="productionMpsSumTable" class="table table-striped table-bordered table-hover" >
+							<thead>
+								<tr>
+									<th style="width: 160px">生产线</th>
+									<th style="width: 120px">完工日期</th>
+									<th style="width: 80px">数量</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						
+					</div>
+					<!-- /.box-body -->
+				</div>
+			
+			</div>
+			
+
+	</section>
+	
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+	
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+	
+				<div class="modal-body" id="tips"></div>
+				<div class="modal-footer" id="sure">
+	
+				</div>
+			</div>
+		</div>
+	</div>
+					
+</body>
+
+<!-- jQuery 2.1.4 -->
+<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../../../jslib/fastclick/fastclick.js"></script>
+<!-- datetime -->
+<script type="text/javascript" src="../../../jslib/datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../jslib/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<!-- AdminLTE App -->
+<script src="../../../jslib/adminlte/js/app.min.js"></script>
+<!-- DataTables -->
+<script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+<script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+<!-- select -->
+<script src="../../../jslib/select2/select2.full.min.js"></script>
+<script src="../../../jslib/select2/i18n/zh-CN.js"></script>
+<script type="text/javascript" src="../../../jslib/barcode/jquery-barcode.js"></script>
+<script type="text/JavaScript" src="../../../jslib/ritsc-printarea/demo/jquery.PrintArea.js"></script>
+<script type="text/javascript" src="productionordermps.js"></script>
+	<script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>设备台账打印</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    name="viewport">
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+<style type="text/css">
+.table-wrap {width:1080px;height:400px; overflow:auto;}
+</style>
+</head>
+
+<body class="hold-transition skin-blue-light sidebar-mini">
+    <div id= "titleheight">
+       <!--  <section class="content-header">
+             <h1>&nbsp;</h1>
+            <ol class="breadcrumb">
+                <li><i class="fa fa-home"></i></li>
+                <li class="active">打印导入导出</li>
+                <li class="active">设备台账打印</li>
+                <li class="active"></li>
+            </ol>
+        </section> -->
+    <section class="content">
+        <!-- 左边为4 -->
+        <div class="col-sm-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                    <h3 class="box-title">设备台账条码打印</h3>&nbsp;
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+            <div class="box-body">
+                     <form class="form-horizontal">
+                     <div class=" col-sm-12 ">
+
+			               <div class="form-group">
+
+
+	                       <label class="col-sm-2 control-label" for="centerid">机器工作中心</label>
+								<div class="col-sm-2 ">
+									<select id="centername" name="centername"
+											class="form-control select2" style="width: 100%">
+									</select>
+									<input type="hidden" name="centerid" id="centerid">
+								</div>
+
+							<label class="col-sm-1 control-label" for="equipmentname">设备台账</label>
+								<div class="col-sm-2 ">
+									<select id="equipmentname" name="equipmentname"
+										class="form-control select2" style="width: 100%">
+									</select>
+									<input type="hidden" name="equipmentid" id="equipmentid">
+								</div>
+
+							 <div class=" col-sm-5 ">
+							 <a class="btn btn-primary" id="queryEquipmentList" onclick="queryEquipmentList();">预览</a>
+		                    <a class="btn btn-primary" id="exportEmployee" onclick="exportEmployee();">导出</a>
+
+                        <a class="btn btn-primary" id="print" onclick="print();">打印</a>
+                        <span id="count"></span>
+						<div>
+					</div>
+					 </div>
+                    </div>
+                        <div id="info" class="table-wrap box-body">
+
+
+
+                      </div>
+                      </div>
+                      </form>
+                      <div class="overlay" id="mask" hidden="">
+                        <i class="fa fa-refresh fa-spin"></i>
+                      </div>
+                </div>
+
+            </div>
+
+
+
+    <div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+
+                <div class="modal-body" id="tips"></div>
+                <div class="modal-footer" id="sure"></div>
+            </div>
+        </div>
+    </div>
+    </section>
+    <!-- jQuery 2.1.4 -->
+    <script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- datetime -->
+    <script type="text/javascript"
+        src="../../../jslib/datetimepicker/bootstrap-datetimepicker.js"
+        charset="UTF-8"></script>
+    <script type="text/javascript"
+        src="../../../jslib/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"
+        charset="UTF-8"></script>
+    <!-- FastClick -->
+    <script src="../../../jslib/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../../jslib/adminlte/js/app.min.js"></script>
+    <!-- InputMask -->
+    <script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+    <script src="../../../jslib/iCheck/icheck.js"></script>
+    <!-- DataTables -->
+    <script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+    <script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+    <!-- select2 -->
+    <script src="../../../jslib/select2/select2.full.min.js"></script>
+    <script src="../../../jslib/select2/i18n/zh-CN.js"></script>
+    <script
+        src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+    <script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+    <script type="text/javascript"
+        src="../../../jslib/barcode/jquery-barcode.js"></script>
+    <script type="text/JavaScript"
+        src="../../../jslib/ritsc-printarea/demo/jquery.PrintArea.js"></script>
+    <!--    <script type="text/JavaScript"
+        src="../../../jslib/ritsc-printarea/demo/jquery.PrintArea.js"></script> -->
+    <script type="text/javascript" src="equipmentbarcodeprint.js"></script>
+</body>
+</html>

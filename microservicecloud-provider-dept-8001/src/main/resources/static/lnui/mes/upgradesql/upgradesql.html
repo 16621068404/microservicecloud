@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>数据库升级日志</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes"
+	name="viewport">
+
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+
+<style type="text/css">
+</style>
+
+</head>
+<body style="overflow-y: auto;"
+	class="hold-transition skin-blue-light sidebar-mini">
+
+	<!-- <div>
+		<section class="content-header">
+			<h1>&nbsp;</h1>
+			<ol class="breadcrumb">
+				<li><i class="fa fa-home"></i></li>
+				<li class="active">数据库升级日志</li>
+				<li class="active"></li>
+			</ol>
+		</section>
+	</div> -->
+	
+	<div>
+		<!-- Your Page Content Here -->
+	 <section class="content">
+		<div class="col-sm-5">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">数据库日志</h3>&nbsp;
+				<div class="box-tools pull-right">
+				<button class="btn btn-box-tool" data-widget="collapse">
+						<i class="fa fa-minus"></i>
+				</button>
+				</div>
+				
+				  <label class="checkbox-inline">
+								<input type="checkbox" name="execute" id="execute" value="0" >未执行
+				  </label>
+				 <label class="checkbox-inline">
+								  	<input type="checkbox" name="execute" id="execute" value="1"> 已执行
+				 </label>
+				 <h3></h3>
+				<div>
+					<button class="btn btn-default btn-flat btn-xs" id="executeSql"  type="button" onclick="executeSql(1)">选中文件执行SQL</button>
+					<button class="btn btn-default btn-flat btn-xs" id="unexecuteSql"  type="button" onclick="executeSql(2)">未执行文件执行SQL</button>
+					<button class="btn btn-default btn-flat btn-xs" id="tagexecuteSql"  type="button" onclick="executeSql(4)">标记已执行</button>
+					<button class="btn btn-default btn-flat btn-xs" id="untagexecuteSql"  type="button" onclick="executeSql(5)">所有未执行已执行</button>
+					<button class="btn btn-default btn-flat btn-xs" id="selectSql"  type="button" onclick="selectSql()">查看sql</button>
+				</div>
+			</div>
+			<div class="box-body">
+				<table id="generalInfo"
+							class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th style="width: 15px"><input type="checkbox" id="checkAll" onclick="com.leanway.dataTableCheckAll('generalInfo', 'checkAll', 'checkupgreadesql')" class="regular-checkbox"><label for="checkAll"></label></th>
+									<th style="width: 180px">文件名</th>
+									<th style="width: 100px">是否执行</th>
+									<th style="width: 200px">升级时间</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-7">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+			<h3 class="box-title">数据库升级日志语句</h3>
+				<div class="box-tools pull-right">
+					<button class="btn btn-box-tool" data-widget="collapse">
+						<i class="fa fa-minus"></i>
+					</button>
+				</div>
+				  <label class="checkbox-inline" style="padding-left: 20px;">
+								<input type="checkbox" name="sqlall" id="sqlall" value="0" >全部sql语句
+				 </label>
+			</div>
+				<div class="box-body">
+				<table id="detail"
+							class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th style="width: 15px"><input type="checkbox" id="checkDetailAll" onclick="com.leanway.dataTableCheckAll('detail', 'checkDetailAll', 'checkDetail')" class="regular-checkbox"><label for="checkDetailAll"></label></th>
+									<th style="width: 220px">sql语句</th>
+									<th style="width: 70px">状态</th>
+									<th style="width: 100px">日志信息</th>
+									<th style="width: 90px">操作号</th>
+									<th style="width: 140px">创建时间</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+			</div>
+		</div>
+	</div>
+		</section>
+	</div>
+	
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+				<div class="modal-body" id="tips"></div>
+				<div class="modal-footer" id="sure"></div>
+			</div>
+		</div>
+	</div>
+	
+		<div>
+			<div class="row">
+				<div class="col-sm-12" >
+					<div class="modal fade " id="veiwSql" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel"  aria-hidden="true">
+						<div class="modal-dialog" style="width:1170px">
+							<div class="modal-content" >
+								<div class="modal-header">
+									<button type="button" class="close"  data-dismiss="modal" aria-hidden="true"> &times;</button>
+					            	<h4 class="modal-title" id="myModalLabel" align="center">SQL语句或日志信息</h4>
+					         	</div>
+
+								<div class="modal-body" >
+
+										<div class="box-body">
+												<h4 class="modal-title" id="sqlView"></h4>
+										</div>
+								</div>
+
+								<div class="modal-footer">
+					           		<button type="button" class="btn btn-default"  id="modalClose" data-dismiss="modal">关闭</button>
+					        	 </div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	<!-- jQuery 2.1.4 -->
+	<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+	<!-- bootstrapValidator -->
+	<script src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+	<script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+	<!-- SlimScroll -->
+	<script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="../../../jslib/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../../../jslib/adminlte/js/app.min.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="../../../jslib/adminlte/js/demo.js"></script>
+	<!-- datetime -->
+	<script type="text/javascript" src="../../../jslib/datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="../../../jslib/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+	<!-- select2 -->
+	<script src="../../../jslib/select2/select2.full.min.js"></script>
+	<script src="../../../jslib/select2/i18n/zh-CN.js"></script>
+	<!-- DataTables -->
+	<script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+	<script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+	<script type="text/javascript" src="upgradesql.js"></script>
+</body>
+</html>

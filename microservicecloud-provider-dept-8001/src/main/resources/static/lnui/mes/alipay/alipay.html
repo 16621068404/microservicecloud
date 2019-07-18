@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>账户总览</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes"
+	name="viewport">
+
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+
+
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+<div id="mask" class="mask" style="height:100px; width:100px;  text-align:center; line-height:100px; display: none" ><font color="white"><h3>正在加载图表，请稍后...</h3></font></div>
+	<div class="row">
+		<section class="content-header">
+			<!-- <h1>&nbsp;</h1>
+			<ol class="breadcrumb">
+				<li><i class="fa fa-home"></i></li>
+				<li class="active">费用中心</li>
+				<li class="active">产品总览</li>
+				<li class="active"></li>
+			</ol> -->
+		</section>
+	</div>
+
+	<div class="col-sm-12">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">产品总览</h3>
+				<div class="box-tools pull-right">
+					<button class="btn btn-box-tool" data-widget="collapse">
+						<i class="fa fa-minus"></i>
+					</button>
+				</div>
+			</div>
+			<div class="box-body">
+				<form class="form-horizontal" id="formData" name="formData" action="../../../../lnmes/platform/alipayapi.jsp" method="POST" target="_blank">
+					<div class="form-group" col-sm-11>
+						<label class="col-sm-2 control-label" for="money">请选择产品购买<span class="glyphicon glyphicon-upload"></span>:</label>
+
+						<div class="col-sm-2 ">
+
+						    <input type="hidden" value="800" id="price1">
+							<img src="image/c30.png" width="100" height="100"/>
+							<font color='red' size='5px'>￥800</font><br>
+							C30指环扫描仪的高性能处理器和解码板，拥有快速解码和高精度识别能力
+						</div>
+
+						<label class="col-sm-1 control-label" for="count1">数量</label>
+						<div class="col-sm-1 ">
+						 <input class="min" name="" type="button" value="-" />
+						 <input class="form-control" id="count1" name="count1"
+											type="text" placeholder="数量" value="0"/>
+                         <input class="add" name="" type="button" value="+" />
+						</div>
+
+						<div class="col-sm-1"></div>
+
+						<div class="col-sm-2 ">
+						    <input type="hidden" value="2600" id="price2">
+						 	<img src="image/PDA V5.jpg" width="100" height="100" />
+						 	<font color='red' size='5px'>￥2600</font><br>
+						 	  V5是一款设计新颖、造型精致的移动数据采集终端。V5基于Android4.4操作系统。
+						</div>
+
+						<label class="col-sm-1 control-label" for="count2">数量</label>
+						<div class="col-sm-1 ">
+						  <input class="min" name="" type="button" value="-" />
+						 <input class="form-control" id="count2" name="count2"
+											type="text" placeholder="数量" onblur="countMoney()" value="0"/>
+						<input class="add" name="" type="button" value="+" />
+						</div>
+
+					</div>
+
+					<div class="form-group" col-sm-11>
+
+						<div class="col-sm-2 "></div>
+
+						<div class="col-sm-2 ">
+						   <input type="hidden" value="2200" id="price3">
+						   <img src="image/A8.jpg" width="100" height="100" />
+						   <font color='red' size='5px'>￥2200</font><br>
+						   二维屏幕4.3寸IPS屏，支持多点电容触摸网络支持4G（联通，移动）网络RFID读取方式。
+						</div>
+
+						<label class="col-sm-1 control-label" for="count3">数量</label>
+						<div class="col-sm-1 ">
+
+						  <input class="min" name="" type="button" value="-" />
+						 <input class="form-control" id="count3" name="count3"
+											type="text" placeholder="数量" onblur="countMoney()" value="0"/>
+						  <input class="add" name="" type="button" value="+" />
+						</div>
+
+						<div class="col-sm-1"></div>
+
+						<div class="col-sm-2 ">
+						    <input type="hidden" value="2100" id="price4">
+						    <img src="image/A9.jpg" width="100" height="100" />
+						    <font color='red' size='5px'>￥2100</font><br>
+						 A9数据采集终端是基于Android 5.1操作系统的高性能、高可靠的工业级手持数据终端。
+						</div>
+
+						<label class="col-sm-1 control-label" for="count4">数量</label>
+
+						<div class="col-sm-1 ">
+
+						 <input class="min" name="" type="button" value="-" />
+						 <input class="form-control" id="count4" name="count4"
+											type="text" placeholder="数量" onblur="countMoney()" value="0"/>
+                          <input class="add" name="" type="button" value="+" />
+						</div>
+
+					</div>
+
+					<div class="form-group" col-sm-11>
+
+										<div class="col-sm-2 "></div>
+
+						<div class="col-sm-2 ">
+						    <input type="hidden" value="2500" id="price7">
+							<img src="image/A5.png" width="100" height="100" />
+							<font color='red' size='5px'>￥2500</font><br>
+							 产品优势四核/阳光下可见/ROM16GB/7.0英寸大显示屏/支持手套触摸条码/RFID扫描/支持定制特殊功能。
+						</div>
+
+						<label class="col-sm-1 control-label" for="count">数量</label>
+
+						<div class="col-sm-1 ">
+
+						  <input class="min" name="" type="button" value="-" />
+						  <input class="form-control" id="count7" name="count7"
+											type="text" placeholder="数量" onblur="countMoney()" value="0"/>
+											<input class="add" name="" type="button" value="+" />
+						</div>
+
+
+						<div class="col-sm-1"></div>
+
+						<div class="col-sm-2 ">
+						    <input type="hidden" value="1800" id="price6">
+							<img src="image/C5.jpg" width="100" height="100" />
+							<font color='red' size='5px'>￥1800</font><br>
+							C5物联网手持设备是运行Windows CE 5.0操作系统的手持终端，GSM/GPRS电话功能。
+						</div>
+
+						<label class="col-sm-1 control-label" for="count">数量</label>
+
+						<div class="col-sm-1 ">
+						 <input class="min" name="" type="button" value="-" />
+						 <input class="form-control" id="count6" name="count6"
+											type="text" placeholder="数量" onblur="countMoney()" value="0"/>
+											<input class="add" name="" type="button" value="+" />
+						</div>
+
+
+					</div>
+					<div class="form-group" col-sm-11>
+
+										<div class="col-sm-2 "></div>
+
+						<div class="col-sm-2 ">
+						    <input type="hidden" value="3000" id="price9">
+							<img src="image/SY9.jpg" width="100" height="100" />
+							<font color='red' size='5px'>￥3000</font><br>
+							 工业级安卓智能打印手持终端，四核 ARM Cortex A7  主频为1.3Ghz，2G LPDDR2 RAM+16G EMMC ROM。
+						</div>
+
+						<label class="col-sm-1 control-label" for="count">数量</label>
+
+						<div class="col-sm-1 ">
+
+						  <input class="min" name="" type="button" value="-" />
+						  <input class="form-control" id="count9" name="count9"
+											type="text" placeholder="数量" onblur="countMoney()" value="0"/>
+											<input class="add" name="" type="button" value="+" />
+						</div>
+
+
+						<div class="col-sm-1"></div>
+
+						<div class="col-sm-2 ">
+						    <input type="hidden" value="2000" id="price10">
+							<img src="image/LS10.jpg" width="100" height="100" />
+							<font color='red' size='5px'>￥2000</font><br>
+							 Cortex A72+A53/Android 4.2.2 以上/2G运行内存，8G存储内存.
+						</div>
+
+						<label class="col-sm-1 control-label" for="count">数量</label>
+
+						<div class="col-sm-1 ">
+						 <input class="min" name="" type="button" value="-" />
+						 <input class="form-control" id="count10" name="count10"
+											type="text" placeholder="数量" onblur="countMoney()" value="0"/>
+											<input class="add" name="" type="button" value="+" />
+						</div>
+
+
+					</div>
+					
+					<div class="form-group" col-sm-11>
+
+										<div class="col-sm-2 "></div>
+
+						<div class="col-sm-2 ">
+						    <input type="hidden" value="3000" id="price11">
+							<img src="image/GK11.jpg" width="100" height="100" />
+							<font color='red' size='5px'>￥3000</font><br>
+							 ARM 双核 1.4G以上/ Android 4.2.2/ 22寸 1920×1080以上/红外触摸屏/金属键盘鼠标
+						</div>
+
+						<label class="col-sm-1 control-label" for="count">数量</label>
+
+						<div class="col-sm-1 ">
+
+						  <input class="min" name="" type="button" value="-" />
+						  <input class="form-control" id="count11" name="count11"
+											type="text" placeholder="数量" onblur="countMoney()" value="0"/>
+											<input class="add" name="" type="button" value="+" />
+						</div>
+
+
+						<div class="col-sm-1"></div>
+
+						<div class="col-sm-2 ">
+						    <input type="hidden" value="2000" id="price12">
+							<img src="image/GK12.jpg" width="100" height="100" />
+							<font color='red' size='5px'>￥2000</font><br>
+							ARM 双核 1.4G以上/19寸 1280×720以上/ 红外触摸屏/一维或二维扫描头/RFID读卡器.
+						</div>
+
+						<label class="col-sm-1 control-label" for="count">数量</label>
+
+						<div class="col-sm-1 ">
+						 <input class="min" name="" type="button" value="-" />
+						 <input class="form-control" id="count12" name="count12"
+											type="text" placeholder="数量" onblur="countMoney()" value="0"/>
+											<input class="add" name="" type="button" value="+" />
+						</div>
+
+
+					</div>
+
+					<div class="form-group" col-sm-6>
+
+						<div class="col-sm-3"></div>
+
+						<label class="col-sm-1 control-label" for="sumcount">金额总计</label>
+						<div class="col-sm-2 ">
+
+						 <input class="form-control" id="sumcount" name="sumcount"
+											type="text" placeholder="金额总计" />
+						</div>
+
+						 <label class="col-sm-1 control-label" for="recharge"></label>
+						<!-- ><span><button type="button" class="btn btn-sm btn-primary"
+							onclick="rechargeMoney1()" id="recharge1">支付宝支付</button> </span>
+							 -->
+							<span><button type="button" class="btn btn-sm btn-primary"
+						          onclick="rechargeMoney1()">支付宝支付</button></span>
+							<label class="col-sm-1 control-label" for="recharge"></label>
+						<span><button type="button" class="btn btn-sm btn-primary"
+							onclick="rechargeMoney2()" id="recharge2">微信支付</button> </span>
+
+
+
+					</div>
+
+								<div id="qrcode" align="center">
+					<div></div>
+
+				</div>
+						<!-- <div class="form-group" col-sm-4>
+
+						<label class="col-sm-2 control-label" for="receipt">可索取发票总额<span class="glyphicon glyphicon-download"></span>:</label>
+
+						<div class="col-sm-1 ">
+						 <div valign="center">
+
+						 ￥0.0</div>
+						</div>
+						 <label class="col-sm-1 control-label" for="forReceipt"></label>
+						<span><button type="button" class="btn btn-sm btn-primary"
+								onclick="askForReceipt()"	 id="forReceipt">索取发票</button> </span>
+					</div>
+					 -->
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+	<form id="alipaysubmit" name="alipaysubmit" action="https://mapi.alipay.com/gateway.do?_input_charset=utf-8" method="get" target="_blank">
+		<input type="hidden" id="_input_charset" name="_input_charset"/>
+		<input type="hidden" id="subject" name="subject"/>
+		<input type="hidden" id="sign" name="sign"/>
+		<input type="hidden" id="notify_url" name="notify_url"/>
+		<input type="hidden" id="body" name="body"/>
+		<input type="hidden" id="payment_type" name="payment_type"/>
+		<input type="hidden" id="out_trade_no" name="out_trade_no"/>
+		<input type="hidden" id="partner" name="partner"/>
+		<input type="hidden" id="service" name="service"/>
+		<input type="hidden" id="total_fee" name="total_fee"/>
+		<input type="hidden" id="return_url" name="return_url"/>
+		<input type="hidden" id="sign_type" name="sign_type"/>
+		<input type="hidden" id="seller_id" name="seller_id"/>
+		<input type="submit" value="确认" style="display:none;">
+  </form>
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+				<div class="modal-body" id="tips"></div>
+				<div class="modal-footer" id="sure"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- jQuery 2.1.4 -->
+	<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="../../../jslib/fastclick/fastclick.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../../../jslib/adminlte/js/app.min.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="../../../jslib/adminlte/js/demo.js"></script>
+	<!-- InputMask -->
+	<script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+	<script
+		src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+	<script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+	<script src="../../../jslib/jquery-qrcode-master/jquery.qrcode.min.js"></script>
+	<script src="alipay.js"></script>
+</body>
+</html>

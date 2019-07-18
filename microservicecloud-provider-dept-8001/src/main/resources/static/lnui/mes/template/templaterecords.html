@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+</head>
+<body style="overflow-x: hidden;">
+
+	<iframe  id="templateIframe"  style="padding-left: 1px;" src="" frameborder="0" border="0" width="100%"  scrolling="no"></iframe>
+	<div style="text-align: center;">
+		<!-- style="display: none;" -->
+		<button id="saveBtn" name="save" id="save" onclick="saveData()" >保存</button> 
+	</div>
+	
+    <div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"
+                      aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel">提示</h4>
+              </div>
+
+              <div class="modal-body" id="tips"></div>
+              <div class="modal-footer" id="sure">
+
+              </div>
+          </div>
+      </div>
+  </div>
+</body>
+<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="templaterecords.js"></script>
+</html>

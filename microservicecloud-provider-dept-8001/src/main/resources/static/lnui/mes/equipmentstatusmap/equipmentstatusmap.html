@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta
+    content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes"
+    name="viewport">
+
+	<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		#allmap{width:100%;height:500px;}
+		p{margin-left:5px; font-size:14px;}
+	.info-box-content { padding: 5px 10px;float: right;padding-right: 50px;
+	}
+	</style>
+	<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=2.0&ak=02a0bb2a75c0c3bdba271c43299917e3"></script>
+	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+	<title>给多个点添加信息窗口</title>
+</head>
+
+<body>
+    <section class="content">
+      <!-- Info boxes -->
+      <div class="row">
+      <div class="col-sm-3">
+      <div class="info-box">
+      <span class="info-box-icon bg-aqua">
+      <i class="fa fa-desktop"></i></span>
+      <div class="info-box-contentv" style="width:100%">
+      <span class="info-box-text" style="font-size:18px">&nbsp;总共</span>
+       <span class="info-box-number" id="total"></span>
+        </div>
+        </div>
+        </div>
+
+        <!-- /.col -->
+        <div class="col-sm-3">
+          <div class="info-box">
+            <span class="info-box-icon bg-green">
+            <i class="fa fa-check-circle-o"></i></span>
+
+            <div class="info-box-contentv style="width:100%"">
+              <span class="info-box-text" style="font-size:18px">&nbsp;在线</span>
+              <span class="info-box-number" id="onlinecount"></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-sm-3">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-close"></i></span>
+
+            <div class="info-box-contentv">
+              <span class="info-box-text">&nbsp;离线</span>
+              <span class="info-box-number" id="offlinecount"></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-3">
+           <div class="box-body">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="chart-responsive">
+                    <canvas id="pieChart" height="80"></canvas>
+                  </div>
+                  <!-- ./chart-responsive -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-7">
+                  <ul class="chart-legend clearfix">
+                    <li><i class="fa fa-circle-o text-green"></i>正常(500)</li>
+                    <li><i class="fa fa-circle-o text-yellow"></i> 等待(400)</li>
+                    <li><i class="fa fa-circle-o text-violet"></i> 换模(300)</li>
+                    <li><i class="fa fa-circle-o text-gray"></i> 停机(100)</li>
+                  </ul>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+
+
+      <div class="row">
+        <!-- Left col -->
+        <div class="col-md-12">
+          <!-- MAP & BOX PANE -->
+          <div class="box box-success">
+            <div class="box-header with-border">
+            <!--   <h3 class="box-title">Visitors Report</h3> -->
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+           <!-- map -->
+
+
+			<div id="allmap"></div>
+
+
+    		 <!--  -->
+          </div>
+
+          </div>
+
+
+          </div>
+
+
+    </section>
+    
+    		<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">提示</h4>
+					</div>
+					<div class="modal-body" id="tips"></div>
+					<div class="modal-footer" id="sure"></div>
+				</div>
+			</div>
+		</div>
+    <!-- /.content -->
+
+     <!-- jQuery 2.1.4 -->
+    <script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../../jslib/adminlte/js/app.min.js"></script>
+    <!-- InputMask -->
+    <script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+    <!-- DataTables -->
+    <script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+    <script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+    <script
+        src="../../../jslib/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+
+      <!-- ChartJS 1.0.1 -->
+	<script src="../../../jslib/chartjs/Chart.min.js"></script>
+
+
+    <script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+    <script src="equipmentstatuschart.js"></script>
+
+	<div id="allmap"></div>
+
+</body>
+</html>
+
+

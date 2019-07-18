@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title></title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+<link href="../../../jslib/zTree/css/zTreeStyle/zTree.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+table th {
+    white-space: nowrap;
+}
+
+table td {
+    white-space: nowrap;
+}
+
+.ztree-wrap {
+/* 	height: 500px; */
+	overflow: auto;
+}
+</style>
+<!--[if lt IE 9]>
+  <script src="plugin/html5shiv.3.7.3/html5shiv.min.js"></script>
+  <script src="plugin/respond.1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+	<section class="content">
+	
+		<div class="col-sm-12">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+				
+					<button class="btn btn-default  btn-xs" onclick="addSo();"  id="addFun">新增</button>
+					<button class="btn btn-default  btn-xs" onclick="updateSo();" id="editFun">修改</button>
+					
+ 					<button class="btn btn-default  btn-xs" onclick="delSo();" id="delfun">删除</button>
+ 					<button class="btn btn-default  btn-xs" onclick="checkPurchaseOrderSo(1);" id="checkFun">确认</button>
+ 					<button class="btn btn-default  btn-xs" onclick="createProductionOrder(0,0);" id="createProductionOrder1">生成生产订单</button>
+ 					<button class="btn btn-default  btn-xs" onclick="calculateMrp(0);" id="calculateMrp">计算物料需求</button>
+ 					<button class="btn btn-default  btn-xs" onclick="calculateSo();" id="calculateSo">生成主计划</button>
+ 					<!-- <button class="btn btn-default  btn-xs" onclick="createProductionOrder(0,1);" id="createProductionOrder2">生成当前产品订单</button> -->
+ 					<button class="btn btn-default  btn-xs" onclick="deletePo(0);" id="deletePo0">删除生产订单</button>
+ 					
+	                 <!--   <label class="checkbox-inline" style="padding-left: 25px;">
+							<input type="checkbox" name="dispatchingstatus" id="dispatchingstatus" value="0" >未确认
+						</label>
+						<label class="checkbox-inline">
+						  	<input type="checkbox" name="dispatchingstatus" id="dispatchingstatus" value="1"> 已确认
+						</label> -->
+							
+					<!-- /.box-tools -->
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="form-horizontal clearfix">
+					
+				<!-- 		<form class="form-inline" role="form" style="padding-left: 15px;">
+							<div class="form-group">
+			                    <label class="checkbox-inline" style="padding-left: 25px;">
+								  	<input type="checkbox" name="dispatchingstatus" id="dispatchingstatus" value="2">预投
+								</label>
+								<label class="checkbox-inline">
+								   <input type="checkbox" name="dispatchingstatus" id="dispatchingstatus" value="3"> 合同
+								</label>
+								<input type="text" placeholder="请输入关键字" id ="searchValue"  name = "searchValue" class="input-sm form-control" style="width: 250px"><button type="button" class="btn btn-sm btn-primary" onclick="searchSo()"> 搜索</button>
+							</div>
+						</form> -->
+	                    <div class=" col-sm-6 input-group ">
+	                          <input type="text" placeholder="请输入关键字" id ="searchValue"  name = "searchValue" class="input-sm form-control">
+	                          <span class="input-group-btn"><button type="button" class="btn btn-sm btn-primary" onclick="searchSo()"> 搜索</button> </span>
+	                           
+	                    </div>
+
+	                </div>
+					<table id="soTable" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th style="width: 10px"><input type="checkbox" id="checkAll" class="regular-checkbox"
+									onclick="com.leanway.dataTableCheckAll('soTable', 'checkAll', 'checkList');"><label
+									for="checkAll"></label></th>
+								<th>合同号</th>
+								<th>类型</th>
+								<th>单据序号</th>
+								<th>客户名称</th>
+								<th>备注</th>
+								<th>创建时间</th>
+								<!-- <th>供应商</th>
+								<th>状态</th> -->
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<div class="overlay" id="mask" hidden="">
+					<div class="progress center" id="progressDiv"
+						style="display: none;">
+						<div class="progress-bar" style="width: 0%;"
+							progressbar" id="progressBarDiv">
+							<span id="progressInfo">0%</span>
+						</div>
+						<!-- <label id="progressInfo" style="padding-left: 100px;text-align: center;">生成中：0%</label> -->
+						<!--<label style="padding-right: 1px;float: right;" onclick="showOrderInfo()" ><a>详细</a></label>-->
+					</div>
+					<div style="width: 100%" class="infocenter">
+						<span id="orderInfo2" style="color: #3c8dbc;"></span>
+					</div>
+				</div>
+				<!-- /.box-body -->
+			</div>
+			<!-- /.box -->
+		</div>	
+		
+		<div class="col-sm-12">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+				
+					<button class="btn btn-default  btn-xs" onclick="addSod();"  id="addsod">新增</button>
+					<button class="btn btn-default  btn-xs" onclick="updateSod();" id="updatesod">修改</button>
+ 					<button class="btn btn-default  btn-xs" onclick="delSod();" id="delsod">删除</button>
+ 					<button class="btn btn-default  btn-xs" onclick="checkPurchaseOrderSo(2);" id="checkFun">确认</button>
+ 					<button class="btn btn-default  btn-xs" onclick="createProductionOrder(1,0);" id="createProductionOrder3">生成生产订单</button>
+ 					<button class="btn btn-default  btn-xs" onclick="calculateMrp(1);" id="calculateMrp1">计算物料需求</button>
+					<button class="btn btn-default  btn-xs" onclick="inBatchesOrderDetail();" id="inBatchesOrderDetail">分批下发</button>
+ 					<!-- <button class="btn btn-default  btn-xs" onclick="createProductionOrder(1,1);" id="createProductionOrder4">生成当前产品订单</button> -->
+ 					<!-- <button class="btn btn-default  btn-xs" onclick="relevance();" id="relevance">关联产品</button> -->
+ 					  
+					<!-- /.box-tools -->
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="form-horizontal clearfix">
+
+	                    <div class=" col-sm-4 input-group">
+	                          <input type="text" placeholder="请输入关键字" id ="searchValue"  name = "searchValue" class="input-sm form-control">
+	                          <span class="input-group-btn"><button type="button" class="btn btn-sm btn-primary" onclick="searchSo()"> 搜索</button> </span>
+	                    </div>
+
+	                </div>
+					<table id="sodTable" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th style="width: 10px"><input type="checkbox" id="checkAll" class="regular-checkbox"
+									onclick="com.leanway.dataTableCheckAll('sodTable', 'sodCheckAll', 'sodCheckList');"><label
+									for="sodCheckAll"></label></th>
+								<th>品号</th>
+								<!--<th>版本</th>-->
+								<th>品名</th>
+								<!--<th>描述</th>-->
+								<!--<th>规格</th>-->
+								<!-- <th>计划数量</th> -->
+								<th>数量</th>
+								<th>完工日期</th>
+								<!--<th>优先级</th>-->
+								<th>查询号</th>
+								<!--<th>行号</th>-->
+								<th>工单状态</th>
+								<!--<th>生产进度</th>-->
+								<th>备注</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+
+				</div>
+				<!-- /.box-body -->
+			</div>
+			<!-- /.box -->
+		</div>	
+	</section>
+	
+	<div class="modal fade" id="addSoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" >
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="productionModalLabel">合同销售</h4>
+				</div>
+					<div class="modal-body">
+						<div class="box-body">
+							<form class="form-horizontal" id="soModalForm">
+							
+					<!-- 			<div class="form-group">
+									<label class="col-sm-2 control-label" for="serialno">订单序号</label>
+									<div class="col-sm-10">
+										<input class="form-control" id="serialno" name="serialno" type="text" placeholder="订单序号" readonly="readonly" />
+									</div>
+								</div> -->
+							
+								<div class="form-group">
+								
+									<input class="form-control" id="salesorderid" name="salesorderid" type="hidden" />
+									
+									<label class="col-sm-2 control-label" for="code">合同号</label>
+									<div class="col-sm-4">
+										<input class="form-control" id="code" name="code" type="text" placeholder="合同号" />
+									</div>
+									
+									<label class="col-sm-2 control-label" for="companionid">客户名称</label>
+									<div class="col-sm-4">
+									
+										<select id="companionid" name="companionid" multiple="multiple"  class="input-sm form-control"   style="width: 100%;height : 32px;">
+											
+										</select>
+									</div>
+								 
+								</div>
+								
+								<div class="form-group">
+								
+									<label class="col-sm-2 control-label" for="orderkind">类型</label>
+									<div class="col-sm-4">
+										<select class="form-control"  id="orderkind" name="orderkind" >
+											<option value="0" >销售</option>
+											<option value="1">预投</option>
+										</select>
+									</div>
+									
+									<label class="col-sm-2 control-label" for="comments">备注</label>
+									<div class="col-sm-4">
+										<textarea class="form-control" rows="1" id="comments" name="comments" placeholder="备注"></textarea>
+									</div>
+									
+								</div>
+
+								<div class="form-group">
+
+									<label class="col-sm-2 control-label" for="contractname">合同名称</label>
+									<div class="col-sm-4">
+										<input class="form-control" id="contractname" name="contractname" type="text" placeholder="合同名称" />
+									</div>
+
+									<label class="col-sm-2 control-label" for="contacts">联系人</label>
+									<div class="col-sm-4">
+										<input class="form-control" id="contacts" name="contacts" type="text" placeholder="联系人" />
+									</div>
+
+								</div>
+							
+								 
+						</form>
+                     </div>
+				</div>
+		    	 <div class="modal-footer" align="center">
+		    		<button type="button" class="btn btn-default"  id="modalClose" data-dismiss="modal">关闭</button>
+                  	<button type="button" class="btn btn-primary" id="saveSo" onclick="saveSo()">确定</button>
+                </div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="addSodModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1111">
+	<!-- style="width: 98%;" -->
+		<div class="modal-dialog" style="width: 70%;">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="productionModalLabel">合同销售产品</h4>
+				</div>
+					<div class="modal-body">
+						<div class="box-body">
+							<form class="form-horizontal" id="sodModalForm">
+							
+								<div class="form-group">
+									<input class="form-control" id="orderkind" name="orderkind" type="hidden" />
+									<input class="form-control" id="salesorderid" name="salesorderid" type="hidden" />
+									<input class="form-control" id="salesorderdetailid" name="salesorderdetailid" type="hidden" />
+									<input class="form-control" id="bomid" name="bomid" type="hidden" />
+									<input class="form-control" id="versionid" name="versionid" type="hidden" />
+									<input class="form-control" id="productorid" name="productorid" type="hidden" />
+									
+									<label class="col-sm-2 control-label" for="productorname"><a style="cursor:pointer" onclick="showBom()">品号</a></label>
+									<div class="col-sm-4">
+										<input class="form-control" id="productorname" name="productorname" type="text" placeholder="品号(点击弹出Bom)" readonly="readonly"  onclick="showBom()" style="cursor:pointer"/>
+									</div>
+									
+									<label class="col-sm-2 control-label" for="versionname">产品版本</label>
+									<div class="col-sm-4">
+										<input class="form-control" id="versionname" name="versionname" type="text" placeholder="Bom版本" readonly="readonly"/>
+									</div>
+								 
+								</div>
+								
+								<div class="form-group">
+								
+									<label class="col-sm-2 control-label" for="shortname">产品短名</label>
+									<div class="col-sm-4">
+										<input class="form-control" id="shortname" name="shortname" type="text" placeholder="产品图号"  readonly="readonly"/>
+									</div>
+								
+									<label class="col-sm-2 control-label" for="drawcode">产品图号</label>
+									<div class="col-sm-4">
+										<input class="form-control" id="drawcode" name="drawcode" type="text" placeholder="产品图号"  readonly="readonly"/>
+									</div>
+									
+								</div>
+								
+								<div class="form-group">
+								
+									<label class="col-sm-2 control-label" for="number">数量</label>
+									<div class="col-sm-4">
+										<input class="form-control" id="number" name="number" type="text" placeholder="数量" />
+									</div>
+								
+									<label class="col-sm-2 control-label" for="producefinishdate">完工日期</label>
+									<div class="col-sm-4">
+										<input class="form-control" id="producefinishdate" name="producefinishdate" type="text" placeholder="完工日期" />
+									</div>
+									
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="prioritylevels">优先级</label>
+									<div class="col-sm-4">
+										<input class="form-control" id="prioritylevels" name="prioritylevels" type="text" placeholder="优先级(数字)" />
+									</div>
+								
+									<label class="col-sm-2 control-label" for="productionsearchno">查询号</label>
+									<div class="col-sm-4">
+										<input class="form-control" id="productionsearchno" name="productionsearchno" type="text" placeholder="查询号" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="line">行号</label>
+									<div class="col-sm-4">
+										<input class="form-control" id="line" name="line" type="text" placeholder="行号(数字)" />
+									</div>
+									
+									<label class="col-sm-2 control-label" for="progressstatus">显示生产进度</label>
+									<div class="col-sm-4">
+										<select class="form-control"  id="progressstatus" name="progressstatus" >
+											<option value="0">不显示</option>
+											<option value="1">显示</option>
+										</select>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									
+									<label class="col-sm-2 control-label" for="comments">备注</label>
+									<div class="col-sm-10">
+										<textarea class="form-control" rows="2" id="comments" name="comments" placeholder="备注"></textarea>
+									</div>
+									 
+								</div>
+								
+						</form>
+                     </div>
+				</div>
+		    	 <div class="modal-footer" align="center">
+		    		<button type="button" class="btn btn-default"  id="modalClose" data-dismiss="modal">关闭</button>
+                  	<button type="button" class="btn btn-primary" id="saveSod" onclick="saveSod()">确定</button>
+                </div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div >
+		<div class="row">
+			<div class="col-sm-12" >
+				<div class="modal fade "   id="calculatePurchaseModal" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel"  aria-hidden="true">
+					<div class="modal-dialog modal-lg" style="width: 98%">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close"  data-dismiss="modal" aria-hidden="true"> &times;</button>
+								
+				            	<h4 class="modal-title" id="myModalLabel">物料需求</h4>
+				         	</div>
+
+							<!-- <div class="modal-body"  style="padding: 5px;"> -->
+								
+									<div class="box-body" style="padding: 5px;">
+
+										<div class="col-sm-12" >
+											
+													<div class="box-header with-border">
+														<!-- <h3 class="box-title">异常原因</h3>
+														<button type="button"  onclick="showExecuteException()" id="showExecuteException"  class="btn btn-default  btn-xs" data-toggle="modal">异常处理</button>
+														<button type="button"  onclick="exceptionOrderCalculate(2)" id="exceptionOrderCalculate2"  class="btn btn-default  btn-xs" data-toggle="modal">快速处理</button> -->
+													</div>
+													<div class="box-body" style="overflow: auto;">
+													
+														<div class="form-horizontal clearfix">
+														
+														    <!-- <form class="form-inline" role="form" style="padding-left: 15px;">
+
+										                    	<div class="form-group">
+										                    	 	<select id="exexceptionid"  multiple="multiple" name="exexceptionid" class="input-sm form-control"   style="width: 205px;height : 32px;" >
+										
+																	 </select>
+																	 
+																	 <select id="exsearchno" name="exsearchno" class="input-sm form-control" style="width: 200px;">
+																	 </select>
+									
+																	 <input type="text" placeholder="查询号" id ="exsearchno"  name = "exsearchno" class="input-sm form-control" style="width: 95px; height : 32px;">
+																	 <input type="text" placeholder="产品编码" id ="exproductorname"  name = "exproductorname" class="input-sm form-control" style="width: 95px; height : 32px;">
+																	 <input type="text" placeholder="图号" id ="exdrawcode"  name = "exdrawcode" class="input-sm form-control" style="width: 95px; height : 32px;">
+																	 <input type="text" placeholder="批次号" id ="batch"  name = "batch" class="input-sm form-control">
+																	
+																	 <input type="text" placeholder="提报人" id ="excreateusername"  name = "date" class="input-sm form-control" style="width: 90px; height : 32px;">
+																	 <input type="text" placeholder="处理人" id ="exexecuteuser"  name = "exexecuteuser" class="input-sm form-control" style="width: 90px; height : 32px;">		
+																	 <input type="text" placeholder="提报时间" id ="excreatetime"  name = "excreatetime" class="input-sm form-control" style="width: 90px; height : 32px;">
+																	 <input type="text" placeholder="提报时间"" id ="date"  name = "date" class="input-sm form-control" style="width: 90px; height : 32px;">			 
+																	 <div class=" input-group" >
+																		 <input type="text" placeholder="关键字" id ="searchValue"  name = "searchValue" class="input-sm form-control">
+																		<input type="text" placeholder="提报时间"" id ="excreatetime_end"  name = "excreatetime_end" class="input-sm form-control" style="width: 90px; height : 32px;">
+																		<span class="input-group-btn">
+																		    <button type="button" class="btn btn-sm btn-primary" onclick="searchException()"> 搜索</button>
+																		    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown1" style="height : 32px;">
+																			    <span class="caret" ></span>
+																			    <span class="sr-only">Toggle Dropdown</span>
+																		    </button>
+																		 	<ul class="dropdown-menu">
+																		 		<li><a onclick="exportDispatchingOrder()" >导出工单</a></li>
+																			</ul>
+																    	</span>
+															    		<button type="button"    onclick="queryDispatchingOrder()"  id="toProductionOrder" class="btn btn-sm btn-primary">清空查询条件</button>
+																	</div>
+																	
+																	<label class="radio-inline" style="padding-left: 20px;">
+																	  <input type="radio" name="iscalculate" id="iscalculate" value="0" checked="checked" >调整
+																	</label>
+																	<label class="radio-inline">
+																	  <input type="radio" name="iscalculate" id="iscalculate" value="1"> 不调
+																	</label>
+																	
+															</div>
+														</form> -->
+														
+														
+										                  <!--   <div class="col-lg-1  input-group">
+										                    	
+										                    
+										                          <input type="text" placeholder="请输入关键字" id ="exceptionSearchValue"  name = "exceptionSearchValue" class="input-sm form-control">
+										                          <span class="input-group-btn"><button type="button" class="btn btn-sm btn-primary" onclick="searchException()"> 搜索</button> </span>
+										                    </div> -->
+												     	</div>
+												 		<table id="calculatePurchaseTable" class="table table-striped table-bordered table-hover" >
+														 	<thead>
+																<tr>
+																	<th style="width: 15px"><input type="checkbox" id="cpCheckAll" class="regular-checkbox"
+																	onclick="com.leanway.dataTableCheckAll('calculatePurchaseTable', 'cpCheckAll', 'cpCheckList');"><label for="cpCheckAll"></label></th>
+																	<th>品号</th>
+																	<th>短名</th>
+																	<th>描述</th>
+																	<th>图号</th>
+																	<th>缺料数量</th>
+																	<th>总数</th>
+																	<th>可用数量</th>
+																	<th>合同号</th>
+																	<th>查询号</th>
+																</tr>
+											       		 	</thead>
+														</table>
+													
+													</div>
+										</div>
+									</div>
+								
+							<!-- </div> -->
+
+							<!-- <div class="modal-footer">
+				           		<button type="button" class="btn btn-default"  id="modalClose" data-dismiss="modal">关闭</button>
+				        	 </div>
+-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="bomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 2222">
+		<div class="modal-dialog" >
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="productionModalLabel">选择Bom</h4>
+				</div>
+					<div class="modal-body">
+						<div class="box-body">
+							<div class="ztree-wrap">
+								<ul id="treeBom" class="ztree"></ul>
+							</div>
+                     </div>
+				</div>
+		    	 <div class="modal-footer" align="center">
+		    		<button type="button" class="btn btn-default"  id="modalClose" data-dismiss="modal">关闭</button>
+                  	<button type="button" class="btn btn-primary" id="saveBom" onclick="saveBom()">确定</button>
+                </div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="inBatchesModal" tabindex="-1" role="dialog"
+		 aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">分批下发</h4>
+				</div>
+
+				<div class="form-horizontal">
+					<div class="form-group">
+					</div>
+					<div class="form-group" style="vertical-align: bottom">
+						<label class="col-sm-2 control-label" for="count_issue">下发数量</label>
+						<div class="col-sm-3">
+							<input class="form-control" id="count_issue" name="count_issue" type="number"
+								   placeholder="下发数量" />
+						</div>
+						<label class="col-sm-2 control-label" for="producefinishdate_issue">完工日期</label>
+						<div class="col-sm-3">
+							<input class="form-control" id="producefinishdate_issue"
+								   name="producefinishdate_issue" type="text" placeholder="生产完工日期" />
+						</div>
+					</div>
+					<div class="form-group" style="vertical-align: bottom">
+						<label class="col-sm-2 control-label" for="productionsearchno_issue">生产查询号</label>
+						<div class="col-sm-3">
+							<input class="form-control" id="productionsearchno_issue"
+								   name="productionsearchno_issue" type="text" placeholder="生产查询号" />
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="issue" onclick="issueOrder();"
+							class="btn btn-primary" data-toggle="modal">下发</button>
+					&nbsp;
+					<button type="button" class="btn btn-default" id="modalClose"
+							data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- <div class="modal fade" id="relevanceModal" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" style="width: 90%">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">关联产品</h4>
+					<button class="btn btn-default btn-xs" onclick="deleteRelevance()" id="deleteContact"><i class="fa fa-times"></i>&nbsp;解除关联</button>
+					<button class="btn btn-default btn-xs" onclick="nextLevels()"id="nextLevels">下一级</button>
+				</div>
+				<div class="modal-body">
+					<div class="box-body table-responsive no-padding">
+						<div class="col-sm-12"
+							style="min-height: 350px; overflow-y: auto; max-height: 450px; padding-top: 5px; overflow-x: hidden;">
+
+							<div class="form-horizontal clearfix">
+								<div class="col-sm-6 input-group">
+									<input type="text" placeholder="请输入订单号、生产查询号、产品编码、产品名称搜索"
+										id="relevanceSearchValue" name="relevanceSearchValue"
+										class="input-sm form-control"> <span
+										class="input-group-btn"><button type="button"
+											class="btn btn-sm btn-primary" onclick="searchPreOrder()">
+											搜索</button> </span>
+								</div>
+							</div>
+							<table id="viewRelevanceTables"
+								class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+										<th style="width: 10px"><input type="checkbox"
+											id="relevanceCheckAll" name="relevanceCheckAll"
+											onclick="com.leanway.dataTableCheckAllNoSave('viewRelevanceTables', 'relevanceCheckAll', 'relevanceCheck')"
+											class="regular-checkbox"><label
+											for="relevanceCheckAll"></label></th>
+										<th style="width: 100px">订单号</th>
+										<th style="width: 100px">产品编码</th>
+										<th style="width: 100px">产品描述</th>
+										<th style="width: 100px">产品图号</th>
+										<th style="width: 50px">生产查询号</th>
+										<th style="width: 50px">订单数量</th>
+										<th style="width: 50px">剩余可关联数</th>
+										<th style="width: 50px">选中产品关联本单数</th>
+										
+										<th style="width: 100px">产品版本</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+		 
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" id="modalClose"
+						data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="saveRelevance"
+						onclick="saveRelevance()">保存</button>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 9999">
+	    <div class="modal-dialog modal-sm">
+	        <div class="modal-content">
+	
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal"
+	                    aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">提示</h4>
+	            </div>
+	
+	            <div class="modal-body" id="tips"></div>
+	            <div class="modal-footer" id="sure">
+	
+	            </div>
+	        </div>
+	    </div>
+	</div>
+		
+</body>
+
+<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../../jslib/select2/select2.full.min.js"></script>
+<script src="../../../jslib/select2/i18n/zh-CN.js"></script>
+<script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+<script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+<script src="../../../jslib/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="../../../jslib/zTree/js/jquery.ztree.exedit-3.5.js"></script>
+<script type="text/javascript" src="../../../jslib/datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../../../jslib/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="../../../jslib/leanway/jn_common.js"></script>	
+<script src="newsalesorder.js"></script>
+
+</html>

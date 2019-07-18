@@ -1,0 +1,502 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+/* td {
+	text-align: center;
+} */
+</style>
+</head>
+
+<body>
+<form name="form1" method="post" action="">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td colspan="4" align="center" style="font-size: 16px">广州欧慕生物科技有限公司</td>
+    </tr>
+    <tr>
+      <td colspan="4" align="center" style="font-size: 14px">客供料检验结果反馈单</td>
+    </tr>
+   
+  </table>
+  <table width="100%" border="0">
+    <tr>
+      <td width="15%">日期：</td>
+      <td width="35%" height="30px;"><input name="date1" type="text" id="date1" size="15" /></td>
+      <td width="17%">产品编号：</td>
+      <td width="35%" height="30px;"><input name="production" type="text" id="production" size="15" />
+      
+      <!-- <input type="button" name="button" id="button" value="保存" onclick="save()" /></td> -->
+    </tr>
+  </table>
+  <table width="100%" border="1" style="border-collapse:collapse;border-width:thin;border-style:solid;">
+    <tr>
+      <td width="8%" height="23" align="center">序号</td>
+      <td align="center" width="6%">客户/品牌</td>
+      <td align="center" width="18%">产品名称</td>
+      <td align="center" width="14%">查号/生产日期</td>
+      <td align="center" width="10%">湿化检查</td>
+      <td align="center" width="16%">微生物检查</td>
+      <td align="center" width="14%"><div style="width:230px;">检验结果</div></td> 
+      <td align="center "width="14%">备注</td>
+    </tr>
+    <tr>
+      <td height="48" align="center">1</td>
+      <td align="center"><input type="text" id="gongyingshang1" name="gongyingshang1" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang2" name="gongyingshang2" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang3" name="gongyingshang3" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang4" name="gongyingshang4" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang5" name="gongyingshang5" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box1" name="boxname1" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box2" name="boxname1" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang6" name="gongyingshang6"></td>
+    </tr>
+    <tr>
+      <td height="48" align="center">2</td>
+      <td align="center"><input type="text" id="gongyingshang7" name="gongyingshang7" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang8" name="gongyingshang8" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang9" name="gongyingshang9" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang10" name="gongyingshang10" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang11" name="gongyingshang11" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box3" name="boxname2" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box4" name="boxname2" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang12" name="gongyingshang12"></td>
+    </tr>
+      <tr>
+      <td height="48" align="center">3</td>
+      <td align="center"><input type="text" id="gongyingshang13" name="gongyingshang13" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang14" name="gongyingshang14" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang15" name="gongyingshang15" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang16" name="gongyingshang16" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang17" name="gongyingshang17" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box5" name="boxname3" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box6" name="boxname3" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang18" name="gongyingshang18"></td>
+    </tr>
+      <tr>
+      <td height="48" align="center">4</td>
+      <td align="center"><input type="text" id="gongyingshang19" name="gongyingshang19" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang20" name="gongyingshang20" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang21" name="gongyingshang21" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang22" name="gongyingshang22" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang23" name="gongyingshang23" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box7" name="boxname4" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box8" name="boxname4" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang24" name="gongyingshang24"></td>
+    </tr>
+      <tr>
+      <td height="48" align="center">5</td>
+      <td align="center"><input type="text" id="gongyingshang25" name="gongyingshang25" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang26" name="gongyingshang26" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang27" name="gongyingshang27" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang28" name="gongyingshang28" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang29" name="gongyingshang29" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box9" name="boxname5" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box10" name="boxname5" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang30" name="gongyingshang30"></td>
+    </tr>
+      <tr>
+      <td height="52" align="center">6</td>
+      <td align="center"><input type="text" id="gongyingshang31" name="gongyingshang31" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang32" name="gongyingshang32" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang33" name="gongyingshang33" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang34" name="gongyingshang34" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang35" name="gongyingshang35" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box11" name="boxname6" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box12" name="boxname6" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang36" name="gongyingshang36"></td>
+    </tr>
+      <tr>
+      <td height="48" align="center">7</td>
+      <td align="center"><input type="text" id="gongyingshang37" name="gongyingshang37" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang38" name="gongyingshang38" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang39" name="gongyingshang39" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang40" name="gongyingshang40" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang41" name="gongyingshang41" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box13" name="boxname7" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box14" name="boxname7" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang42" name="gongyingshang42"></td>
+    </tr>
+      <tr>
+      <td height="48" align="center">8</td>
+      <td align="center"><input type="text" id="gongyingshang43" name="gongyingshang43" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang44" name="gongyingshang44" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang45" name="gongyingshang45" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang46" name="gongyingshang46" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang47" name="gongyingshang47" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box15" name="boxname8" value="1">
+        合格
+       </div>
+      
+      <div style="width:230px;">
+        <input type="radio" id="box16" name="boxname8" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang48" name="gongyingshang48"></td>
+    </tr>
+      <tr>
+      <td height="48" align="center">9</td>
+      <td align="center"><input type="text" id="gongyingshang49" name="gongyingshang49" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang50" name="gongyingshang50" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang51" name="gongyingshang51" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang52" name="gongyingshang52" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang53" name="gongyingshang53" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box17" name="boxname9" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box18" name="boxname9" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang54" name="gongyingshang54"></td>
+    </tr>
+      <tr>
+      <td height="52" align="center">10</td>
+      <td align="center"><input type="text" id="gongyingshang55" name="gongyingshang55" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang56" name="gongyingshang56" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang57" name="gongyingshang57" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang58" name="gongyingshang58" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang59" name="gongyingshang59" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box19" name="boxname10" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box20" name="boxname10" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang60" name="gongyingshang60"></td>
+    </tr>
+      <tr>
+      <td height="52" align="center">11</td>
+      <td align="center"><input type="text" id="gongyingshang61" name="gongyingshang61" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang62" name="gongyingshang62" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang63" name="gongyingshang63" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang64" name="gongyingshang64" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang65" name="gongyingshang65" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box21" name="boxname11" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box22" name="boxname11" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang66" name="gongyingshang66"></td>
+    </tr>
+      <tr>
+      <td height="48" align="center">12</td>
+      <td align="center"><input type="text" id="gongyingshang67" name="gongyingshang67" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang68" name="gongyingshang68" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang69" name="gongyingshang69" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang70" name="gongyingshang70" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang71" name="gongyingshang71" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box23" name="boxname12" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box24" name="boxname12" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang72" name="gongyingshang72"></td>
+    </tr>  <tr>
+      <td height="52" align="center">13</td>
+      <td align="center"><input type="text" id="gongyingshang73" name="gongyingshang73" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang74" name="gongyingshang74" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang75" name="gongyingshang75" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang76" name="gongyingshang76" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang77" name="gongyingshang77" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box25" name="boxname13" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box26" name="boxname13" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang78" name="gongyingshang78"></td>
+    </tr>  <tr>
+      <td height="52" align="center">14</td>
+      <td align="center"><input type="text" id="gongyingshang79" name="gongyingshang79" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang80" name="gongyingshang80" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang81" name="gongyingshang81" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang82" name="gongyingshang82" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang83" name="gongyingshang83" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box27" name="boxname14" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box28" name="boxname14" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang84" name="gongyingshang84"></td>
+    </tr>  <tr>
+      <td height="52" align="center">15</td>
+      <td align="center"><input type="text" id="gongyingshang85" name="gongyingshang85" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang86" name="gongyingshang86" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang87" name="gongyingshang87" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang88" name="gongyingshang88" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang89" name="gongyingshang89" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box29" name="boxname15" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box30" name="boxname15" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang90" name="gongyingshang90"></td>
+    </tr>  <tr>
+      <td height="52" align="center">16</td>
+      <td align="center"><input type="text" id="gongyingshang91" name="gongyingshang91" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang92" name="gongyingshang92" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang93" name="gongyingshang93" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang94" name="gongyingshang94" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang95" name="gongyingshang95" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box31" name="boxname16" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box32" name="boxname16" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang96" name="gongyingshang96"></td>
+    </tr>
+      <tr>
+      <td height="52" align="center">17</td>
+      <td align="center"><input type="text" id="gongyingshang97" name="gongyingshang97" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang98" name="gongyingshang98" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang99" name="gongyingshang99" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang100" name="gongyingshang100" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang101" name="gongyingshang101" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box33" name="boxname17" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box34" name="boxname17" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang102" name="gongyingshang102"></td>
+    </tr>
+      <tr>
+      <td height="52" align="center">18</td>
+      <td align="center"><input type="text" id="gongyingshang103" name="gongyingshang103" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang104" name="gongyingshang104" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang105" name="gongyingshang105" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang106" name="gongyingshang106" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang107" name="gongyingshang107" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box35" name="boxname18" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box36" name="boxname18" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang108" name="gongyingshang108"></td>
+    </tr>
+      <tr>
+      <td height="52" align="center">19</td>
+      <td align="center"><input type="text" id="gongyingshang109" name="gongyingshang109" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang110" name="gongyingshang110" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang111" name="gongyingshang111" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang112" name="gongyingshang112" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang113" name="gongyingshang113" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box37" name="boxname19" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box38" name="boxname19" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang114" name="gongyingshang114"></td>
+    </tr>
+      <tr>
+      <td height="52" align="center">20</td>
+      <td align="center"><input type="text" id="gongyingshang115" name="gongyingshang115" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang116" name="gongyingshang116" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang117" name="gongyingshang117" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang118" name="gongyingshang118" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang119" name="gongyingshang119" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box39" name="boxname20" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box40" name="boxname20" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang120" name="gongyingshang120"></td>
+    </tr>
+      <tr>
+      <td height="52" align="center">21</td>
+      <td align="center"><input type="text" id="gongyingshang121" name="gongyingshang121" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang122" name="gongyingshang122" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang123" name="gongyingshang123" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang124" name="gongyingshang124" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang125" name="gongyingshang125" size= "8"></td>
+      <td>
+      <div>
+          <input type="radio" id="box41" name="boxname21" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box42" name="boxname21" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang126" name="gongyingshang126"></td>
+    </tr>
+      <tr>
+      <td height="52" align="center">22</td>
+      <td align="center"><input type="text" id="gongyingshang127" name="gongyingshang127" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang128" name="gongyingshang128" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang129" name="gongyingshang129" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang130" name="gongyingshang130" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang131" name="gongyingshang131" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box43" name="boxname22" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box44" name="boxname22" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang132" name="gongyingshang132"></td>
+    </tr>
+      <tr>
+      <td height="52" align="center">23</td>
+      <td align="center"><input type="text" id="gongyingshang133" name="gongyingshang133" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang134" name="gongyingshang134" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang135" name="gongyingshang135" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang136" name="gongyingshang136" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang137" name="gongyingshang137" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box45" name="boxname23" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box46" name="boxname23" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang138" name="gongyingshang138"></td>
+    </tr>
+      <tr>
+      <td height="52" align="center">24</td>
+      <td align="center"><input type="text" id="gongyingshang139" name="gongyingshang139" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang140" name="gongyingshang140" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang141" name="gongyingshang141" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang142" name="gongyingshang142" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang143" name="gongyingshang143" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box47" name="boxname24" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box48" name="boxname24" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang144" name="gongyingshang144"></td>
+    </tr>  <tr>
+      <td height="48" align="center">25</td>
+      <td align="center"><input type="text" id="gongyingshang145" name="gongyingshang145" size= "10"></td>
+      <td align="center"><input type="text" id="gongyingshang146" name="gongyingshang146" size= "14"></td>
+      <td align="center"><input type="text" id="gongyingshang147" name="gongyingshang147" size= "24"></td>
+      <td align="center"><input type="text" id="gongyingshang148" name="gongyingshang148" size= "4"></td>
+      <td align="center"><input type="text" id="gongyingshang149" name="gongyingshang149" size= "8"></td>
+      <td>
+      <div style="width:230px;">
+          <input type="radio" id="box49" name="boxname25" value="1">
+        合格
+       </div>
+       
+      <div style="width:230px;">
+        <input type="radio" id="box50" name="boxname25" value="2">        
+      不合格      </div> </td>
+      <td align="center"><input type="text" size="20" id="gongyingshang150" name="gongyingshang150"></td>
+    </tr>
+  </table>
+   <table width="100%" border="0">
+    <tr>
+      <td width="15%">理化检验员：</td>
+      <td width="35%" height="30px;"><input name="user1" type="text" id="user1" size="15" /></td>
+      <td width="17%">微生物检验员：</td>
+      <td width="35%" height="30px;"><input name="user2" type="text" id="user2" size="15" />
+      <!-- <input type="button" name="button" id="button" value="保存" onclick="save()" /></td> -->
+    </tr>
+  </table>
+</form>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>用户 | 登录</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<!-- Bootstrap 3.3.5 -->
+<link rel="stylesheet" href="jslib/bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="jslib/font-awesome-4.4.0/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet"
+	href="jslib/ionicons-2.0.1/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="jslib/adminlte/css/AdminLTE.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="jslib/iCheck/square/blue.css">
+<link rel="stylesheet" href="jslib/leanway/common.css">
+
+</head>
+<body class="hold-transition login-page">
+
+	<div class="login-box">
+	    <br/><br/>
+	    <h1>&nbsp;&nbsp;登  录  界  面</h1>
+		<div class="login-box-body">
+		
+			<form id="loginForm"  autocomplete="off" role="form" action="user?method=login"
+				method="post">
+				<div class="form-group has-feedback">
+				<!-- <input type="hidden" id="code" /> -->
+					<input type="hidden" id="openId" /> <input type="text"
+						class="form-control" name="userName" value="" id="userName"
+						placeholder="请输入:用户名"> <span
+						class="glyphicon glyphicon-envelope form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					<input type="password" class="form-control" name="password"
+						value="" id="password" placeholder="请输入密码">
+					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					<button type="button" class="btn btn-primary btn-block btn-flat" onclick="login()">登录</button>
+				</div>
+					
+			</form>
+		</div>
+	</div>
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="z-index: 999999999;" 
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+
+				<div class="modal-body" id="tips"></div>
+				<div class="modal-footer" id="sure"></div>
+			</div>
+		</div>
+	</div>
+
+	
+	<!-- jQuery 2.1.4 -->
+	<script src="jslib/jQuery/jquery.js"></script>
+	<script src="jslib/jQueryMD5/jQuery.md5.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+	<script
+		src="jslib/jquery-qrcode-master/jquery.qrcode.min.js"></script>
+	<!-- iCheck -->
+	<script src="jslib/iCheck/icheck.min.js"></script>
+	<script src="jslib/leanway/jn_common.js"></script>
+	<script src="index.js"></script>
+	<script>
+	
+	</script>
+</body>
+</html>

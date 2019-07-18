@@ -1,0 +1,12 @@
+body {
+	padding: 5px;
+	font-size: 12px;
+	margin: 0;
+}
+
+.label-top {
+	display: block;
+	height: 22px;
+	line-height: 22px;
+	vertical-align: middle;
+}

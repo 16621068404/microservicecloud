@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>产品追踪管理</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link rel="stylesheet" href="../../../jslib/leanway/loader_datatables.css">
+
+<style type="text/css">
+table th {
+	white-space: nowrap;
+}
+
+table td {
+	white-space: nowrap;
+}
+</style>
+
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+
+
+	<!-- left信息  显示主要内容    boostraps 自带是12的页面布局-->
+	<!-- <div>
+		<section class="content-header">
+		<h1>&nbsp;</h1>
+		<ol class="breadcrumb">
+			<li><i class="fa fa-home"></i></li>
+			<li class="active">生产追踪</li>
+			<li class="active">产品追踪</li>
+			<li class="active"></li>
+	</ol>
+</section>
+	</div> -->
+	<section class="content">
+		<!-- 左边为4 -->
+		<div class="col-sm-4">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title">追踪单</h3>
+					&nbsp;
+
+					<!-- <label class="radio-inline">
+						<input type="radio" name="confirmstatus" id="confirmstatus0" value="0" checked>
+						未入库
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="confirmstatus" id="confirmstatus1" value="2">
+						已入库
+					</label> -->
+					<!-- <label class="radio-inline">
+						<span style="padding-right: 8px;">同步：</span>
+						<input type="radio" name="transferstatus" id="transferstatus0" value="0" checked>
+						否
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="transferstatus" id="transferstatus1" value="1">
+						是
+					</label> 
+					</br>-->
+					<!-- <button class="btn btn-default btn-flat btn-xs" onclick="addProductionTrack();" id="addFun">新增</button>
+					<button class="btn btn-default btn-flat btn-xs" onclick="updateProductorTrack();"
+						id="updateFun">修改</button> -->
+					<!--  <button class="btn btn-default btn-flat btn-xs" onclick="confirmTrack();" id="confirmFun">确认入库</button> -->
+
+					<!-- <a
+						class="btn btn-primary" onclick="updateProductionTrack();">修改</a> &nbsp;-->
+					<a class="btn btn-default btn-flat btn-xs btn_del"  id="delFun">删除</a>&nbsp;
+					<!-- <div class="btn-group">
+						<button aria-expanded="false" aria-haspopup="true" data-toggle="dropdown"
+							class="btn btn-default btn-flat btn-xs dropdown-toggle" type="button" id="delFun">
+							删除
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li>
+								<a onclick="deleteProductionTrack(1)" id="deleteCurrentFun">当前选中数据</a>
+							</li>
+							<li>
+								<a onclick="deleteProductionTrack(2)" id="deleteAllFun">跨页选中数据</a>
+							</li>
+						</ul>
+					</div> -->
+					<!-- <button class="btn btn-default btn-flat btn-xs" onclick="transferTrack(1);" id="transferFun"
+						style="display: none">同步完工单</button>
+					<button class="btn btn-default btn-flat btn-xs" onclick="transferTrack(2);" id="synctrack">同步完工单</button> -->
+
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+					<br>
+					<!-- /.box-tools -->
+				</div>
+				<div class="form-horizontal clearfix">
+
+					<div class="col-lg-12 col-sm-12 input-group">
+						<input type="text" placeholder="请输入关键字" id="queryproductiontrackname"
+							name="queryproductiontrackname" class="input-sm form-control" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-sm btn-primary" onclick="queryProductionTrackName();">搜索</button>
+						</span>
+						<!-- <span
+								class="input-group-btn"><button type="button"
+									class="btn btn-sm btn-primary" onclick="queryProductorByName();"> -->
+					</div>
+				</div>
+				<table id="generalInfo" class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<td style="width: 15px"><input type="checkbox" id="checkAll"
+									onclick="com.leanway.dataTableCheckAll('generalInfo', 'checkAll', 'checkList')"
+									class="regular-checkbox"> <label for="checkAll"></label></td>
+							<td>追踪单号</td>
+							<td>订单编号</td>
+							<td>产品名称</td>
+							<td>创建方式</td>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+		</div>
+		<!-- 	</div>
+		</div> -->
+		<!-- 表体   右边为8 -->
+		<div class="col-sm-8">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title">产品追踪单号管理</h3>
+					&nbsp;
+					<button class="btn btn-default btn-flat btn-xs" onclick="saveProductionTrack();"
+						id="saveOrUpdateAId">保存</button>
+					<!-- <button class="btn btn-default btn-flat btn-xs" onclick="resetForm();"
+						id="resetform">重置</button> -->
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+					<!-- /.box-tools -->
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+
+					<div class="box-body">
+
+						<div class="form-group">
+							<div class="col-sm-12">
+								<label class="col-sm-2 control-label" for="productionorderid">生产订单</label>
+								<div class="col-sm-4">
+									<select id="productionorderid" name="productionorderid" class="form-control select2"
+										placeholder="生产订单编号" style="width: 100%">
+									</select>
+<!-- 									<input type="hidden" name="name" id="name">
+ -->								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title">产品追踪关联表</h3>
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+					<!-- /.box-tools -->
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<form class="form-horizontal" id="productionTrackForm" name="productionTrackForm">
+						<div class="form-group">
+							<div>
+								<input class="form-control" id="trackid" name="trackid" type="hidden" placeholder="追踪单号" />
+							</div>
+							<label class="col-sm-2 control-label" for="endcode">追踪单号</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="endcode" name="endcode" type="text" placeholder="追踪单号" />
+							</div>
+							<label class="col-sm-2 control-label" for="trackdate">追踪日期</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="trackdate" name="trackdate" type="text" placeholder="追踪日期" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="drawcode">图号</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="drawcode" name="drawcode" type="text" placeholder="图号" />
+							</div>
+							<label class="col-sm-2 control-label" for="productorid">产品编码</label>
+							<div class="col-sm-4">
+								<select id="productorid" name="productorid" class="form-control" style="width: 100%">
+								</select>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<label class="col-sm-2 control-label" for="storeid">仓库</label>
+							<div class="col-sm-4">
+									<select id="storeid" name="storeid"
+										class="form-control select2" placeholder="仓库" style="width: 100%">
+									</select>
+						    </div>
+						    <label class="col-sm-2 control-label" for="mapid">仓储地点</label>
+							<div class="col-sm-4">
+									<select id="mapid" name="mapid"
+										class="form-control select2" placeholder="仓储地点" style="width: 100%">
+									</select>
+						    </div>
+						</div> -->
+
+						<div class="form-group">
+							<!-- <label class="col-sm-2 control-label" for="compid">关联企业名称</label>
+							<div class="col-sm-4">
+								<select id="compid" name="compid" class="form-control " placeholder="关联企业编号"
+									style="width: 100%">
+								</select>
+							</div> -->
+							
+							<label class="col-sm-2 control-label" for="unitsid">计量单位</label>
+							<div class="col-sm-4">
+								<select id="unitsid" name="unitsid" class="form-control " placeholder="计量单位"
+									style="width: 100%">
+								</select>
+							</div>
+							<label class="col-sm-2 control-label" for="name">仓库</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="name" name="name" type="text"
+									placeholder="仓库"/>
+							</div>
+						</div>
+
+						<!--<div class="form-group">
+							 <label class="col-sm-2 control-label" for="surplusnumber">未完成数量</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="surplusnumber" name="surplusnumber" type="text"
+									placeholder="未完成数量" />
+							</div> 
+							
+						</div>-->
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="qualifiedcount">合格数量</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="qualifiedcount" name="qualifiedcount" type="text"
+									placeholder="合格数量" onblur="judgeUnDone();" onfocus="disabledqty();" />
+							</div>
+							<label class="col-sm-2 control-label" for="totalcount">完工数量</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="totalcount" name="totalcount" type="text" placeholder="完工数量"
+									onblur="totalcountqty();disableCount();" />
+							</div>
+
+							<!-- <label class="col-sm-2 control-label" for="endcode">完工入库号</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="endcode" name="endcode"
+									type="text" placeholder="完工入库号" />
+							</div> -->
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="unqualifiedcount">不合格数量</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="unqualifiedcount" name="unqualifiedcount" type="text"
+									placeholder="不合格数量" />
+							</div>
+							<label class="col-sm-2 control-label" for="unqualifiedreason">不合格原因</label>
+							<div class="col-sm-4">
+								<select class="form-control" id="unqualifiedreason" name="unqualifiedreason"
+									onfocus="disabledqty();"></select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="instocknumber">入库数量</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="instocknumber" name="instocknumber" type="text"
+									placeholder="入库数量" />
+							</div>
+							<!-- <label class="col-sm-2 control-label" for="productionsearchno">生产查询号</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="productionsearchno" name="productionsearchno" type="text"
+									placeholder="生产查询号" />
+							</div> -->
+							<label class="col-sm-2 control-label" for="batchno">批次号</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="batchno" name="batchno" type="text"
+									placeholder="批次号" />
+							</div>
+
+						</div>
+						<!-- <div class="form-group">
+							<label class="col-sm-2 control-label" for="starttime">计划开始时间</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="starttime" name="starttime" type="text" placeholder="计划开始时间" />
+							</div>
+							<label class="col-sm-2 control-label" for="endtime">计划结束时间</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="endtime" name="endtime" type="text" placeholder="计划结束时间" />
+							</div>
+						</div> -->
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="adjuststarttime">调整开始时间</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="adjuststarttime" name="adjuststarttime" type="text"
+									placeholder="调整开始时间" />
+							</div>
+							<label class="col-sm-2 control-label" for="adjustendtime">调整结束时间</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="adjustendtime" name="adjustendtime" type="text"
+									placeholder="调整结束时间" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="practicalstarttime">实际开始时间</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="practicalstarttime" name="practicalstarttime" type="text"
+									placeholder="实际开始时间" />
+							</div>
+							<label class="col-sm-2 control-label" for="practicalendtime">实际结束时间</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="practicalendtime" name="practicalendtime" type="text"
+									placeholder="实际结束时间" />
+							</div>
+						</div>
+						<div class="form-group">
+
+							<!-- <label class="col-sm-2 control-label" for="runendtime">实际追踪时间</label>
+							<div class="col-sm-4 ">
+								<input class="form-control" id="runendtime" name="runendtime" type="text"
+									placeholder="实际追踪时间" />
+							</div> -->
+						</div>
+
+
+
+						<!-- <div class="form-group">
+							<label class="col-sm-2 control-label" for="centerid">工作中心名称</label>
+							<div class="col-sm-4">
+								<select id="centerid" name="centerid" class="form-control "
+									placeholder="工作中心编号" style="width: 100%">
+								</select>
+							</div>
+							<label class="col-sm-2 control-label" for="employeeid">雇员编号</label>
+							<div class="col-sm-4">
+								<select id="employeeid" name="employeeid"
+									class="form-control select2" placeholder="生产订单编号"
+									style="width: 100%">
+								</select> <input type="hidden" name="name" id="name">
+							</div>
+						</div> -->
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">打印条码</h4>
+					</div>
+
+					<div class="modal-body" id="printarea">
+						<center>
+							<div id="barcodeTarget" class="barcodeTarget"></div>
+						</center>
+						<center>
+							<canvas id="canvasTarget" width="150" height="150"></canvas>
+						</center>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="printBarcode();" />
+						打印
+						</button>
+						<button type="button" class="btn btn-default" id="modalClose" data-dismiss="modal">关闭</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+
+				<div class="modal-body" id="tips"></div>
+				<div class="modal-footer" id="sure"></div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery 2.1.4 -->
+	<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="../../../jslib/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../../../jslib/adminlte/js/app.min.js"></script>
+	<!-- InputMask -->
+	<script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+	<!-- DataTables -->
+	<script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+	<script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+	<!-- datetime -->
+	<script type="text/javascript" src="../../../jslib/datetimepicker/bootstrap-datetimepicker.js"
+		charset="UTF-8"></script>
+	<script type="text/javascript"
+		src="../../../jslib/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+	<script src="../../../jslib/iCheck/icheck.js"></script>
+	<!--Select2  -->
+	<script src="../../../jslib/select2/select2.full.min.js"></script>
+	<script src="../../../jslib/select2/i18n/zh-CN.js"></script>
+	<script src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+	<script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+	<script type="text/javascript" src="../../../jslib/barcode/jquery-barcode.js"></script>
+	<script type="text/JavaScript" src="../../../jslib/ritsc-printarea/demo/jquery.PrintArea.js"></script>
+	<script type="text/javascript" src="productiontrack.js"></script>
+</body>
+</html>

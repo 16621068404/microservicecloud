@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>产品 | 控制台</title>
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link rel="stylesheet"href="../../jslib/leanway/loader_datatables.css">
+<link href="../../jslib/zTree/css/zTreeStyle/zTree.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+td.details-control {
+    background: url('../../jslib/datatablesNew/examples/resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../../jslib/datatablesNew/examples/resources/details_close.png') no-repeat center center;
+}
+
+div#treeMenu {
+	position: absolute;
+	visibility: hidden;
+	background-color: #555;
+	text-align: left;
+	padding: 1px;
+}
+
+div#treeMenu ul li {
+	margin: 1px 0;
+	padding: 0 5px;
+	cursor: pointer;
+	list-style: none outside none;
+	background-color: #DFDFDF;
+}
+
+table th {
+    white-space: nowrap;
+}
+
+table td {
+    white-space: nowrap;
+}
+
+.ztree-wrap {height:500px; overflow:auto;}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse" role="navigation"> 
+    <div class="container-fluid"> 
+    <div class="navbar-header"> 
+        <a class="navbar-brand" href="#">导航栏</a> 
+    </div> 
+    <div> 
+        <ul class="nav navbar-nav"> 
+            <li><a href="#">客户管理</a></li> 
+            <li><a href="#">会员管理</a></li> 
+            <li><a href="#">档案管理</a></li> 
+            <li><a href="#">设备管理</a></li>
+            <li><a href="#">模块bug管理</a></li>
+         
+
+  <li class="dropdown"> 
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">文件管理 <b class="caret"></b></a> 
+                <ul class="dropdown-menu"> 
+                    <li><a href="#">A级文件</a></li> 
+                    <li><a href="#">B级文件</a></li> 
+                    <li><a href="#">C级文件</a></li> 
+                    <li class="divider"></li> 
+                    <li><a href="#">特级文件</a></li> 
+                    <li class="divider"></li> 
+                    <li><a href="#">紧急文件</a></li> 
+                </ul> 
+            </li> 
+        </ul> 
+    </div> 
+    </div> 
+</nav>
+    <h3 class="box-title">系统模块bug列表</h3>
+    <div class="box box-primary">
+				<div class="box-header with-border">
+    <div class="box-body">
+    
+					<div id="dcontent" style="display:inline;width:auto;height:auto;">
+					    <div class="col-sm-1" align="center">
+									<input class="form-control" id="newtime" name="newtime"
+										   type="text" style="display:none;width:500px;height:auto;border:2px;font-size:25px"/>
+								</div><br>
+					<table id="sysBugTable" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th style="width: 15px"><input type="checkbox" id="bugIdkAll" name="bugIdkAll"  class="regular-checkbox" onclick="com.leanway.dataTableCheckAll('sysBugTable', 'bugIdkAll', 'BugCheckList');">
+								<label for="bugIdkAll"></label></th>
+ 								<th>bug编号</th>  <!--bug_id -->
+								<th>bug模块</th>  <!--module_name-->
+								<th>bug类型</th>  <!--bug_type-->
+								<th>bug状态</th>  <!--status-->
+								<th>创建者</th>    <!--create_username-->
+								<th>修改者</th>    <!--modify_username-->
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+	</div>
+   </div>
+   </div>
+
+<!-- jQuery 2.1.4 -->
+<script src="../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="../../jslib/bootstrap/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../../jslib/fastclick/fastclick.js"></script>
+<!-- datetime -->
+<script type="text/javascript" src="../../jslib/datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../../jslib/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<!-- AdminLTE App -->
+<script src="../../jslib/adminlte/js/app.min.js"></script>
+<script src="../../jslib/iCheck/icheck.js"></script>
+<!-- InputMask -->
+<script type="text/javascript" src="../../jslib/leanway/jn_common.js"></script>
+<!-- DataTables -->
+<script src="../../jslib/datatables/jquery.dataTables.js"></script>
+<script src="../../jslib/datatables/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="../../jslib/barcode/jquery-barcode.js"></script>
+<script type="text/JavaScript" src="../../jslib/ritsc-printarea/demo/jquery.PrintArea.js"></script>
+<script src="../../jslib/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+<!-- select2 -->
+<script src="../../jslib/select2/select2.full.min.js"></script>
+<script src="../../jslib/select2/i18n/zh-CN.js"></script>
+<script type="text/javascript" src="../../jslib/zTree/js/jquery.ztree.exedit-3.5.js"></script>
+<script src="main2.js"></script>
+
+  
+</body>
+
+<script type="text/javascript">
+
+	window.onbeforeunload=function(event){ 
+		
+	}
+	$(document).ready(
+		function() {
+			if ($(window).width() > 768) {
+				$('body').find('firstpage-default').attr(
+						'height',
+						$(window).height() - $('#titleLogo').height()
+								- $('#navTop').height()
+								- $('#booterBottom').height());
+			} else {
+				$('body').find('firstpage-default').attr(
+						'height',
+						$(window).height() - $('#titleLogo').height()
+								- $('#navTop').height()
+								- $('#booterBottom').height() - 50);
+			}
+		$("#home").trigger("click");
+	});
+
+</script>
+
+</html>

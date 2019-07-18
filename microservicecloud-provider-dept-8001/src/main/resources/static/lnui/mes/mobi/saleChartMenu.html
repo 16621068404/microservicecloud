@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../../../jslib/bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="../../../jslib/font-awesome-4.4.0/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet"
+	href="../../../jslib/ionicons-2.0.1/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="../../../jslib/adminlte/css/AdminLTE_mobi.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="../../../jslib/adminlte/css/skins/_all-skins.min.css">
+<style>
+/* FROM HTTP://WWW.GETBOOTSTRAP.COM
+     * Glyphicons
+     *
+     * Special styles for displaying the icons and their classes in the docs.
+     */
+.bs-glyphicons {
+	padding-left: 4px;
+	padding-bottom: 1px;
+	margin-bottom: 20px;
+	list-style: none;
+	overflow: hidden;
+}
+
+.bs-glyphicons li {
+	float: left;
+	width: 33%;
+	padding: 10px;
+	margin: 0 -1px -1px 0;
+	font-size: 16px;
+	line-height: 1.4;
+	text-align: center;
+	border: 1px solid #ddd;
+}
+
+.bs-glyphicons .glyphicon {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	font-size: 48px;
+}
+
+.bs-glyphicons .glyphicon-class {
+	display: block;
+	text-align: center;
+	word-wrap: break-word; /* Help out IE10+ with class names */
+}
+
+.bs-glyphicons li:hover {
+	background-color: rgba(86, 61, 124, .1);
+}
+
+@media ( min-width : 768px) {
+	.bs-glyphicons li {
+		width: 12.5%;
+	}
+}
+</style>
+</head>
+<body id="body">
+
+	<div id="table">
+		<table align="center" width="100%">
+
+			<tr>
+				<td width="33%" style="“padding-bottom: 10px”"><a
+					class="btn btn-app"
+					onclick="toPage('../mobile/saleschart/saleschart.html')"> <i
+						class="fa fa-line-chart"></i>
+				</a></td>
+				<td width="33%" style="“padding-bottom: 10px”"><a class="btn btn-app"
+					onclick="toPage('../mobile/salesfinishmobile/salesfinish.html')"> <i
+						class="fa fa-truck"></i> 
+				</a></td>
+				<td width="33%"><a class="btn btn-app"
+					onclick="toPage('../mobile/untimelyship/untimelyship.html')"> <i
+						class="fa fa-stack-overflow"></i>
+				</a></td>
+				
+			</tr>
+			<tr>
+				<td height="40px" align="center" valign="middle">销售订单图表</td>
+				<td height="40px" align="center" valign="middle">销售出货率</td>
+				<td height="40px" align="center" valign="middle">销售未及时出货率</td>
+				
+			</tr>
+			<tr>
+				<td colspan="3" height="5p"></td>
+			</tr>
+			<tr>
+				<td width="33%"><a class="btn btn-app"
+					onclick="toPage('../mobile/productioncapacity/productioncapacity.html')"> <i
+						class="fa fa-gg"></i>
+				</a></td>
+				<td width="33%"><a class="btn btn-app"
+					onclick="toPage('../mobile/finishproductorsratemobile/finishproductorsrate.html')">
+						<i class="fa fa-rotate-left"></i> 
+				</a></td>
+			</tr>
+			
+			<tr>
+				<td height="40px" align="center" valign="middle">产品产能明细表</td>
+				<td height="40px" align="center" valign="middle">成品年度周转率</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="5p"></td>
+			</tr>
+		</table>
+	</div>
+	<div id="chart">
+		<iframe id="iframe" width="100%" height="100%" frameborder="no"
+			border="0px" marginwidth="0px" marginheight="0px" scrolling="yes"
+			allowtransparency="yes"></iframe>
+	</div>
+</body>
+<!-- jQuery 2.1.4 -->
+<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="../../../jslib/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../../../jslib/adminlte/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../../jslib/adminlte/js/demo.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#chart").hide()
+	});
+	
+
+	function toPage(link) {
+		$("#table").hide()
+		$("#chart").show()
+
+		if ($(window).width() > 768) {
+			$("#body").height($(window).height());
+			$("#chart").height($("#body").height());
+
+		} else {
+			$("#body").height($(window).height());
+			$("#chart").height($("#body").height());
+		}
+		$("#iframe").attr("src", link);
+		
+	}
+	
+</script>
+</html>

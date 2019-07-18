@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>杂出</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta name="viewport"
+	content="width=device-width,user-scalable=yes  initial-scale=1.0, maximum-scale=2.0">
+
+<link rel="stylesheet"
+	href="../../../jslib/leanway/loader_datatables.css">
+<link href="../../../jslib/zTree/css/zTreeStyle/zTree.css"
+	rel="stylesheet" type="text/css" />
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+</head>
+<body style="overflow: auto;"
+	class="hold-transition skin-blue-light sidebar-mini">
+	<!-- header -->
+	<!-- <div>
+		<section class="content-header">
+			<h1>&nbsp;</h1>
+			<ol class="breadcrumb">
+				<li><i class="fa fa-home"></i></li>
+				<li class="active">仓库管理</li>
+				<li class="active">杂入杂出</li>
+				<li class="active"></li>
+			</ol>
+		</section>
+
+	</div> -->
+	<div>
+		<!-- Your Page Content Here -->
+		<section class="content">
+
+			<div class="col-sm-3">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title">杂出单</h3>&nbsp;
+								 
+						<label class="radio-inline"> <input type="radio"
+							name="confirmstatus" id="confirmstatus0" value="0" checked> 未确认
+						</label>
+						 <label class="radio-inline"> <input type="radio"
+							name="confirmstatus" id="confirmstatus1" value="1" >
+							已确认
+						</label>
+						<label class="radio-inline"> <input type="radio"
+							name="confirmstatus" id="confirmstatus2" value="2">
+							已出库
+						</label>
+<!-- 						<label class="radio-inline"> <input type="radio" -->
+<!-- 							name="confirmstatus" id="confirmstatus3" value="3"> -->
+<!-- 							已关闭 -->
+<!-- 						</label> -->
+						<br>
+
+						<!-- <button class="btn btn-default btn-flat  btn-xs" data-toggle="modal"
+								onclick="addInventory()" id="addInventory">新增</button> -->
+
+						<!-- 				<button class="btn btn-default btn-flat  btn-xs" onclick="deleteWorkCenter()"
+								id="delFun">删除</button> -->
+						<div class="btn-group">
+							<button aria-expanded="false" aria-haspopup="true"
+								data-toggle="dropdown"
+								class="btn btn-default btn-flat btn-xs dropdown-toggle"
+								type="button" id="addAdditional" onclick="addOut()">
+								新增 
+							</button>							
+						</div>
+						<button class="btn btn-default btn-flat  btn-xs"
+							onclick="updateAdditional()" id="updateAdditional">修改</button>						
+						<div class="btn-group">
+							<button aria-expanded="false" aria-haspopup="true"
+								data-toggle="dropdown"
+								class="btn btn-default btn-flat btn-xs dropdown-toggle"
+								type="button" id="deleteAdditional">
+								删除 <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li><a onclick="deleteAdditional(1)" id=delete1>当前选中数据</a></li>
+								<li><a onclick="deleteAdditional(2)" id="delete2">跨页选中数据</a></li>
+							</ul>
+						</div>
+<!-- 						<div class="btn-group"> -->
+<!-- 							<button aria-expanded="false" aria-haspopup="true" -->
+<!-- 								data-toggle="dropdown" -->
+<!-- 								class="btn btn-default btn-flat btn-xs dropdown-toggle" -->
+<!-- 								type="button" id="closeAdditional"> -->
+<!-- 								关闭 <span class="caret"></span> -->
+<!-- 							</button> -->
+<!-- 							<ul class="dropdown-menu"> -->
+<!-- 								<li><a onclick="closeAdditional(1)" id=delete1>当前选中数据</a></li> -->
+<!-- 								<li><a onclick="closeAdditional(2)" id="delete2">跨页选中数据</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</div> -->
+						
+						<button class="btn btn-default btn-flat  btn-xs" type="button"
+							id="sureInOut" onclick="sureInOut()">确认杂出单</button>
+
+
+						<!-- 						<button class="btn btn-default btn-flat  btn-xs" type="button"
+							id="addOut" onclick="addOut()">新增杂出</button>
+						<button class="btn btn-default btn-flat  btn-xs" type="button"
+							id="addIn" onclick="addIn()">新增杂入</button> -->
+
+						 
+			
+					</div>
+					<div class="box-body">
+						<div class="form-horizontal clearfix">
+
+							<div class="col-lg-12 col-sm-12 input-group">
+								<input type="text" placeholder="请输入关键字" id="searchValue"
+									name="searchValue" class="input-sm form-control"> <span
+									class="input-group-btn"><button type="button"
+										class="btn btn-sm btn-primary" onclick="searchAdditional()">
+										搜索</button> </span>
+							</div>
+
+						</div>
+						<table id="inoutInfo"
+							class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<td style="width: 15px"><input type="checkbox"
+										id="checkAll"
+										onclick="com.leanway.dataTableCheckAll('inoutInfo', 'checkAll', 'checkList')"
+										class="regular-checkbox"><label for="checkAll"></label></td>
+									<td>单号</td>
+                                    <!--  <td>仓库</td> -->
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-9">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						&nbsp;
+						<h3 class="box-title" id="inoutTitle">杂出</h3>
+						&nbsp;
+						<button type="button" id="addTable" onclick="addTable()"
+							class="btn btn-default btn-flat   btn-xs">新增</button>
+
+						<button type="button" id="saveInOrOut" onclick="saveInOrOut()"
+							class="btn btn-default btn-flat   btn-xs">保存</button>
+						<button type="button" id="deleteAdditionalDetail"
+							onclick="deleteAdditionalDetail()"
+							class="btn btn-default btn-flat   btn-xs">删除</button>
+						<button type="button" id="printLabel" onclick="printLabel()"
+						class="btn btn-default btn-flat   btn-xs">打印标签</button>
+					</div>
+					<div class="box-body table-responsive no-padding">
+
+                        <form class="form-horizontal" id="additionalForm">
+							<input class="form-control" id="additionalid" name="additionalid"
+								type="hidden" />
+							<input class="form-control" id="additionalDetailList" name="additionalDetailList"
+								type="hidden" />
+							<div class="form-group">
+								<!-- <label class="col-sm-2 control-label" for="deptid">领用部门</label>
+								<div class="col-sm-4 ">
+							        <select id="deptid" name="deptid" class="form-control select2" style="width: 100%" disabled="false">
+                                             </select>
+								</div> -->
+	
+								<!-- <label class="col-sm-2 control-label" for="tradetype">交易类型</label>
+	                            <div class="col-sm-4">
+	                                <select class="form-control" id="tradetype" name="tradetype"
+	                                    type="text" placeholder="交易类型"></select>
+	                            </div> -->
+	                            
+	                            <label class="col-sm-2 control-label" for="tradetype">交易类型</label>
+	                            <div class="col-sm-4">
+	                                <select class="form-control" id="tradetype" name="tradetype"
+	                                    type="text" placeholder="交易类型"></select>
+	                            </div>
+	                            
+	                            <label class="col-sm-2 control-label" for="comment">备注</label>
+								<div class="col-sm-4">
+									<input class="form-control" id="comment" name="comment"
+										type="text" placeholder="备注" />
+								</div>
+									</br></br>
+								<label class="col-sm-2 control-label" for="deptid">费用承担部门</label>
+	                            <div class="col-sm-4">
+	                                <select class="form-control" id="deptid" name="deptid"
+	                                    type="text" placeholder="费用承担部门"></select>
+	                            </div>
+								 <label class="col-sm-2 control-label" for="ladlenumber">钢包号</label>
+								<div class="col-sm-4">
+									<input class="form-control" id="ladlenumber" name="ladlenumber"
+										type="text" placeholder="钢包号" />
+								</div> 
+							</div>
+							<div class="form-group">
+							<!--  
+								<label class="col-sm-2 control-label" for="postdate">过账日期</label>
+								<div class="col-sm-4">
+									<input class="form-control" id="postdate" name="postdate"
+										type="text" placeholder="过账日期" readonly="true"/>
+								</div>-->
+								
+								
+	
+							</div>
+						</form>
+
+						<table class="table table-striped table-bordered table-hover"
+							id="inoutTable">
+ 
+							<thead id="thead">
+
+							</thead>
+
+							<tbody id="tbody1">
+							</tbody>
+
+						</table>
+
+					</div>
+
+				</div>
+			</div>
+	</div>
+	</div>
+	</div>
+	<!-- <div class="col-sm-12">
+				<div class="box box-success collapsed-box" id="box3">
+
+				</div>
+			</div> -->
+
+	</section>
+	</div>
+
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+				<div class="modal-body" id="tips"></div>
+				<div class="modal-footer" id="sure"></div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	  <!-- 模态框（Modal） -->
+			<div class="modal fade" id="labelPrintDiv" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">标签数据填写</h4>
+						</div>
+
+						<div class="modal-body">
+							<form class="form-horizontal" id="labelPrintDivForm">
+								<div class="box-body">
+									<input type="hidden" name="productorid" id="productorid">
+									<input type="hidden" name="unitsid" id="unitsid">
+									<input type="hidden" name="code" id="code">
+									<input type="hidden" name="shortname" id="shortname">
+                                    <input type="hidden" name="operatorname" id="operatorname">
+                                    <input type="hidden" name="unitsname" id="unitsname">
+                                    <input type="hidden" name="additionaldetailid" id="additionaldetailid">
+
+									<!-- <div class="form-group">
+										<label class="col-sm-2 control-label" for="companionid">供应商</label>
+										<div class="col-sm-4">
+											<select id="companionid" name="companionid" class="form-control select2" style="width: 100%"></select>
+										</div>
+									</div> -->
+
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="productorname">产品代码</label>
+										<div class="col-sm-4 ">
+										  		<input class="form-control" readonly="true" id="productorname" name="productorname" type="text" placeholder="产品代码" />
+										</div>
+
+										<label class="col-sm-2 control-label" for="productordesc">产品名称</label>
+										<div class="col-sm-4 ">
+										  		<input class="form-control" readonly="true" id="productordesc" name="productordesc" type="text" placeholder="产品名称" />
+										</div>
+
+
+									</div>
+	                               <div class="form-group">
+	                                
+									    <label class="col-sm-2 control-label" for="batch">产品批号</label>
+										<div class="col-sm-4 ">
+										  		<input class="form-control" readonly="true" id="batch" name="batch" type="text" placeholder="产品批号" />
+										</div>
+										<label class="col-sm-2 control-label" for="count">数量</label>
+										<div class="col-sm-3 ">
+										  		<input class="form-control" readonly="true" id="count" name="count" type="text" placeholder="总数" />
+										</div>
+										 <div class="col-sm-1" id="unitsname1">
+										 </div>
+									</div>
+									
+									
+									<div class="form-group">
+									
+									    
+										<label class="col-sm-2 control-label" for="material">产品规格</label>
+										<div class="col-sm-4 ">
+										  		<input class="form-control" readonly="true" id="material" name="material" type="text" placeholder="产品规格" />
+										</div>
+										<label class="col-sm-2 control-label" for="operator">经办人</label>
+										<div class="col-sm-4 ">
+										  		<select id="operator" name="operator" class="form-control select2" style="width: 100%"></select>
+										</div>
+										
+									</div>									
+
+									<div class="form-group">
+									
+									    <label class="col-sm-2 control-label" for="deptname">领料部门</label>
+										<div class="col-sm-4 ">
+									        <input class="form-control" readonly="true" id="deptname" name="deptname" type="text" placeholder="领料部门" />
+										</div>
+									
+									    <label class="col-sm-2 control-label" for="producedate">领用日期</label>
+										<div class="col-sm-4 ">
+										  		<input class="form-control" id="producedate" name="producedate" type="text" placeholder="领用日期" />
+										</div>
+										
+
+
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="comments">备注</label>
+										<div class="col-sm-10 ">
+									        <textarea class="form-control"  id="comments" name="comments" placeholder="备注"></textarea>
+									    <div class="col-sm-4 ">
+									</div>
+
+								</div>
+
+							</form>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" id="modalClose" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-primary" id="saveLabelDataFun" onclick="saveLabelData();">保存</button>
+						</div>
+
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal -->
+			</div>
+	<!-- jQuery 2.1.4 -->
+	<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+	<!-- bootstrapValidator -->
+	<script
+		src="../../../jslib/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+	<script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+	<!-- SlimScroll -->
+	<script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="../../../jslib/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../../../jslib/adminlte/js/app.min.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="../../../jslib/adminlte/js/demo.js"></script>
+	<!--Select2  -->
+	<script src="../../../jslib/select2/select2.full.min.js"></script>
+	<script src="../../../jslib/select2/i18n/zh-CN.js"></script>
+	<script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+	<script type="text/javascript" src="../../../jslib/leanway/validate.js"></script>
+	<!-- DataTables -->
+	<script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+	<script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+	<script src="../../../jslib/leanway/websocket.js"></script>
+	<!-- DateTime -->
+	<script type="text/javascript" src="../../../jslib/datetimepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="../../../jslib/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<script src="../../../jslib/leanway/websocket.js"></script>
+	<script type="text/javascript" src="additionalout.js"></script>
+</body>
+</html>

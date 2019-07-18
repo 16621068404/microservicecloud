@@ -1,0 +1,61 @@
+package com.atguigu.springcloud.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.atguigu.springcloud.entities.Dept;
+import com.atguigu.springcloud.service.DeptService;
+
+@RestController
+public class DeptController {
+	@Autowired
+	private DeptService service;
+
+	@Autowired
+	private DiscoveryClient client;
+	
+	@Value("${server.port}")
+	private String serverPort;
+
+	@RequestMapping(value = "/dept/add", method = RequestMethod.POST)
+	public boolean add(@RequestBody Dept dept) {
+		return service.add(dept);
+	}
+
+	// http://127.0.0.1:8001/dept/get/3
+	@RequestMapping(value = "/dept/get/{id}", method = RequestMethod.GET)
+	public Dept get(@PathVariable("id") Long id) {
+		return service.get(id);
+	}
+
+	@RequestMapping(value = "/dept/list", method = RequestMethod.GET)
+	public List<Dept> list() {
+		System.out.println("==============部门服务端口:"+serverPort);
+		return service.list();
+	}
+
+	//获取部门服务的基本信息
+	@RequestMapping(value = "/dept/discovery", method = RequestMethod.GET)
+	public Object discovery() {
+		//从eureka服务中，获取所有的微服务信息
+		List<String> list = client.getServices();
+		System.out.println("**********" + list);
+
+		List<ServiceInstance> srvList = client.getInstances("MICROSERVICECLOUD-DEPT");
+		for (ServiceInstance element : srvList) {
+			System.out.println(element.getServiceId() + "\t" + element.getHost() + "\t" + element.getPort() + "\t"
+					+ element.getUri());
+		}
+		return this.client;
+	}
+
+}

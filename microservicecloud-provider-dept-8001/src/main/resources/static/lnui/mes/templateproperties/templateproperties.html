@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>模版配置</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<!-- Bootstrap 3.3.5 -->
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+	<section class="content">
+		<!-- 左边为4 -->
+		<div class="col-sm-4">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title">模版配置列表</h3>&nbsp;
+					<a class="btn btn-default btn-flat btn-xs" onclick="addTemplate();" id="addFun">新增</a>
+					<a class="btn btn-default btn-flat btn-xs" onclick="updateTemplate();" id="editFun">修改</a>
+					 <div class="btn-group">
+                                <button aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" class="btn btn-default btn-flat btn-xs dropdown-toggle" type="button" id="delFun">删除 <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a onclick="deleteTemplate(1)" id="deleteTemplateFun">当前选中数据</a></li>
+                                    <li><a onclick="deleteTemplate(2)" id="deleteAllFun">跨页选中数据</a></li>
+                              </ul>
+                      </div>
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+					<!-- /.box-tools -->
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+						<div class="form-horizontal clearfix">
+								<div class="col-lg-12 col-sm-12 input-group">
+									<input type="text" placeholder="请输入关键字" id="searchValue"
+									name="searchValue" class="input-sm form-control"> <span
+									class="input-group-btn"><button type="button"
+										class="btn btn-sm btn-primary" onclick="searchValueFun()">
+										搜索</button> </span>
+								</div>
+							</div>
+					<table id="templateTable"
+						class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<td style="width: 15px"><input type="checkbox" id="checkAll" onclick="com.leanway.dataTableCheckAll('generalInfo', 'checkAll', 'checkList')" class="regular-checkbox"><label for="checkAll"></label></td>
+								<td>配置名称</td>
+								<td>页面标识</td>
+								<td>模板名称</td>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.box-body -->
+			</div>
+			<!-- /.box -->
+		</div>
+		<!-- 	</div>
+		</div> -->
+		<!-- 表体   右边为8 -->
+		<div class="col-sm-8">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title">配置信息</h3>&nbsp;
+					<button class="btn btn-default btn-flat btn-xs" onclick="saveTemplate();" id="saveOrUpdate">保存</button>
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+				</div>
+			<div class="box-body">
+				<form class="form-horizontal" id="templateForm" >
+					<div class="box-body">
+						<div class="form-group">
+
+							<input type="hidden" id="propertiesid" name="propertiesid">
+
+							<label class="col-sm-2 control-label">配置名称</label>
+							<div class="col-sm-3">
+								<input class="form-control" id="propertiesname" name="propertiesname"
+										type="text" placeholder="配置名称" />
+							</div>
+							<label class="col-sm-2 control-label">模板名称[版本]</label>
+							<div class="col-sm-3">
+								<select class="form-control" id="catlateid" onchange="showOther()"></select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">页面标识</label>
+							<div class="col-sm-3">
+								<input class="form-control" id="idkey" name="idkey"
+										type="text" placeholder="页面标识" />
+							</div>
+							<label class="col-sm-2 control-label">是否提取改值</label>
+							<div class="col-sm-3">
+								<select class="form-control" id="extract">
+									<option value=0  selected="selected">否</option>
+									<option value=1 >是</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="tagtype">控件类型</label>
+							<div class="col-sm-3">
+								<select class="form-control" id="tagtype" ></select>
+							</div>
+							<label class="col-sm-2 control-label" for="datatype">数据类型</label>
+							<div class="col-sm-3">
+								<select class="form-control" id="datatype"></select>
+							</div>
+						</div>
+					</div>
+					</form>
+				</div>
+				<!-- form end -->
+			</div>
+		</div>
+	</div>
+		<!-- /.box-body -->
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+
+				<div class="modal-body" id="tips">
+				</div>
+				<div class="modal-footer" id="sure">
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+	<!-- Bootstrap 3.3.5 -->
+<link rel="stylesheet" href="../../../jslib/bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="../../../jslib/bootstrap-validator/css/bootstrapValidator.css">
+	<!-- jQuery 2.1.4 -->
+	<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js" ></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../../jslib/bootstrap/js/bootstrap.min.js"  ></script>
+	<!-- SlimScroll -->
+	<script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+	 <!-- FastClick -->
+	<script src="../../../jslib/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../../../jslib/adminlte/js/app.min.js"></script> <!-- AdminLTE for demo purposes -->
+	<script src="../../../jslib/adminlte/js/demo.js"></script> <!-- bootstrapValidator -->
+	<script  src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js" >
+	</script> <script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+	<!-- InputMask -->
+	<script type="text/javascript" src="../../../jslib/leanway/jn_common.js" ></script>
+	 <script src="../../../jslib/iCheck/icheck.js"></script>
+	<!-- select2 -->
+	<script src="../../../jslib/select2/select2.full.min.js"  ></script>
+	<script src="../../../jslib/select2/i18n/zh-CN.js"></script> <!-- ztree -->
+	<script src="../../../jslib/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+	<script type="text/javascript" src="../../../jslib/zTree/js/jquery.ztree.exedit-3.5.js" ></script>
+	<!-- DataTables -->
+	<script src="../../../jslib/datatables/jquery.dataTables.js" >
+	</script> <script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+	<script type="text/javascript" src="templateproperties.js"></script>
+</body>
+</html>

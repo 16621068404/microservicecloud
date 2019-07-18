@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>MES | 登录</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<!-- Bootstrap 3.3.5 -->
+<link rel="stylesheet"
+	href="../../jslib/bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="../../jslib/font-awesome-4.4.0/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet"
+	href="../../jslib/ionicons-2.0.1/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="../../jslib/adminlte/css/AdminLTE.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="../../jslib/iCheck/square/blue.css">
+<link rel="stylesheet" href="../../jslib/leanway/common.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="../../jslib/html5shiv.3.7.3/html5shiv.min.js"></script>
+  <script src="../../jslib/respond.1.4.2/respond.min.js"></script>
+  <![endif]-->
+<script type="text/javascript">
+	var cnzz_protocol = (("https:" == document.location.protocol) ? " https://"
+			: " http://");
+	document
+			.write(unescape("%3Cspan id='cnzz_stat_icon_1260012411'%3E%3C/span%3E%3Cscript src='"
+					+ cnzz_protocol
+					+ "s95.cnzz.com/z_stat.php%3Fid%3D1260012411%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</head>
+<body class="hold-transition login-page">
+
+	<div class="login-box">
+
+		<!-- /.login-logo -->
+		<div class="login-box-body">
+			<p class="login-box-msg">
+				<img alt="" src="logo.png">
+			</p>
+			<form id="loginForm" autocomplete="off" role="form"
+				action="user?method=login" method="post">
+				<div class="form-group has-feedback">
+					<!-- <input type="hidden" id="code" /> -->
+					<input type="hidden" id="openId" /> <input type="text"
+						class="form-control" name="userName" value="" id="userName"
+						placeholder="请输入:用户名"> <span
+						class="glyphicon glyphicon-envelope form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					<input type="password" class="form-control" name="password"
+						value="" id="password" placeholder="请输入密码"> <span
+						class="glyphicon glyphicon-lock form-control-feedback"></span>
+				</div>
+				<div class="form-group has-feedback">
+					<select class="form-control" id="companyid" name="companyid"
+						onfocus="loadCompany()">
+						<option value="">请选择登录企业</option>
+					</select>
+				</div>
+				<div class="row">
+					<div class="col-xs-8">
+						<!-- <div class="checkbox icheck" id="saveUserInfo">-->
+						<input type="checkbox" id="saveUserInfo" class="regular-checkbox" />
+						<label for="saveUserInfo"></label>&nbsp;<label for="saveUserInfo"
+							style="font-weight: normal;">记住登录信息(不含密码)</label>
+						<!--</div>-->
+					</div>
+					<!-- /.col -->
+					<div class="col-xs-4">
+						<button type="button" class="btn btn-primary btn-block btn-flat"
+							onclick="login()">登录</button>
+					</div>
+					<!-- /.col -->
+				</div>
+			</form>
+			<!--/.social-auth-links -->
+			<a href="../../lnui/mes/getbackpassword.html">找回密码</a> <br> <a
+				class="text-center" onclick="isOfficial()" style="cursor: pointer;">申请账号</a><br>
+			<a data-toggle="collapse" href="#collapseExample"
+				aria-expanded="false" aria-controls="collapseExample"> 客户端下载 </a> <br>
+			<a href="../../lnui/mes/alipay/alipay.html" class="text-center">支付中心</a>
+		</div>
+		<div class="collapse" id="collapseExample">
+
+
+			<div class="well">
+				<div>
+					<select class="form-control" id="barcode" name="barcode"
+						onchange="init()">
+						<option value="">========请选择您要下载的APP========</option>
+						<option value="../../lnfiles/download/app/L8Cloud/L8Cloud.apk">查询图表 Android</option>
+						<option value="../../lnfiles/download/app/tracking/tracking.apk">追踪 Android</option>
+						<option
+							value="../../lnfiles/download/app/monitorforTV/proMonitor.apk">监控看板 Android</option>
+						<option
+							value="../../lnfiles/download/app/TrackingForMachine/touch_board.apk">触摸屏Android</option>
+					</select>
+				</div>
+				<p>
+				<div id="qrcode" align="center">
+					<div></div>
+
+				</div>
+				<!-- /.login-box-body -->
+			</div>
+
+
+			<!-- /.login-box -->
+
+		</div>
+		<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">提示</h4>
+					</div>
+
+					<div class="modal-body" id="tips"></div>
+					<div class="modal-footer" id="sure"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="position: fixed; bottom: 0px">
+		<a href="http://www.miitbeian.gov.cn" target="_blank"
+			style="color: #444">沪ICP备15055801号-2</a>
+	</div>
+	<!-- jQuery 2.1.4 -->
+	<script src="../../jslib/jQuery/jquery.js"></script>
+	<script src="../../jslib/jQueryMD5/jQuery.md5.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../jslib/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../jslib/jquery-qrcode-master/jquery.qrcode.min.js"></script>
+	<!-- iCheck -->
+	<script src="../../jslib/iCheck/icheck.min.js"></script>
+	<script src="../../jslib/leanway/jn_common.js"></script>
+	<script src="index.js"></script>
+	<script>
+		$(function() {
+
+			//获取地址栏的参数
+			function getQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+
+			if (isWeiXin()) {
+
+				$("#openId").val(getQueryString("openId"));
+				var openid = getQueryString("openId");
+				if (openid == "" || openid == null) {
+					window.location.href = "weixin?method=getopenid";
+				} else {
+
+					$.ajax({
+						type : "POST",
+						url : "user?method=bind",
+						data : {
+							"openId" : openid
+						},
+						dataType : "text",
+						async : false,
+						success : function(text) {
+							var tempText = $.parseJSON(text)
+							if (tempText.info == "success") {
+								location.href = "mobi_main.html";
+								//
+							} else if (tempText.info == "failed") {
+
+							} else {
+
+								lwalert("tipModal", 1, "用户名或密码错误！");
+							}
+
+						}
+					});
+				}
+
+			}
+
+		});
+
+		/**
+		 * 判断是否是微信浏览器
+		 * @returns {Boolean}
+		 */
+		function isWeiXin() {
+			var ua = window.navigator.userAgent.toLowerCase();
+			if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	</script>
+</body>
+</html>

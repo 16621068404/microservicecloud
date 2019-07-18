@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>首页</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+
+<link rel="stylesheet"href="../../../jslib/leanway/loader_datatables.css">
+
+<!-- tree grid -->
+
+</head>
+<body class="hold-transition skin-blue-light sidebar-mini">
+	<section class="content-header">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="box box-primary" id="salesOrderchartid">
+					<div class="box-header with-border">
+						<h5 class="box-title">异常来源图表</h5>
+						 <label class="radio-inline">
+					  			<select id="top" name="top" class="form-control select2" onchange="getChart()">
+                              <option value="5">5</option>	
+                              <option value="10">10</option>					                     
+                              <option value="15">15</option>					
+                              <option value="20">20</option>					
+                         				
+							</select>
+						</label> 
+					    <label class="checkbox-inline" style="padding-left: 25px;">
+							<input type="checkbox" name="exceptionType" id="exceptionType0" value="0" >开工异常
+						</label>
+						<label class="checkbox-inline">
+						  	<input type="checkbox" name="exceptionType" id="exceptionType0" value="1"> 完工异常
+						</label>														
+				</div>
+				<div class="box-body">
+						<div id="chart-container" align="center">FusionCharts
+							will render here</div>
+					</div>
+			</div>
+            </div>
+				<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+								<h4 class="modal-title" id="myModalLabel">提示</h4>
+							</div>
+
+							<div class="modal-body" id="tips"></div>
+							<div class="modal-footer" id="sure"></div>
+						</div>
+					</div>
+				</div>
+	</section>
+
+	<!-- jQuery 2.1.4 -->
+	<script src="../../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
+	<!-- Bootstrap 3.3.5 -->
+	<script src="../../../jslib/bootstrap/js/bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script src="../../../jslib/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="../../../jslib/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../../../jslib/adminlte/js/app.min.js"></script>
+	<!-- InputMask -->
+	<script type="text/javascript" src="../../../jslib/leanway/jn_common.js"></script>
+	<script src="../../../jslib/iCheck/icheck.js"></script>
+	<!-- DataTables -->
+	<script src="../../../jslib/datatables/jquery.dataTables.js"></script>
+	<script src="../../../jslib/datatables/dataTables.bootstrap.js"></script>
+	<script
+		src="../../../jslib/bootstrap-validator/js/bootstrapValidator.js"></script>
+	<script src="../../../jslib/bootstrap-validator/js/language/zh_CN.js"></script>
+
+	<script src="../../../jslib/fusioncharts/js/fusioncharts.js"></script>
+
+	<script src="exceptionresource.js"></script>
+</body>
+</html>
