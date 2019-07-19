@@ -1,4 +1,3 @@
-
 var sysBugTable;
 $ ( function ( ) {
 
@@ -10,7 +9,7 @@ $ ( function ( ) {
 	// 加载数据验证
 	//initBootstrapValidator();
 
-} );
+});
 
 /**
  * 
@@ -81,4 +80,13 @@ var initSysBugTable = function ( ) {
 			
 		} );
 	return editTable;
+}
+
+//页面强制刷新  相当于   Ctrl + F5
+var refresh = function ( ) {
+	//reload()方法  有一个参数
+    //false  可以从缓存中读取，      相当于 f5
+    //true   强制从服务器获取页面  相当于 Ctrl + f5
+    location.reload(true);  //===================================刷新
+	
 }

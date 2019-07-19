@@ -10,6 +10,10 @@
 <link rel="stylesheet"href="../../jslib/leanway/loader_datatables.css">
 <link href="../../jslib/zTree/css/zTreeStyle/zTree.css" rel="stylesheet" type="text/css"/>
 <style type="text/css">
+
+  body {
+       margin: 0;
+    }
 td.details-control {
     background: url('../../jslib/datatablesNew/examples/resources/details_open.png') no-repeat center center;
     cursor: pointer;
@@ -78,27 +82,78 @@ table td {
     </div> 
     </div> 
 </nav>
-    <h3 class="box-title">系统模块bug列表</h3>
-    <div class="box box-primary">
-				<div class="box-header with-border">
-    <div class="box-body">
+    <div class="col-sm-12">
+    <h3 class="box-title">系统模块bug列表  
+    <button type="button" class="btn btn-danger glyphicon glyphicon-refresh" onclick="refresh()"  style="margin-left: 1000px;width: 100px;"> 刷新</button>
+    <button type="button" class="btn btn-success glyphicon glyphicon-search" onclick="" style="margin-right: 100px;width: 100px;"> 查询</button>
+    </h3>
     
-					<div id="dcontent" style="display:inline;width:auto;height:auto;">
-					    <div class="col-sm-1" align="center">
-									<input class="form-control" id="newtime" name="newtime"
-										   type="text" style="display:none;width:500px;height:auto;border:2px;font-size:25px"/>
-								</div><br>
-					<table id="sysBugTable" class="table table-striped table-bordered table-hover">
+
+ <div class="box box-primary collapsed-box">
+				<div class="box-header with-border">
+					<h3 class="box-title">查询条件</h3>
+					<h3 class="box-title" style="float: right;margin-right: 80px;">--展开查询条件--</h3>
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+					    </button>
+				    </div>
+			    </div>
+				<div class="box-body">
+					<div class="box-header">
+						<div class="form-horizontal clearfix">
+						   <form class="form-horizontal" id="queryConditionsForm">
+							<div class="form-group">
+							    <label class="col-sm-1 control-label" for="bug_id">bug编号</label>
+								<div class="col-sm-1">
+									<input class="form-control" placeholder="请输入bug编号" id="bug_id" name="bug_id"
+										type="text" />
+								</div>
+								<label class="col-sm-1 control-label" for="module_name">bug模块</label>
+								<div class="col-sm-1">
+									<input class="form-control" placeholder="请输入bug模块" id="module_name" name="module_name"
+										type="text" />
+								</div>
+								<label class="col-sm-1 control-label" for="bug_type">bug类型</label>
+								<div class="col-sm-1">
+									<input class="form-control" placeholder="请输入bug类型" id="bug_type" name="bug_type"
+										type="text" />
+								</div>	
+								<label class="col-sm-1 control-label" for="status">bug状态</label>
+								<div class="col-sm-1">
+									<input class="form-control" placeholder="请输入bug状态" id="status" name="status"
+										type="text" />
+								</div>
+								<label class="col-sm-1 control-label" for="create_username">创建者</label>
+								<div class="col-sm-1">
+									<input class="form-control" placeholder="请输入创建者" id="create_username" name="create_username"
+										type="text" />
+								</div>
+								<label class="col-sm-1 control-label" for="modify_username">修改者</label>
+								<div class="col-sm-1">
+									<input class="form-control" placeholder="请输入修改者" id="modify_username" name="modify_username"
+										type="text" />
+								</div>
+							</div>
+					      </form>
+				   </div>
+		       </div>
+          </div>
+</div>
+ <div class="box box-primary">
+   <div class="box-header with-border">
+		<div id="dcontent" style="display:inline;width:auto;height:auto;">
+			<table id="sysBugTable" class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
 								<th style="width: 15px"><input type="checkbox" id="bugIdkAll" name="bugIdkAll"  class="regular-checkbox" onclick="com.leanway.dataTableCheckAll('sysBugTable', 'bugIdkAll', 'BugCheckList');">
 								<label for="bugIdkAll"></label></th>
- 								<th>bug编号</th>  <!--bug_id -->
-								<th>bug模块</th>  <!--module_name-->
-								<th>bug类型</th>  <!--bug_type-->
-								<th>bug状态</th>  <!--status-->
-								<th>创建者</th>    <!--create_username-->
-								<th>修改者</th>    <!--modify_username-->
+ 								<th>bug编号</th>  <!-- bug_id -->
+								<th>bug模块</th>  <!-- module_name -->
+								<th>bug类型</th>  <!-- bug_type -->
+ 								<th>bug状态</th>  <!--status -->
+ 								<th>创建者</th>    <!--create_username -->
+								<th>修改者</th>    <!-- modify_username -->
 							</tr>
 						</thead>
 						<tbody>
@@ -106,8 +161,23 @@ table td {
 					</table>
 				</div>
 	</div>
-   </div>
-   </div>
+  </div>
+</div>
+
+   	
+			
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- jQuery 2.1.4 -->
 <script src="../../jslib/jQuery/jQuery-2.1.4.min.js"></script>
