@@ -1,5 +1,6 @@
 package com.atguigu.springcloud.SysBug.Controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.atguigu.springcloud.Login.Controller.BaseContrller;
 import com.atguigu.springcloud.SysBug.Service.SysBugService;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.springcloud.entity.PageUtil;
+import com.springcloud.entity.SysBug;
+import com.springcloud.tool.JsonUtils;
 import com.springcloud.tool.RequestParamUtil;
 import com.springcloud.tool.StringUtil;
 @RequestMapping("/sysBugController")
@@ -30,17 +35,40 @@ public class SysBugController extends BaseContrller{
      * */
 	@RequestMapping(value = "/findSysBugList", method = RequestMethod.GET)
     public void findSysBugList(HttpServletRequest request, HttpServletResponse response) {
-
-        int limitCount = RequestParamUtil.getIntParameter(request, "length", 10);
-        int startPage = ((RequestParamUtil.getIntParameter(request, "start", 0)) / limitCount) + 1;
-        PageUtil page = new PageUtil();
-        Map<String, Object> mapJson = new HashMap<>();
-            page.setPageSize(limitCount);
-            page.setCurrentPage(startPage);
-            int tempVal = (page.getCurrentPage() - 1) * page.getPageSize();
-            page.setTempVal(tempVal);//下一页
-            mapJson= sysBugService.findSysBugList(page);
-            writerJsonResult(request,response, mapJson);// 结果回写
+		Map<String, Object> mapJson = new HashMap<>();
+		//接收参数
+		String searchConditions = request.getParameter("searchConditions");
+		SysBug sysBug = new SysBug();
+		
+		try {
+			 if(searchConditions != null && searchConditions.length() > 0) {
+			      sysBug = JsonUtils.readJson2Object(searchConditions,SysBug.class);
+			 }
+			 
+			 int limitCount = RequestParamUtil.getIntParameter(request, "length", 10);
+		        int startPage = ((RequestParamUtil.getIntParameter(request, "start", 0)) / limitCount) + 1;
+		        PageUtil page = new PageUtil();
+		      
+		            page.setPageSize(limitCount);
+		            page.setCurrentPage(startPage);
+		            int tempVal = (page.getCurrentPage() - 1) * page.getPageSize();
+		            page.setTempVal(tempVal);//下一页
+		            sysBug.setPageUtil(page);
+		            mapJson= sysBugService.findSysBugList(sysBug);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			 writerJsonResult(request,response, mapJson);// 结果回写
+		}
+			
+	
+		
+       
+           
     }
 	
 	

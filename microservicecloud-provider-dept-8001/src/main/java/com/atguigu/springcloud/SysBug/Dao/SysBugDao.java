@@ -10,8 +10,8 @@ import com.springcloud.entity.SysBug;
 @Mapper
 public interface SysBugDao {
 
-	public List<SysBug> findSysBugList(PageUtil page);
+	public List<SysBug> findSysBugList(SysBug sysBug);
 
-	public int countSysBugList();
+	public int countSysBugList(SysBug sysBug);
 
 }

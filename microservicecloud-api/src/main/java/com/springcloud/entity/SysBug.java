@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class SysBug implements Serializable{
+public class SysBug   implements Serializable{
 	
 	/**
 	 * 
@@ -17,6 +17,7 @@ public class SysBug implements Serializable{
 	private String status;                //bug状态
 	private String create_username;       //创建者
 	private String modify_username;       //修改者
+	private PageUtil pageUtil;            //分页
 	
 	
 }

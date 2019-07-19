@@ -20,14 +20,14 @@ public class SysBugServiceImp implements SysBugService{
 	
 	
 
-	public Map<String, Object> findSysBugList(PageUtil page) {
+	public Map<String, Object> findSysBugList(SysBug sysBug) {
 		    
-		    List<SysBug> sysBug = sysBugDao.findSysBugList(page);
-	        int countNumber = sysBugDao.countSysBugList();
+		    List<SysBug> sysBugs = sysBugDao.findSysBugList(sysBug);
+	        int countNumber = sysBugDao.countSysBugList(sysBug);
 	        Map<String, Object> mapJson = new HashMap<String, Object>();
 	        mapJson.put("iTotalDisplayRecords", countNumber);
 	        mapJson.put("iTotalRecords", countNumber);
-	        mapJson.put("data", sysBug);
+	        mapJson.put("data", sysBugs);
 	        return mapJson;
 		
 	}

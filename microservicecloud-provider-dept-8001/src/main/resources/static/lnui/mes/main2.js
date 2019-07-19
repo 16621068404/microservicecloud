@@ -72,12 +72,9 @@ var initSysBugTable = function ( ) {
 				 com.leanway.dataTableUnselectAll("sysBugTable","bugIdkAll");
             	 com.leanway.setDataTableSelectNew("sysBugTable",null, "BugCheckList", null);
             	 com.leanway.dataTableClick("sysBugTable", "BugCheckList", true , sysBugTable);
-				
 			}
-
 		}).on('xhr.dt', function (e, settings, json) {
 			com.leanway.checkLogind(json);
-			
 		} );
 	return editTable;
 }
@@ -89,4 +86,32 @@ var refresh = function ( ) {
     //true   强制从服务器获取页面  相当于 Ctrl + f5
     location.reload(true);  //===================================刷新
 	
+}
+
+//按照查询条件去查询数据
+var queryBtn = function ( ) {
+	//将form表单中的值转成数组
+	var formDataArr = $('form[id="queryConditionsForm"]').serializeArray();
+	console.log(formDataArr);
+	var o = {};
+	//将数组转成对象
+     $.each(formDataArr, function() {
+         if (o[this.name] !== undefined) {
+             if (!o[this.name].push) {
+                 o[this.name] = [o[this.name]];
+             }
+             o[this.name].push(this.value || '');
+         } else {
+             o[this.name] = this.value || '';
+         }
+     });
+     //打印对象
+     console.log(o);
+     //将对象转成json字符串
+     //var formDataJson = JSON.stringify(formDataObj);    //将对象转化为json字符串
+     //formDataJson = JSON.parse(formDataJson);           //将json字符串转化为对象
+     var formDataJson = JSON.stringify(o);    //将对象转化为json字符串
+     //发起请求
+     sysBugTable.ajax.url("http://127.0.0.1:8001/sysBugController/findSysBugList"+"?searchConditions=" + encodeURIComponent(formDataJson)).load();
+     
 }

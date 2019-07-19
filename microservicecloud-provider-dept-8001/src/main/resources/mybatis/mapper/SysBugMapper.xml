@@ -4,19 +4,30 @@
 
 <mapper namespace="com.atguigu.springcloud.SysBug.Dao.SysBugDao">
 
-	
-	<select id="findSysBugList" resultType="SysBug" parameterType="PageUtil">
-		select bug_id,
-		       module_name,
-		       bug_type,
-		       status,
-		       create_username,
-		       modify_username 
-		from sys_bug LIMIT ${pageSize} offset ${tempVal}   
+
+	<select id="findSysBugList" resultType="SysBug"
+		parameterType="SysBug">
+		select
+		bug_id,module_name,bug_type,status,create_username,modify_username
+		from sys_bug where 1 = 1
+		<if test="bug_id != 0"> and bug_id = ${bug_id}</if>
+		<if test="module_name != null and module_name != ''"> and module_name = #{module_name}</if>
+		<if test="bug_type != null and bug_type != ''"> and bug_type = #{bug_type}</if>
+		<if test="status != null and status != ''"> and status = #{status}</if>
+		<if test="create_username != null and create_username != ''"> and create_username = #{create_username}</if>
+		<if test="modify_username != null and modify_username != ''"> and modify_username = #{modify_username}</if>
+		LIMIT ${pageUtil.pageSize} offset
+		${pageUtil.tempVal}
 	</select>
 
-   <select id="countSysBugList" resultType="Integer">
-		select count(1) from sys_bug
+	<select id="countSysBugList" resultType="Integer" parameterType="SysBug">
+		select count(1) from sys_bug where 1 = 1
+		<if test="bug_id != 0"> and bug_id = ${bug_id}</if>
+		<if test="module_name != null and module_name != ''"> and module_name = #{module_name}</if>
+		<if test="bug_type != null and bug_type != ''"> and bug_type = #{bug_type}</if>
+		<if test="status != null and status != ''"> and status = #{status}</if>
+		<if test="create_username != null and create_username != ''"> and create_username = #{create_username}</if>
+		<if test="modify_username != null and modify_username != ''"> and modify_username = #{modify_username}</if>
 	</select>
 
 
