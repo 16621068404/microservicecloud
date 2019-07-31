@@ -29,7 +29,11 @@ public class BaseResponse<T> {
 	 * 返回
 	 */
 	private T data;
-
+	
+	/**
+	 * token
+	 */
+	private String token;
 
 	public BaseResponse() {
 
@@ -40,11 +44,13 @@ public class BaseResponse<T> {
 		this.code = code;
 		this.msg = msg;
 		this.data = data;
+		
 	}
 
 	@Override
 	public String toString() {
-		return "BaseResponse [code=" + code + ", msg=" + msg + ", data=" + data + "]";
+		return "BaseResponse [code=" + code + ", msg=" + msg + ", data=" + data + ", token=" + token + "]";
 	}
+
 
 }

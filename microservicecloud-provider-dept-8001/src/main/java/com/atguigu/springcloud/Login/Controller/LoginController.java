@@ -1,7 +1,7 @@
 package com.atguigu.springcloud.Login.Controller;
 
-
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.atguigu.springcloud.Login.Service.LoginService;
 import com.springcloud.BaseResponse.BaseResponse;
 import com.springcloud.entity.User;
+import com.springcloud.tool.JsonUtils;
 @RequestMapping("/loginController")
 @RestController
+@SuppressWarnings("rawtypes")
 public class LoginController extends BaseContrller{
 	
 	@Autowired
@@ -31,17 +33,17 @@ public class LoginController extends BaseContrller{
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public void login(HttpServletRequest request, HttpServletResponse response, User user) {
-		   // 向浏览器发送一个响应头，设置浏览器的解码方式为UTF-8
+	    //向浏览器发送一个响应头，设置浏览器的解码方式为UTF-8
         response.setHeader("Content-type", "text/html;charset=UTF-8");
-        BaseResponse baseResponse = new BaseResponse();
-//        String userName = request.getParameter("userName");
-//        String password = request.getParameter("password");
+        Map<String, Object> mapJson = new HashMap<>();
+		
 		try {
-			baseResponse = loginService.findLoginUser(user);	
+			mapJson = loginService.findLoginUser(user);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			writerJsonResult(request, response, baseResponse);	
+			writerJsonResult(request, response, mapJson);	
 		}
 		
 	  

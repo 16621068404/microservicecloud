@@ -1,7 +1,8 @@
 var sysBugTable;
+var token;
 $ ( function ( ) {
 
-
+	token = document.cookie.split(";")[0];    //从cookie中读取token
 	// 初始化系统BUG表
 	sysBugTable = initSysBugTable();
 	// enter键时候触发查询
@@ -18,7 +19,7 @@ $ ( function ( ) {
  */
 var initSysBugTable = function ( ) {
 	var editTable = $("#sysBugTable").DataTable({
-			"ajax" : 'http://127.0.0.1:8001/sysBugController/findSysBugList',
+			"ajax" : 'http://192.168.0.188:8001/mainPage/findMainPageInfo?token='+token+'',
 			"iDisplayLength" : 10,
 			'bPaginate': true,
 			"bDestory": true,

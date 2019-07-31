@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.springcloud.entity.PageUtil;
 import com.springcloud.entity.SysBug;
+import com.springcloud.tool.Base64Tool;
 import com.springcloud.tool.JsonUtils;
 import com.springcloud.tool.RequestParamUtil;
 import com.springcloud.tool.StringUtil;
@@ -38,9 +39,18 @@ public class SysBugController extends BaseContrller{
 		Map<String, Object> mapJson = new HashMap<>();
 		//接收参数
 		String searchConditions = request.getParameter("searchConditions");
+		String token = request.getParameter("token");
 		SysBug sysBug = new SysBug();
 		
 		try {
+			
+			 if(token.isEmpty()) {
+				 mapJson.put("msg", "用户登录失效,请重新登录！");
+			 } else {
+				String tokenInfo =  Base64Tool.getFromBase64(token);
+				System.out.println(tokenInfo);
+			 }
+			
 			 if(searchConditions != null && searchConditions.length() > 0) {
 			      sysBug = JsonUtils.readJson2Object(searchConditions,SysBug.class);
 			 }

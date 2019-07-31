@@ -11,7 +11,7 @@ spring:
   datasource:
       type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
       driver-class-name: org.postgresql.Driver #org.gjt.mm.mysql.Driver              # MySQL驱动包
-      url: jdbc:postgresql://123.206.211.89:5432/xxq_center?characterEncoding\=utf-8 #jdbc:mysql://localhost:3306/cloudDB01?useUnicode=true&characterEncoding=utf8              # 数据库名称
+      url: jdbc:postgresql://123.206.211.89:5432/daocha_center?characterEncoding\=utf-8 #jdbc:mysql://localhost:3306/cloudDB01?useUnicode=true&characterEncoding=utf8              # 数据库名称
       username: postgres
       password: ycgyl@2016
       dbcp2:

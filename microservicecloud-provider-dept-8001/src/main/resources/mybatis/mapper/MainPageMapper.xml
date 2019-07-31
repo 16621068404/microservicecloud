@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.springcloud.MainPage.Dao.MainPageDao">
+
+
+   <!--从中心库中去拿用户信息 -->
+   <select id="findUserInfoForCentral" resultType="User"
+		parameterType="String">
+		select
+		user_logid,user_no,cust_no,cust_name,cust_logo,branch_no,branch_name,system_type,db_type
+		from v_cust_user where 1 = 1 and user_no = #{_parameter}
+	</select>
+
+
+</mapper>
+ 
+
