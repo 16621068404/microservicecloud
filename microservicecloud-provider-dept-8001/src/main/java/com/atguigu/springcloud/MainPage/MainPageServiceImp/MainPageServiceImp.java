@@ -32,12 +32,13 @@ public class MainPageServiceImp implements MainPageService {
 	/**
 	 * 查询主页面菜单
 	 */
+	@SuppressWarnings("rawtypes")
 	public Map<String, Object> findMainPageInfo(User user,HttpServletRequest request) throws IOException {
 		Map<String, Object> mapJson = new HashMap<>();
 		//封装连接数据库信息		
 		JDBCbean jdbcBean = JDBCUtils.encapsulationJDBC(user);
 		
-		List allData = new ArrayList<>();
+	
 		//根据系统用户的id,去查询用户的角色;
 		String userNo = user.getUser_no();
 		String userNoSql = MainPageConfigSql.findUserNoSql(userNo);  // 【客户信息方法】 
@@ -74,15 +75,53 @@ public class MainPageServiceImp implements MainPageService {
 		      * 2.系统用户信息
 		      * 3.中心库中用户信息
 		      */
-		     allData.add(mean);
-		     allData.add(centralUser);
+		    
 
 			if(mean != null && mean.size() > 0) {
 		    	
+				/*
+				 *organize----------------------公司
+				 *department--------------------部门
+				 *role--------------------------角色
+				 *user--------------------------用户
+				 *authorizeMenu-----------------授权菜单
+				 *authorizeButton---------------授权按钮
+				 *authorizeColumn---------------授权列表
+				 *menu--------------------------菜单
+				 *button------------------------按钮
+				 *dataItem----------------------数据字典
+				 *excelImportTemplate-----------excel导入模板
+				 *excelExportTemplate-----------excel导出模板
+				 *
+				 */
+				mapJson.put("authorizeMenu",JsonUtils.obj2Json(mean));   // 授权菜单
 				
-				mapJson.put("data", allData);
-		    	mapJson.put("msg", "查询主页面成功!");
-		    	mapJson.put("code", 200);
+				//授权按钮
+				mapJson.put("authorizeButton","[]"); 
+				
+				mapJson.put("authorizeColumn","[]"); 
+				
+				mapJson.put("authorizeGrid","[]"); 
+				
+				mapJson.put("shortcutMenu","[]"); 
+				
+				
+				
+				List branch_data = new ArrayList();
+				branch_data.add(centralUser);
+				
+				mapJson.put("login_user_data",JsonUtils.obj2Json(centralUser)); 
+				mapJson.put("branch_data",JsonUtils.obj2Json(branch_data)); 
+				mapJson.put("depart_data",JsonUtils.obj2Json(branch_data)); 
+				mapJson.put("user_data",JsonUtils.obj2Json(branch_data)); 
+				mapJson.put("default_value",JsonUtils.obj2Json(branch_data)); 
+				mapJson.put("report_data",JsonUtils.obj2Json(branch_data)); 
+				mapJson.put("param_config","[]"); 
+				
+				
+				
+		    	mapJson.put("message", "获取功能菜单数据成功!");
+		    	mapJson.put("error", 1);
 		    }
 		} else {
 			mapJson.put("data", null);

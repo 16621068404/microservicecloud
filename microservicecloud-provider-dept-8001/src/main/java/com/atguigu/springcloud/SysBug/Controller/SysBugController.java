@@ -55,9 +55,9 @@ public class SysBugController extends BaseContrller{
 			      sysBug = JsonUtils.readJson2Object(searchConditions,SysBug.class);
 			 }
 			 
-			 int limitCount = RequestParamUtil.getIntParameter(request, "length", 10);
-		        int startPage = ((RequestParamUtil.getIntParameter(request, "start", 0)) / limitCount) + 1;
-		        PageUtil page = new PageUtil();
+			  int limitCount = RequestParamUtil.getIntParameter(request, "length", 10);
+		      int startPage = ((RequestParamUtil.getIntParameter(request, "start", 0)) / limitCount) + 1;
+		      PageUtil page = new PageUtil();
 		      
 		            page.setPageSize(limitCount);
 		            page.setCurrentPage(startPage);

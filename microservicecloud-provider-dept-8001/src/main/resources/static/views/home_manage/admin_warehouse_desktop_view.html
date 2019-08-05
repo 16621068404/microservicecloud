@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我的桌面</title>
+    <!--框架必需start-->
+    <link href="../../styles/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../styles/tencheer-ui.css" rel="stylesheet"/>
+
+    <script src="../../scripts/jquery/jquery-1.10.2.min.js"></script>
+    <!--框架必需end-->
+    <!--第三方统计图start-->
+<!--     <script src="../../scripts/utils/base/tencheer.base.js?v=20190320"></script> -->
+    <script src="../../scripts/utils/base/tencheer.base.js"></script>
+    <script src="../../scripts/utils/base/tencheer.base.plugin.js"></script>
+    <script src="../../scripts/utils/base/tencheer.old.js"></script>
+    <script src="../../scripts/plugins/highcharts/highcharts.js"></script>
+    <script src="../../scripts/plugins/highcharts/highcharts-more.js"></script>
+    <script src="../../scripts/plugins/highcharts/modules/exporting.js"></script>
+    <!--第三方统计图end-->
+    <script>
+        var in_count_sum=0;
+        $(function () {
+            InitialPage();
+            /*
+             total_sum();
+             setInterval(total_sum,300000);
+            setInterval(GoodsTypeStructure,300000);
+            GoodsTypeStructure(); //货物分类 圆饼图
+            */
+        })
+        function GoodsTypeStructure()
+        {
+            if (tencheer.tabiframeId()!=undefined) {return false;}
+            var pathUrl = "/welcome/BoxStockSumByBox";
+            $.post(pathUrl,{},function(obj){
+                if (obj.code=='1') {
+                    LoadInterfaceVisit(obj.result);  //圆饼图
+                    var out_top = obj.result;
+                    LoadDepartmentApp(out_top.waves); // 走势图
+                }
+            },'json');
+        }
+        function total_sum(){
+            if (tencheer.tabiframeId()!=undefined) {return false;}
+             $.SetForm({
+                url: "/welcome/home_data_total",
+                success: function (data) {
+                    $("#warehouse_end_count").html(parseInt(data.end_count));
+                    $("#box_end_count").html(parseInt(data.box_end_count));
+                    $("#school_agent_count").html(parseInt(data.school_agent_count));
+                    $("#building_agent_count").html(parseInt(data.building_agent_count));
+                    $("#box_count").html(parseInt(data.box_count));
+                }
+            });
+
+
+        }
+        //初始化
+        function InitialPage() {
+            $('#desktop').height($(window).height() - 22);
+            $(window).resize(function (e) {
+                window.setTimeout(function () {
+                    $('#desktop').height($(window).height() - 22);
+                }, 200);
+                e.stopPropagation();
+            });
+        }
+        //访问流量图表
+        function LoadInterfaceVisit(dataall) {
+            var arr = [];
+            var data = dataall.y_all_left;
+            for (var i in data) {
+                arr.push(data[i]);
+            }
+            // console.log(typeof(data));
+            var chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'piecontainer',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    defaultSeriesType: 'pie'
+                },
+                title: {
+                    text: ''
+                },
+                exporting: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b>' + this.point.name + '</b>: ' + Math.round(this.percentage) + ' %  (成交额:'+this.point.y+')';
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true, //点击切换
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function () {
+                                return '<b>' + this.point.name + '</b>: ' + Math.round(this.percentage) + ' %  (成交额:'+this.point.y+')';
+                            }
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    data: arr
+                }]
+            });
+        }
+        //每日走势图
+        function LoadDepartmentApp(TimeAndWarehouse) {
+            // console.log(TimeAndWarehouse);
+            var time = [];
+            var warehouse_num = [];
+            var warehouse_amount = [];
+            var timsss = TimeAndWarehouse.times;
+            var warehouse_numss = TimeAndWarehouse.warehouse_num;
+            var warehouse_amounts = TimeAndWarehouse.warehouse_amount;
+            for (var i in timsss) {
+                time.push(timsss[i]);
+                // warehouse_num.push(warehouse_numss[i]);
+            }
+            for (var i in warehouse_numss) {
+                warehouse_num.push(warehouse_numss[i]);
+            }
+            for (var i in warehouse_amounts) {
+                warehouse_amount.push(warehouse_amounts[i]);
+            }
+
+            // console.log(time);
+            // console.log(warehouse_num);
+            $('#container').highcharts({
+                chart: {
+                    type: 'spline'
+                },
+                title: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: time
+                },
+                yAxis: {
+                    title: {
+                        text: '销售额'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value + '元'
+                        }
+                    }
+                },
+                exporting: {
+                    enabled: false
+                },
+                credits: {
+                    enabled: false
+                },
+                tooltip: {
+                    crosshairs: true,
+                    shared: true
+                },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            radius: 4,
+                            lineColor: '#666666',
+                            lineWidth: 1
+                        }
+                    }
+                },
+                series: [{
+                    name: '当月成交额',
+                    marker: {
+                        symbol: 'square'
+                    },
+                    data: warehouse_amount
+
+                },
+                // {
+                //     name: '实际',
+                //     marker: {
+                //         symbol: 'diamond'
+                //     },
+                //     data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                // }
+                ]
+            });
+
+        }
+        //跳转到指定模块菜单
+        function OpenNav(Navid,title) {
+            top.$("#nav").find('a#' + Navid).trigger("click");
+        }
+    </script>
+</head>
+<body>
+    <div class="border" id="desktop" style="margin: 10px 10px 0 10px; background: #fff; overflow: auto;">
+        <div class="portal-panel">
+            <div class="row">
+<!--                <div class="portal-panel-title">
+                    <i class="fa fa-balance-scale"></i>&nbsp;&nbsp;统计指标
+                </div>-->
+                <div class="portal-panel-content" style="margin-top: 15px; overflow: hidden;">
+                    <div class="row">
+                        <div style="width: 20%; position: relative; float: left;">
+                            <div class="task-stat" style="background-color: #578ebe;">
+                                <div class="visual">
+                                    <i class="fa fa-pie-chart"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number" id="warehouse_end_count">
+                                        0
+                                    </div>
+                                    <div class="desc">
+                                        商品上架数量
+                                    </div>
+                                    <div class="number" id="warehouse_end_count2">
+                                        0
+                                    </div>
+                                    <div class="desc">
+
+                                    </div>
+                                </div>
+                                <a class="more" style="background-color: #4884b8;" href="javascript:;" onclick="OpenNav('D24DADFE-27E2-ACA0-A1E8-59EBB4E4152C')">查看更多 <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div style="width: 20%; position: relative; float: left;">
+                            <div class="task-stat" style="background-color: #e35b5a;">
+                                <div class="visual">
+                                    <i class="fa fa-bar-chart-o"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number" id="box_end_count">
+                                        0
+                                    </div>
+                                    <div class="desc">
+                                        商品销售数量
+                                    </div>
+                                </div>
+                                <a class="more" style="background-color: #e04a49;" href="javascript:;" onclick="OpenNav('1d3797f6-5cd2-41bc-b769-27f2513d61a9')">查看更多 <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div style="width: 20%; position: relative; float: left;">
+                            <div class="task-stat" style="background-color: #44b6ae;">
+                                <div class="visual">
+                                    <i class="fa fa-windows"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number" id="school_agent_count">
+                                        0
+                                    </div>
+                                    <div class="desc">
+                                        会员数量
+                                    </div>
+                                </div>
+                                <a class="more" style="background-color: #3ea7a0;" href="javascript:;" onclick="OpenNav('b352f049-4331-4b19-ac22-e379cb30bd55')">查看更多 <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div style="width: 20%; position: relative; float: left;">
+                            <div class="task-stat" style="background-color: #8775a7;">
+                                <div class="visual">
+                                    <i class="fa fa-globe"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number"  id="building_agent_count">
+                                        0
+                                    </div>
+                                    <div class="desc">
+                                        分销商数量
+                                    </div>
+                                </div>
+                                <a class="more" style="background-color: #7c699f;" href="javascript:;">查看更多 <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div style="width: 20%; position: relative; float: left;">
+                            <div class="task-stat" style="background-color: #3598dc;">
+                                <div class="visual">
+                                    <i class="fa fa-globe"></i>
+                                </div>
+                                <div class="details">
+                                    <div class="number"  id="box_count">
+                                        0
+                                    </div>
+                                    <div class="desc">
+                                        当日交易额
+                                    </div>
+                                </div>
+                                <a class="more" style="background-color: #258fd7;" href="javascript:;">查看更多 <i class="fa fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="overflow: hidden; height: 460px;">
+                <div style="width: 50%; float: left;">
+                    <div class="portal-panel-title">
+                        <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;消费商品分类占比
+                    </div>
+                    <div class="portal-panel-content" style="margin-top: 10px; overflow: hidden;">
+                        <div id="piecontainer">
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 50%; float: left;">
+                    <div class="portal-panel-title">
+                        <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;每月销售额走势
+                    </div>
+                    <div class="portal-panel-content" style="margin-top: 10px; overflow: hidden;">
+                        <div id="container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

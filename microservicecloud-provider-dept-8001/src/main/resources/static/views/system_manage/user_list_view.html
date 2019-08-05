@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>用户管理</title>
+    <!--框架必需start-->
+    <script src="../../scripts/jquery/jquery-1.10.2.min.js"></script>
+    <link href="../../styles/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../scripts/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <script src="../../scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!--框架必需end-->
+    <!--bootstrap组件start-->
+    <link href="../../scripts/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../scripts/bootstrap/bootstrap.min.js"></script>
+    <!--bootstrap组件end-->
+    <script src="../../scripts/plugins/layout/jquery.layout.js"></script>
+    <link href="../../scripts/plugins/jqgrid/css/jqgrid.css" rel="stylesheet"/>
+    <link href="../../styles/tencheer-ui.css" rel="stylesheet"/>
+
+    <script src="../../scripts/utils/base/tencheer.base.js"></script>
+    <script src="../../scripts/utils/base/tencheer.base.plugin.js"></script>
+    <script src="../../scripts/utils/base/tencheer.base.extensions.js"></script>
+    <!--<script src="../../scripts/utils/base/tencheer.old.js"></script>-->
+    <script src="../../scripts/plugins/jqgrid/grid.locale-cn.js"></script>
+    <script src="../../scripts/plugins/jqgrid/jqgrid.full.js"></script>
+    <script src="./user_list_view.js"></script>
+    
+    <style>
+        html, body {
+            padding: 3px;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="titlePanel">
+    <div class="title-search">
+    </div>
+    <div class="toolbar">
+        <div class="btn-group">
+            <a id="lr-add" class="btn btn-default" onclick="btn_add()"><i class="fa fa-plus"></i>&nbsp;新增</a>
+            <a id="lr-edit" class="btn btn-default" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+            <a id="lr-revisepassword" class="btn btn-default" onclick="btn_revisepassword()"><i class="fa fa-key"></i>&nbsp;重置密码</a>
+        </div>
+    </div>
+</div>
+<div class="gridPanel">
+    <table id="gridTable"></table>
+    <div id="gridPager"></div>
+</div>
+</body>
+</html>
+<script>
+    (function ($, tencheer) {
+        $(function () {
+            tencheer.childInit();
+        })
+    })(window.jQuery, window.tencheer)
+</script>

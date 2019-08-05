@@ -31,7 +31,7 @@ public class LoginController extends BaseContrller{
 	 * String json = null;
 	 * json = JsonUtils.obj2Json(baseResponse);
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(HttpServletRequest request, HttpServletResponse response, User user) {
 	    //向浏览器发送一个响应头，设置浏览器的解码方式为UTF-8
         response.setHeader("Content-type", "text/html;charset=UTF-8");

@@ -33,7 +33,7 @@ public class MainPageController extends BaseContrller {
 	 * 作者：冯光明
 	 * 时间：2019年7月29日16:14:39
 	 */
-	@RequestMapping(value = "/findMainPageInfo", method = RequestMethod.GET)
+	@RequestMapping(value = "/findMainPageInfo", method = RequestMethod.POST)
     public void findSysBugList(HttpServletRequest request, HttpServletResponse response) {
 		
 		
@@ -54,7 +54,7 @@ public class MainPageController extends BaseContrller {
 			     
 			 } else {
 				//读取token
-				String tokenInfo =  Base64Tool.getFromBase64(token);
+				String tokenInfo =  Base64Tool.getFromBase64(token.replaceAll(" ",""));
 			    //将token转化为Users对象
 				user = JsonUtils.readJson2Object(tokenInfo, User.class);
 				
@@ -62,6 +62,9 @@ public class MainPageController extends BaseContrller {
 			 
 			//查询主页面信息
 			mapJson = mainPageService.findMainPageInfo(user,request);
+			
+			
+			
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

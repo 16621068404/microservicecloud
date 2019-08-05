@@ -34,7 +34,7 @@ public class LoginServiceImp implements LoginService{
 		if(user == null) {
 			mapJson.put("code", 500);
 			mapJson.put("msg", "该用户不存在或者用户名密码错误！");
-			mapJson.put("date", null);
+			mapJson.put("data", null);
 			return mapJson;
 		}
 	  /*
@@ -43,7 +43,7 @@ public class LoginServiceImp implements LoginService{
        String token = TokenProccessor.getInstance().makeToken(user); 
        mapJson.put("code", 200);
 	   mapJson.put("msg", "用户登录成功！");
-	   mapJson.put("date", token);
+	   mapJson.put("data", token);
 	   return mapJson;
 	}
 
