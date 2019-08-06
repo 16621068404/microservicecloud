@@ -1,5 +1,7 @@
 package com.springcloud.entity;
 
+import java.util.List;
+@SuppressWarnings("rawtypes")
 public class PageUtil {
     private static final int DEFAULT_PAGE_SIZE   = 10;
     private static final int DEFAULT_PAGE_COUNT  = 0;
@@ -11,9 +13,76 @@ public class PageUtil {
     private int              totalCount;              // 总记录数
     private int              totalPage;               // 总页数
     private int              tempVal;                 // 
+
+	private int records;   // 总记录数
     
+    private int total;     // 总页数
     
+    private int page;      // 当前页
     
+    private int row_num;   // 当前页记录数
+    
+	private String sord;   // 排序方式
+	
+	private String sidx;   // 要排序的字段
+    
+	private List rows;     //返回数据
+    
+    public List getRows() {
+		return rows;
+	}
+
+	public void setRows(List rows) {
+		this.rows = rows;
+	}
+
+	public String getSidx() {
+		return sidx;
+	}
+
+	public void setSidx(String sidx) {
+		this.sidx = sidx;
+	}
+    public String getSord() {
+		return sord;
+	}
+
+	public void setSord(String sord) {
+		this.sord = sord;
+	}
+
+    public int getRecords() {
+		return records;
+	}
+
+	public void setRecords(int records) {
+		this.records = records;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getRow_num() {
+		return row_num;
+	}
+
+	public void setRow_num(int row_num) {
+		this.row_num = row_num;
+	}
+
     public int getTempVal() {
 		return tempVal;
 	}

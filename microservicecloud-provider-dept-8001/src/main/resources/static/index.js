@@ -45,7 +45,8 @@ $(function() {
 						success : function(data) {
 							
 							if (data.code == 200) {
-								document.cookie = data.data;
+								
+								setCookie("token",data.data); 
 								window.location.href = 'views/home_manage/admin_pretty_view.html';
 							} else {
 								$('#myModal').modal();
@@ -58,6 +59,14 @@ $(function() {
 		}
 	}
 
+	function setCookie(name,value) { 
+	    var Days = 30; 
+	    var exp = new Date(); 
+	    exp.setTime(exp.getTime() + Days*24*60*60*1000); 
+	    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString(); 
+	} 
+
+	
 	$("#reset").on("click", function() {
 		$("#username").val("");
 		$("#password").val("");

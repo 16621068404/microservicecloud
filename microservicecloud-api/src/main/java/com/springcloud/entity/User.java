@@ -56,6 +56,53 @@ public class User implements Serializable{
 	
 	private String custom_name;     //货主名称
 	
+	private String depart_no;        //部门编号
+	
+	private String depart_name;      //部门名称
+	
+	private String log_lasttime;
+	
+	private String status;
+	
+	private String user_mobile;     //用户手机
+	
+	private String user_tel;        //用户电话
+	
+	private String user_address;    //用户住址
+	
+	private String user_birthday;
+	
+	private String user_sex;        //性别
+	
+	private String user_email;      //用户邮箱
+	
+	private String user_qq;          //用户QQ
+	
+	private String user_wechat;      //用户微信信息
+	
+	private String work_start_date;
+	
+	private String create_date;
+	
+	private String create_username;
+	
+	private String modify_date;
+	
+	private String modify_username;
+	
+	private String remark;
+	
+	private int sort_code;      //排序
+	
+	private String secretkey;   //密钥
+	
+	private String employee_id;   //员工主键
+	
+	private String user_type;    //用户类型(供货商|服务商|公司员工|承运商|收货商)
+	
+	
+	
+	
 	
 	
 	

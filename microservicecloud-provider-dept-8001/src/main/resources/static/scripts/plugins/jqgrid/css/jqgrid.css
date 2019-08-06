@@ -15,7 +15,7 @@
 .ui-jqgrid .ui-jqgrid-htable th .cbox{margin-left:0px;margin-bottom:1px;vertical-align: middle;}
 .ui-jqgrid .ui-jqgrid-htable th .ui-th-div-ie input{margin-left:-3px;margin-bottom:6px;vertical-align: middle;}
 .ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column{overflow: hidden;border-top : 0 none;}
-.ui-jqgrid-labels th.ui-th-column{background: url(/statics/images/bg_repeat.png) repeat-x 0 0}
+.ui-jqgrid-labels th.ui-th-column{background: url(/images/bg_repeat.png) repeat-x 0 0}
 .ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr{border-left : 0 none;}
 .ui-th-rtl, .ui-jqgrid .ui-jqgrid-htable th.ui-th-rtl{border-right : 0 none;}
 .ui-first-th-ltr{border-right: 1px solid;}

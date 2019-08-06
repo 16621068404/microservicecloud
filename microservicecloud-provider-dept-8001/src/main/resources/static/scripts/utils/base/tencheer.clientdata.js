@@ -19,14 +19,13 @@
  *excelExportTemplate-----------excel导出模板
 */
 var token;
-var lenf;
+
 
 (function ($, tencheer) {
-    //从cookie中读取token
-	lenf = document.cookie.split(";").length - 1;
-    token = document.cookie.split(";")[lenf];
-
     "use strict";
+    //从cookie中读取token
+    token = getCookie("token")
+    
     var clientData = {};
     tencheer.login_status="normal";
     tencheer.login_user_data=[];
@@ -189,3 +188,15 @@ var lenf;
         }
     };
 })(window.jQuery, window.tencheer);
+
+
+function getCookie(name) { 
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg)){
+        return unescape(arr[2]); 
+    } else { 
+        return null; 
+    } 
+}
+
+

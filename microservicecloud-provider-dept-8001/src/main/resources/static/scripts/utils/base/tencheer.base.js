@@ -6,8 +6,19 @@
  */
 window.tencheer = {};
 
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+var token;
+var lenf;
+
 (function ($, tencheer) {
     "use strict";
+    
+    //从cookie中读取token
+    //从cookie中读取token
+    token = getCookie("token")
+    
+    
     //基础方法
     $.extend(tencheer, {
         //初始化
@@ -951,7 +962,7 @@ window.tencheer = {};
             var sort_order="";
             var columnJson="";
             var colModelData=[];
-            var grid_data =top.tencheer.data.getGrid(gridId);
+            var grid_data =top.tencheer.data.getGrid(gridId);  //获取表格样式配置
             var column_tofit=false;
 //            var gridWidth = gridTable.parent().width();
 //            if (gridWidth != undefined && grid_data.grid_width!=undefined) {
@@ -979,7 +990,7 @@ window.tencheer = {};
                 }
                 console.log("param_remark:"+param_remark);
             }
-            var column_data=top.tencheer.data.getColumn(grid_data.grid_id);
+            var column_data=top.tencheer.data.getColumn(grid_data.grid_id);  //获取表格字段配置
             columnJson=column_data;
             var grid_row=grid_data;
             $.each(column_data, function (i) {
@@ -1046,7 +1057,7 @@ window.tencheer = {};
 
             gridTable.jqGrid('GridUnload'); 
             gridTable.jqGrid({
-                url: grid_row.data_url,
+                url: grid_row.data_url+"?token="+token,
                 datatype: "json",
                 autowidth: true,
                 height:$(window).height(),
@@ -1343,6 +1354,17 @@ function accDiv(arg1, arg2) {
         return (r1 / r2) * pow(10, t2 - t1);  
     }  
 }  
+
+function getCookie(name) { 
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg)){
+        return unescape(arr[2]); 
+    } else { 
+        return null; 
+    } 
+}
+
+
 //给Number类型增加一个div方法，调用起来更加方便。  
 Number.prototype.div = function (arg) {  
     return accDiv(this, arg);  

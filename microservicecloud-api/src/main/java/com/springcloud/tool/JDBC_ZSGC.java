@@ -255,6 +255,41 @@ public class JDBC_ZSGC {
         }
 		return null;
     }
+	
+	
+	
+
+    /**
+     * 查询count(*)
+     * @author 冯光明
+     * @param jdbcBean 
+     * @description  
+     * @time 2018年12月10日 下午5:03:11
+     */
+	public static int queryCount(JDBCbean jdbcBean, String sql){
+    	Connection conn = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        int count = 0;
+        try {
+            // 获取连接
+        	conn = JDBC_ZSGC.getConnection(jdbcBean);
+            // 创建语句执行者
+            st = conn.prepareStatement(sql);
+            // 执行sql
+            rs = st.executeQuery();
+            while (rs.next()) {
+            	count = rs.getInt("count");
+            }
+            return count;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            JDBC_ZSGC.colseResource(conn, st, rs);
+        }
+		return count;
+		
+    }
     
     
     /**

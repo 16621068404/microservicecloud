@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.atguigu.springcloud.UserInfo.ConfigSql.UserInfoConfigSql;
 import com.atguigu.springcloud.UserInfo.Service.UserInfoService;
+import com.springcloud.entity.PageUtil;
 import com.springcloud.entity.SysColumn;
 import com.springcloud.entity.SysGrid;
 import com.springcloud.entity.User;
@@ -46,6 +47,31 @@ public class UserInfoServiceImp implements UserInfoService {
 		// 执行查询功能，并返回查询数据
 		List<SysColumn> sysColumn = (List<SysColumn>) JDBC_ZSGC.query(jdbcBean, gridColumnSql, SysColumn.class);
 		return sysColumn;
+	}
+	
+    /**
+     * 获取用户页面数据表格
+     * 
+     */
+	public PageUtil getPageListJson(User user, PageUtil pageUtil) {
+		//封装连接数据库信息
+		JDBCbean jdbcBean = JDBCUtils.encapsulationJDBC(user);
+		//封装sql语句,查询记录数
+		String recordsSql = UserInfoConfigSql.findCountUser(pageUtil);
+		//执行查询功能，并返回查询数据记录数
+		int records = JDBC_ZSGC.queryCount(jdbcBean, recordsSql);
+		//封装sql语句，获取用户页面数据表格数据
+		String rowsSql = UserInfoConfigSql.findPageList(pageUtil);
+		// 执行查询功能，并返回查询数据
+		List<User> userRow = (List<User>) JDBC_ZSGC.query(jdbcBean, rowsSql, User.class);
+		
+		//封装返回到前端的数据
+		pageUtil.setRows(userRow);
+		pageUtil.setRecords(records);
+		int total = (int) Math.ceil((double) records / (double)pageUtil.getPageSize());
+		pageUtil.setTotal(total);
+		
+		return pageUtil;
 	}
 
 }
