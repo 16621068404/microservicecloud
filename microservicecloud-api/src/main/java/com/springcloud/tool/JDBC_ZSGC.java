@@ -139,6 +139,41 @@ public class JDBC_ZSGC {
     }
     
     
+
+    /**
+     * 修改
+     * @author 冯光明
+     * @description  
+     * @time 2018年12月10日 下午3:18:18
+     */
+    public static Integer update(String sql,JDBCbean jdbcBean) {
+    	Connection conn = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        
+        try {
+            // 获取连接
+            conn = JDBC_ZSGC.getConnection(jdbcBean);
+            // 创建语句执行者
+            st= conn.prepareStatement(sql);
+            // 执行sql
+            int i = st.executeUpdate();
+           
+            return i;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JDBC_ZSGC.colseResource(conn, st, rs);
+        }
+		return 0;
+    }
+    
+    
+    
+    
+    
+    
+    
     public static int[] addBatch(String sql,JDBCbean jdbcBean){
     	Connection conn = null;
         PreparedStatement st = null;

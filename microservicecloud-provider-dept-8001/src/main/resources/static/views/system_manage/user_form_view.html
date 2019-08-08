@@ -5,87 +5,31 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>用户管理</title>
-    <script src="/statics/scripts/jquery/jquery-1.10.2.min.js"></script>
-    <link href="/statics/styles/font-awesome.min.css" rel="stylesheet" />
-    <link href="/statics/scripts/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
-    <script src="/statics/scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../../scripts/jquery/jquery-1.10.2.min.js"></script>
+    <link href="../../styles/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../scripts/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <script src="../../scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
     <!--框架必需end-->
     <!--bootstrap组件start-->
-    <link href="/statics/scripts/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="/statics/scripts/bootstrap/bootstrap.extension.css" rel="stylesheet" />
-    <script src="/statics/scripts/bootstrap/bootstrap.min.js"></script>
+    <link href="../../scripts/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../scripts/bootstrap/bootstrap.extension.css" rel="stylesheet" />
+    <script src="../../scripts/bootstrap/bootstrap.min.js"></script>
     <!--bootstrap组件end-->
-    <link href="/statics/styles/tencheer-ui.css" rel="stylesheet"/>
+    <link href="../../styles/tencheer-ui.css" rel="stylesheet"/>
 
-    <script src="/statics/scripts/utils/base/tencheer.base.js?v=20190320"></script>
-    <script src="/statics/scripts/utils/base/tencheer.base.plugin.js"></script>
-    <script src="/statics/scripts/utils/base/tencheer.old.js"></script>
-    <script src="/statics/scripts/plugins/tree/tree.js"></script>
-    <script src="/statics/scripts/plugins/validator/validator.js"></script>
-    <script src="/statics/scripts/plugins/wizard/wizard.js"></script>
-    <script src="/statics/scripts/plugins/datetime/pikaday.js"></script>
-        <script src="/statics/scripts/plugins/my97datepicker/WdatePicker.js"></script>
+    <script src="../../scripts/utils/base/tencheer.base.js"></script>
+    <script src="../../scripts/utils/base/tencheer.base.plugin.js"></script>
+    <script src="../../scripts/utils/base/tencheer.old.js"></script>
+    <script src="../../scripts/plugins/tree/tree.js"></script>
+    <script src="../../scripts/plugins/validator/validator.js"></script>
+    <script src="../../scripts/plugins/wizard/wizard.js"></script>
+    <script src="../../scripts/plugins/datetime/pikaday.js"></script>
+    <script src="../../scripts/plugins/my97datepicker/WdatePicker.js"></script>
+    <script src="./user_form_view.js"></script>
 </head>
 <body>
 <form id="form1">
-    <script>
-        var keyValue = request('keyValue');
-        $(function () {
-           initControl();
-        })
-        //初始化控件
-        function initControl() {
-            //加载角色
-            // $("#role_no").ComboBox({
-            //     url: "/base_manage/role_manage/GetListJson",
-            //     id: "F_RoleId",
-            //     text: "F_FullName",
-            //     description: "==请选择==",
-            //     height: "200px",
-            //     allowSearch: true
-            // });
-            //部门
-              $("#depart_no").ComboBox({
-                 url: "/system_manage/department_manage/GetDepartDropdownList",
-                 id: "depart_no",
-                 text: "depart_name",
-                 description: "==请选择部门==",
-                 height: "200px",
-                 allowSearch: true
-             });
-            //性别
-            $("#user_sex").ComboBox({
-                description: "==请选择==",
-            });
-            if (!!keyValue) {
-                $.SetForm({
-                    url: "/system_manage/user_manage/GetFormJson",
-                    param: { keyValue: keyValue },
-                    success: function (data) {
-                        $("#form1").SetWebControls(data);
-                    }
-                });
-            }
-        }
-        //保存表单
-        function AcceptClick() {
-            
-            if (!$('#form1').Validform()) {
-                return false;
-            }
-            var postData = $("#form1").GetWebControls(keyValue);
-            $.SaveForm({
-                url: "/system_manage/user_manage/SaveForm",
-                param: { "keyValue": keyValue, "UserEntity":postData },
-                close:false,
-                loading: "正在保存数据...",
-                success: function (data) {
-                    $.currentIframe().$("#gridTable").trigger("reloadGrid");
-                    dialogClose();
-                }
-            })
-        }
-    </script>
+   
     <div style="margin-left: 10px; margin-right: 10px;">
 <!--        <ul class="nav nav-tabs">-->
 <!--            <li class="active"><a href="#BaseInfo" data-toggle="tab">基本信息</a></li>-->

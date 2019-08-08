@@ -142,8 +142,8 @@ function btn_revisepassword() {
 			id : "RevisePassword",
 			title : '重置密码',
 			url : '/system_manage/user_manage/RevisePassword?keyValue='
-					+ keyValue + "&user_logid=" + escape(user_logid)
-					+ '&user_name=' + escape(user_name),
+					+ keyValue + "&user_logid=" + user_logid
+					+ '&user_name=' + user_name,
 			width : "500px",
 			height : "260px",
 			callBack : function(iframeId) {

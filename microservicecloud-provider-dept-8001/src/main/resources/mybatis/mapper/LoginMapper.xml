@@ -5,7 +5,7 @@
 <mapper namespace="com.atguigu.springcloud.Login.Dao.LoginDao">
 
 	<select id="findLoginUserDao" resultType="User" parameterType="User">
-		select user_no,user_logid,user_logpass,server_name,db_name,db_user,db_password from v_cust_user where user_logid = #{user_logid} and user_logpass = #{user_logpass}
+		select user_no,user_logid,user_logpass,server_name,db_name,db_user,db_password,cust_no,branch_no from v_cust_user where user_logid = #{user_logid} and user_logpass = #{user_logpass}
 	</select>
 
 </mapper>

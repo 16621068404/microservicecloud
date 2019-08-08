@@ -34,6 +34,25 @@ public class BaseContrller {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * 将json转化为指定的参数对象
+     *
+     * @param request
+     * @param classType
+     * @return
+     */
+    public static <T> T getParamsYmd(HttpServletRequest request, Class<T> classType, String param) {
+        T conditons = null;
+        String json = request.getParameter(param);
+        json = StringUtil.isNullOrBlank(json) ? JsonUtils.DEFAULT_JSON : json;
+        try {
+            conditons = (T)JsonUtils.readJson2ObjectFormat(json, classType, DateUtils.DATE_FORMAT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return conditons;
+    }
 	
 
     /**

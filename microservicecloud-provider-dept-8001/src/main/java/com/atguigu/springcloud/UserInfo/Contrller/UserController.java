@@ -23,6 +23,7 @@ import com.springcloud.entity.PageUtil;
 import com.springcloud.entity.SysGrid;
 import com.springcloud.entity.User;
 import com.springcloud.tool.Base64Tool;
+import com.springcloud.tool.EscapeUtils;
 import com.springcloud.tool.JsonUtils;
 import com.springcloud.tool.RequestParamUtil;
 @SuppressWarnings("unused")
@@ -182,11 +183,205 @@ public class UserController extends BaseContrller{
 	      }
 		
 		
+	     
+		/**
+		 * 
+		 * 用户管理界面弹出from表单
+		 *   进行用户的新增
+		 */
+		@RequestMapping(value = "/system_manage/user_manage/AddUser", method = RequestMethod.GET)
+		public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response) {
+			return new ModelAndView("redirect:/views/system_manage/user_form_view.html");
+		}
+		
+		
+		
+		/**
+		 * 查询部门信息
+		 * /system_manage/department_manage/GetDepartDropdownList
+		 * 
+		 */
+		@SuppressWarnings("rawtypes")
+		@RequestMapping(value = "/system_manage/department_manage/GetDepartDropdownList", method = RequestMethod.GET)
+		public void getDepartDropdownList(HttpServletRequest request, HttpServletResponse response) {
+			
+			    List department = new ArrayList();
+				//获取token,token中含有用户的基本信息；
+				String token = request.getParameter("token");
+				
+				User user = new User();
+				try {
+					 //判断token是否失效
+					 if(token.equals("undefined")) {
+					     return;
+					 } else {
+						//读取token
+						String tokenInfo =  Base64Tool.getFromBase64(token.replaceAll(" ",""));
+					    //将token转化为Users对象
+						user = JsonUtils.readJson2Object(tokenInfo, User.class);
+					 }
+					 //获取部门信息
+					 department = userInfoService.getDepartDropdownList(user);
+				} catch (JsonParseException e) {
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					 writerJsonResult(request,response, department);// 结果回写
+				}
+					
+	      }
+		
+		/**
+		 *  保存用户
+		 * 新增或者修改2个功能共用一个方法
+		 */
+		@SuppressWarnings("rawtypes")
+		@RequestMapping(value = "/system_manage/user_manage/SaveForm", method = RequestMethod.POST)
+		public void saveForm(HttpServletRequest request, HttpServletResponse response) {
+			
+			    Map resultMap = new HashMap();
+				//获取token,token中含有用户的基本信息；
+				String token = request.getParameter("token");
+				String keyValue = request.getParameter("keyValue");
+				
+				//接收字符串,并转成对象
+				User saveUser = getParamsYmd(request, User.class, "UserEntity");
+				
+				User user = new User();
+				try {
+					 //判断token是否失效
+					 if(token.equals("undefined")) {
+					     return;
+					 } else {
+						//读取token
+						String tokenInfo =  Base64Tool.getFromBase64(token.replaceAll(" ",""));
+					    //将token转化为Users对象
+						user = JsonUtils.readJson2Object(tokenInfo, User.class);
+					 }
+					 //保存用户信息
+					resultMap = userInfoService.saveUserForm(user,saveUser);
+				} catch (JsonParseException e) {
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					 writerJsonResult(request,response, resultMap);// 结果回写
+				}
+					
+	      }
+		
+		
+		/**
+		 * 跳转到编辑用户信息界面
+		 */
+		@RequestMapping(value = "/system_manage/user_manage/EditUser", method = RequestMethod.GET)
+		public ModelAndView EditUser(HttpServletRequest request, HttpServletResponse response) {
+			String keyValue = request.getParameter("keyValue");
+			return new ModelAndView("redirect:/views/system_manage/user_form_view.html?keyValue="+keyValue);
+		}
+		
+		
+		/**
+		 *  编辑用户，数据回显   
+		 * 根据用户id，查询用户信息
+		 * 
+		 */
+		@SuppressWarnings("rawtypes")
+		@RequestMapping(value = "/system_manage/user_manage/GetFormJson", method = RequestMethod.GET)
+		public void getFormJson(HttpServletRequest request, HttpServletResponse response) {
+			
+			    Object resultJson = new Object();
+				//获取token,token中含有用户的基本信息；
+				String token = request.getParameter("token");
+				String keyValue = request.getParameter("keyValue");
+
+				User user = new User();
+				try {
+					 //判断token是否失效
+					 if(token.equals("undefined")) {
+					     return;
+					 } else {
+						//读取token
+						String tokenInfo =  Base64Tool.getFromBase64(token.replaceAll(" ",""));
+					    //将token转化为Users对象
+						user = JsonUtils.readJson2Object(tokenInfo, User.class);
+					 }
+					 //查询用户信息
+					 resultJson = userInfoService.findUserForm(user,keyValue);
+				} catch (JsonParseException e) {
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					 writerJsonResult(request,response, resultJson);// 结果回写
+				}
+					
+	      }
+		
+		
+		/**
+		 * 跳转到修改用户密码信息界面
+		 */
+		@RequestMapping(value = "/system_manage/user_manage/RevisePassword", method = RequestMethod.GET)
+		public ModelAndView revisePassword(HttpServletRequest request, HttpServletResponse response) {
+			String keyValue = request.getParameter("keyValue");
+			String user_logid = request.getParameter("user_logid");
+			String user_name = request.getParameter("user_name");
+			//对js中escape编码
+			user_name = EscapeUtils.escape(user_name);
+			return new ModelAndView("redirect:/views/system_manage/revise_password_view.html?keyValue="+keyValue+"&user_logid="+user_logid+"&user_name="+user_name);
+		}
 	  
 		
 		
 		
-	  
+		
+		/**
+		 *  重置密码
+		 *  
+		 */
+		@SuppressWarnings("rawtypes")
+		@RequestMapping(value = "/system_manage/user_manage/SaveRevisePassword", method = RequestMethod.POST)
+		public void saveRevisePassword(HttpServletRequest request, HttpServletResponse response) {
+			
+			    Map resultMap = new HashMap();
+				//获取token,token中含有用户的基本信息；
+				String token = request.getParameter("token");
+				String keyValue = request.getParameter("keyValue");
+				String Password = request.getParameter("Password");
+				
+				User user = new User();
+				try {
+					 //判断token是否失效
+					 if(token.equals("undefined")) {
+					     return;
+					 } else {
+						//读取token
+						String tokenInfo =  Base64Tool.getFromBase64(token.replaceAll(" ",""));
+					    //将token转化为Users对象
+						user = JsonUtils.readJson2Object(tokenInfo, User.class);
+					 }
+					 //保存用户密码
+					resultMap = userInfoService.saveUserPassword(user,keyValue,Password);
+				} catch (JsonParseException e) {
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					 writerJsonResult(request,response, resultMap);// 结果回写
+				}
+					
+	      }
+		
 	  
 	  
 }

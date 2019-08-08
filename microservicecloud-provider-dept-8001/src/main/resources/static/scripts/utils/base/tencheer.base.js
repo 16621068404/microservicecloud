@@ -9,7 +9,6 @@ window.tencheer = {};
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 var token;
-var lenf;
 
 (function ($, tencheer) {
     "use strict";
