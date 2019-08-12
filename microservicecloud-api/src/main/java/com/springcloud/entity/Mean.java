@@ -1,5 +1,7 @@
 package com.springcloud.entity;
 
+import java.io.Serializable;
+
 import lombok.Data;
 /**
  * 主页面的菜单实体bean
@@ -7,9 +9,13 @@ import lombok.Data;
  *
  */
 @Data
-public class Mean {
+public class Mean implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String menu_id;      //菜单主键
 	private String parent_id;    //父级主键
 	private String menu_code;    //菜单编码

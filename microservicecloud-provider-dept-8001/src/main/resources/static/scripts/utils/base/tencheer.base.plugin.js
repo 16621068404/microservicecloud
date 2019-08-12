@@ -336,7 +336,7 @@
                 $.each(data, function (i, row) {
                     var item = {};
                     for (var ii in row) {
-                        if (ii != "ChildNodes") {
+                        if (ii != "childNodes") {
                             item[ii] = row[ii];
                         }
                     }
@@ -345,8 +345,8 @@
                         flag = true;
                     }
                     if (item.hasChildren) {
-                        item.ChildNodes = dom.searchData(row.ChildNodes, keyword);
-                        if (item.ChildNodes.length > 0) {
+                        item.childNodes = dom.searchData(row.childNodes, keyword);
+                        if (item.childNodes.length > 0) {
                             flag = true;
                         }
                         else {

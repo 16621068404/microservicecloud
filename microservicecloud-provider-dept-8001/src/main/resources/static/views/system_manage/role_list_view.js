@@ -1,5 +1,9 @@
 var columnJson = [];
+var token;
 $(function() {
+	//从cookie中读取token
+    //从cookie中读取token
+    token = getCookie("token")
 	InitialControl();
 	InitialPage();
 
@@ -124,7 +128,7 @@ function btn_authorize() {
 			id : "AllotRight",
 			title : '角色授权 - ' + RoleName,
 			url : '/system_manage/role_manage/AllotRight?ObjectId=' + RoleId
-					+ '&Category=2',
+					+ '&Category=2'+'&token='+token,
 			width : "700px",
 			height : "690px",
 			btn : null

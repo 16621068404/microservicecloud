@@ -1,5 +1,7 @@
 package com.springcloud.entity;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -8,8 +10,13 @@ import lombok.Data;
  *
  */
 @Data
-public class Billvalue {
+public class Billvalue implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String bill_prefix;     //前缀
 	
 	private String bill_branch;     //分站

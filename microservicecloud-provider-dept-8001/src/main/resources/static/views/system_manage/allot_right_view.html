@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>角色权限</title>
+    <!--框架必需start-->
+    <script src="../../scripts/jquery/jquery-1.10.2.min.js"></script>
+    <link href="../../styles/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../scripts/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <script src="../../scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!--框架必需end-->
+    <!--bootstrap组件start-->
+    <link href="../../scripts/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../scripts/bootstrap/bootstrap.extension.css" rel="stylesheet" />
+    <script src="../../scripts/bootstrap/bootstrap.min.js"></script>
+    <!--bootstrap组件end-->
+
+    <script src="../../scripts/plugins/datepicker/WdatePicker.js"></script>
+    <link href="../../scripts/plugins/tree/tree.css" rel="stylesheet"/>
+    <link href="../../scripts/plugins/datetime/pikaday.css" rel="stylesheet"/>
+    <link href="../../scripts/plugins/wizard/wizard.css" rel="stylesheet"/>
+    <link href="../../styles/tencheer-ui.css" rel="stylesheet"/>
+
+    <link href="../../scripts/plugins/tree/tree.css" rel="stylesheet"/>
+    <link href="../../scripts/plugins/datetime/pikaday.css" rel="stylesheet"/>
+    <link href="../../scripts/plugins/wizard/wizard.css" rel="stylesheet"/>
+    <link href="../../styles/tencheer-ui.css" rel="stylesheet"/>
+
+    <script src="../../scripts/utils/base/tencheer.base.js"></script>
+    <script src="../../scripts/utils/base/tencheer.base.plugin.js"></script>
+    <script src="../../scripts/utils/base/tencheer.old.js"></script>
+    <script src="../../scripts/plugins/tree/tree.js"></script>
+    <script src="../../scripts/plugins/validator/validator.js"></script>
+    <script src="../../scripts/plugins/wizard/wizard.js"></script>
+    <script src="../../scripts/plugins/datetime/pikaday.js"></script>
+    <script src="./allot_right_view.js"></script>
+    
+
+</head>
+<body>
+<form id="form1">
+
+  
+    <div class="widget-body">
+        <div id="wizard" class="wizard" data-target="#wizard-steps" style="border-left: none; border-top: none; border-right: none;">
+            <ul class="steps">
+                <li data-target="#step-1" class="active"><span class="step">1</span>系统功能<span class="chevron"></span></li>
+<!--                <li data-target="#step-2"><span class="step">2</span>系统按钮<span class="chevron"></span></li>
+                <li data-target="#step-3"><span class="step">3</span>系统视图<span class="chevron"></span></li>-->
+<!--                <li data-target="#step-4"><span class="step">4</span>数据权限<span class="chevron"></span></li>-->
+            </ul>
+        </div>
+        <div class="step-content" id="wizard-steps" style="border-left: none; border-bottom: none; border-right: none;">
+            <div class="step-pane active" id="step-1">
+                <div id="ModuleTree" style="margin: 10px;"></div>
+            </div>
+            <div class="step-pane" id="step-2">
+                <div id="ModuleButtonTree" style="margin: 10px;"></div>
+            </div>
+            <div class="step-pane" id="step-3">
+                <div id="ModuleColumnTree" style="margin: 10px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-button" id="wizard-actions">
+        <!--<a id="btn_test"  style="padding-left: 2px" class="btn btn-default btn-prev" onclick="TreeviewExpandCollapseAll()">收缩</a>-->
+<!--        <a id="btn_last" disabled class="btn btn-default btn-prev">上一步</a>
+        <a id="btn_next" class="btn btn-default btn-next">下一步</a>-->
+        <a id="btn_finish"  class="btn btn-success">完成</a>
+    </div>
+</form>
+</body>
+</html>
+<script>
+    $(function () {
+        tencheer.childInit();
+    })
+</script>

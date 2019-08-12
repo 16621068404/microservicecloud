@@ -1,10 +1,17 @@
 package com.springcloud.entity;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class Role {
+public class Role implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String branch_no;
 	
 	private String role_no;          //角色编号

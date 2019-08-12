@@ -1,5 +1,6 @@
 package com.springcloud.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import lombok.Data;
@@ -10,7 +11,12 @@ import lombok.Data;
  *
  */
 @Data
-public class SysColumn {
+public class SysColumn implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private String column_id;    //列主键
 	

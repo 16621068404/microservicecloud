@@ -29,7 +29,7 @@
                  * @description {Config} cbiconpath  
                  * {String} Checkbox image path.
                  */
-                cbiconpath: "/statics/scripts/plugins/tree/images/icons/",
+                cbiconpath: "../../scripts/plugins/tree/images/icons/",
                 icons: ["checkbox_0.png", "checkbox_1.png", "checkbox_2.png"],
                 /**
                  * @description {Config} showcheck  
@@ -66,10 +66,10 @@
                  * value:"1", //node value
                  * showcheck:false, //whether to show checkbox
                  * checkstate:0, //Checkbox checking state. 0 for unchecked, 1 for partial checked, 2 for checked.
-                 * hasChildren:true, //If hasChildren and complete set to true, and ChildNodes is empty, tree will request server to get sub node.
+                 * hasChildren:true, //If hasChildren and complete set to true, and childNodes is empty, tree will request server to get sub node.
                  * isexpand:false, //Expand or collapse.
                  * complete:false, //See hasChildren.
-                 * ChildNodes:[] // child nodes
+                 * childNodes:[] // child nodes
                  * }]                  
                  *  */
                 data: null,
@@ -138,7 +138,7 @@
                             "isexpand": true,
                             "complete": true,
                             "hasChildren": false,
-                            "ChildNodes": []
+                            "childNodes": []
                         });
                     }
                 }
@@ -163,7 +163,7 @@
                                 "isexpand": true,
                                 "complete": true,
                                 "hasChildren": false,
-                                "ChildNodes": []
+                                "childNodes": []
                             });
                         }
                         var l = data.length;
@@ -280,22 +280,22 @@
             if (nd.hasChildren) {
                 if (nd.isexpand || dfop.isAllExpand) {
                     ht.push("<ul  class='bbit-tree-node-ct'  style='z-index: 0; position: static; visibility: visible; top: auto; left: auto;'>");
-                    if (nd.ChildNodes) {
-                        var l = nd.ChildNodes.length;
+                    if (nd.childNodes) {
+                        var l = nd.childNodes.length;
                         for (var k = 0; k < l; k++) {
-                            nd.ChildNodes[k].parent = nd;
-                            buildnode(nd.ChildNodes[k], ht, deep + 1, path + "." + k, k == l - 1);
+                            nd.childNodes[k].parent = nd;
+                            buildnode(nd.childNodes[k], ht, deep + 1, path + "." + k, k == l - 1);
                         }
                     }
                     ht.push("</ul>");
                 }
                 else {
                     ht.push("<ul style='display:none;'>");
-                    if (nd.ChildNodes) {
-                        var l = nd.ChildNodes.length;
+                    if (nd.childNodes) {
+                        var l = nd.childNodes.length;
                         for (var k = 0; k < l; k++) {
-                            nd.ChildNodes[k].parent = nd;
-                            buildnode(nd.ChildNodes[k], ht, deep + 1, path + "." + k, k == l - 1);
+                            nd.childNodes[k].parent = nd;
+                            buildnode(nd.childNodes[k], ht, deep + 1, path + "." + k, k == l - 1);
                         }
                     }
                     ht.push("</ul>");
@@ -312,7 +312,7 @@
                     t = t[ap[i]];
                 }
                 else {
-                    t = t.ChildNodes[ap[i]];
+                    t = t.childNodes[ap[i]];
                 }
             }
             return t;
@@ -322,8 +322,8 @@
             if (type == 1) {
                 item.checkstate = state;
             }
-            else {// go to childnodes
-                var cs = item.ChildNodes;
+            else {// go to childNodes
+                var cs = item.childNodes;
                 var l = cs.length;
                 var ch = true;
                 for (var i = 0; i < l; i++) {
@@ -351,8 +351,8 @@
         //iterate all children nodes
         function cascade(fn, item, args) {
             if (fn(item, args, 1) != false) {
-                if (item.ChildNodes != null && item.ChildNodes.length > 0) {
-                    var cs = item.ChildNodes;
+                if (item.childNodes != null && item.childNodes.length > 0) {
+                    var cs = item.childNodes;
                     for (var i = 0, len = cs.length; i < len; i++) {
                         cascade(fn, cs[i], args);
                     }
@@ -386,13 +386,13 @@
                     else {
                         var deep = path.split(".").length;
                         if (item.complete) {
-                            item.ChildNodes != null && asnybuild(item.ChildNodes, deep, path, ul, item);
+                            item.childNodes != null && asnybuild(item.childNodes, deep, path, ul, item);
                         }
                         else {
                             $(this).addClass("bbit-tree-node-loading");
                             asnyloadc(item, true, function (data) {
                                 item.complete = true;
-                                item.ChildNodes = data;
+                                item.childNodes = data;
                                 asnybuild(data, deep, path, ul, item);
                             });
                         }
@@ -549,7 +549,7 @@
                     asnyloadc(item, true, function (data) {
 
                         item.complete = true;
-                        item.ChildNodes = data;
+                        item.childNodes = data;
                         item.isexpand = true;
                         if (data && data.length > 0) {
                             item.hasChildren = true;
@@ -576,16 +576,16 @@
         function getck(items, c, fn) {
             for (var i = 0, l = items.length; i < l; i++) {
                 (items[i].showcheck == true && items[i].checkstate == 1) && c.push(fn(items[i]));
-                if (items[i].ChildNodes != null && items[i].ChildNodes.length > 0) {
-                    getck(items[i].ChildNodes, c, fn);
+                if (items[i].childNodes != null && items[i].childNodes.length > 0) {
+                    getck(items[i].childNodes, c, fn);
                 }
             }
         }
         function getCkAndHalfCk(items, c, fn) {
             for (var i = 0, l = items.length; i < l; i++) {
                 (items[i].showcheck == true && (items[i].checkstate == 1 || items[i].checkstate == 2)) && c.push(fn(items[i]));
-                if (items[i].ChildNodes != null && items[i].ChildNodes.length > 0) {
-                    getCkAndHalfCk(items[i].ChildNodes, c, fn);
+                if (items[i].childNodes != null && items[i].childNodes.length > 0) {
+                    getCkAndHalfCk(items[i].childNodes, c, fn);
                 }
             }
         }

@@ -80,8 +80,8 @@ public class UserInfoConfigSql {
 	}
 
 	//封装sql语句,查询当前流水号的长度   系统单据编号最大值  sys_billvalue  Billvalue  
-	public static String findBillValue() {
-		StringBuilder sql = new StringBuilder("SELECT * from sys_billvalue where bill_prefix = 'U' ");
+	public static String findBillValue(String BILL_PREFIX) {
+		StringBuilder sql = new StringBuilder("SELECT * from sys_billvalue where bill_prefix = '"+BILL_PREFIX+"' ");
 		return sql.toString();
 	}
 
@@ -137,7 +137,7 @@ public class UserInfoConfigSql {
 		sql.append(SET);
 		sql.append("bill_value = '"+maxValue+"'");
 		sql.append(WHERE);
-		sql.append("bill_prefix = 'U'");
+		sql.append("bill_prefix = '"+billPrefix+"'");
 		return sql.toString();
 	}
 
@@ -167,6 +167,8 @@ public class UserInfoConfigSql {
 		sql.append("user_email =").append(saveUser.getUser_email() == null || saveUser.getUser_email().equals("") ? null+"," : "'"+saveUser.getUser_email()+"',");
 		sql.append("depart_no =").append(saveUser.getDepart_no() == null || saveUser.getDepart_no().equals("") ? null+"," : "'"+saveUser.getDepart_no()+"',");
 		sql.append("user_address =").append(saveUser.getUser_address() == null || saveUser.getUser_address().equals("") ? null+"," : "'"+saveUser.getUser_address()+"',");
+		sql.append("modify_date =").append(saveUser.getModify_date() == null || saveUser.getModify_date().equals("") ? null+"," : "'"+saveUser.getModify_date()+"',");
+		sql.append("modify_username =").append(saveUser.getModify_username() == null || saveUser.getModify_username().equals("") ? null+"," : "'"+saveUser.getModify_username()+"',");
 		sql.append("remark =").append(saveUser.getRemark() == null || saveUser.getRemark().equals("") ? null : "'"+saveUser.getRemark()+"'");
 		sql.append(WHERE);
 		sql.append("user_no = '"+saveUser.getUser_no()+"'");

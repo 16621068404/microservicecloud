@@ -106,6 +106,7 @@ public class UserInfoServiceImp implements UserInfoService {
 	 */
 	public Map saveUserForm(User user, User saveUser) {
 		Map resultMap = new HashMap();
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
 		// 封装连接数据库信息
 		JDBCbean jdbcBean = JDBCUtils.encapsulationJDBC(user);
 		
@@ -113,6 +114,9 @@ public class UserInfoServiceImp implements UserInfoService {
 		if (saveUser.getUser_no() != null && !saveUser.getUser_no().equals("")) {
 		    //========================执行修改功能==========================
 			//封装sql语句，修改用户信息
+			String modify_date = sdf.format(new Date());
+			saveUser.setModify_date(modify_date);
+			saveUser.setModify_username(user.getUser_logid());
 			String updateUserSql = UserInfoConfigSql.updateUserInfo(saveUser);
 			int num = JDBC_ZSGC.update(updateUserSql, jdbcBean);
 			if (num > 0) {
@@ -131,14 +135,14 @@ public class UserInfoServiceImp implements UserInfoService {
 		// 执行查询功能，并返回查询数据
 		Billsetup billsetup = (Billsetup) JDBC_ZSGC.queryObject(jdbcBean, rulesSql, Billsetup.class);
 		// 封装sql语句,查询当前流水号的长度 系统单据编号最大值 sys_billvalue
-		String billValueSql = UserInfoConfigSql.findBillValue();
+		String billValueSql = UserInfoConfigSql.findBillValue(BILL_PREFIX);
 		Billvalue billvalue = (Billvalue) JDBC_ZSGC.queryObject(jdbcBean, billValueSql, Billvalue.class);
 		// 根据单据编号规则表创建一个生成单据编号的公共方法。 --------------sys_billsetup---【单据编号规则设置表】
 		String user_no = createBillsetup(billsetup, user, billvalue);
 		// 封装要保存的数据
 		saveUser.setUser_no(user_no);
 		saveUser.setBranch_no(user.getBranch_no());
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
+		
 		String create_date = sdf.format(new Date());
 		saveUser.setCreate_date(create_date);
 		saveUser.setCreate_username(user.getUser_logid());
@@ -173,7 +177,7 @@ public class UserInfoServiceImp implements UserInfoService {
 	}
 
 	// 根据单据编号规则表创建一个生成单据编号的公共方法。 --------------sys_billsetup---【单据编号规则设置表】
-	private String createBillsetup(Billsetup billsetup, User user, Billvalue billvalue) {
+	public static String createBillsetup(Billsetup billsetup, User user, Billvalue billvalue) {
 		// 要返回的用户编码
 		StringBuilder user_no = new StringBuilder();
 

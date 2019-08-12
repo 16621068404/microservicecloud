@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class SysBug   implements Serializable{
+public class SysBug implements Serializable{
 	
 	/**
 	 * 

@@ -1,9 +1,14 @@
 package com.springcloud.entity;
 
+import java.io.Serializable;
 import java.util.List;
 @SuppressWarnings("rawtypes")
-public class PageUtil {
-    private static final int DEFAULT_PAGE_SIZE   = 10;
+public class PageUtil implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final int DEFAULT_PAGE_SIZE   = 10;
     private static final int DEFAULT_PAGE_COUNT  = 0;
     private static final int DEFAULT_TOTAL_COUNT = 0;
     private static final int DEFAULT_TOTAL_PAGE  = 0;
