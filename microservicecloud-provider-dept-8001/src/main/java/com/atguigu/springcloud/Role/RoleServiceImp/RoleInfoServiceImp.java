@@ -377,7 +377,7 @@ public class RoleInfoServiceImp implements RoleInfoService {
 	 * @param jdbcBean
 	 * @return
 	 */
-	private User findDLuUserInfo(User user, JDBCbean jdbcBean) {
+	public static User findDLuUserInfo(User user, JDBCbean jdbcBean) {
 		//根据用户id,查询用户信息；
 		//封装sql语句
 		String userNoSql = MainPageConfigSql.findUserNoSql(user.getUser_no());      //【客户信息方法】 

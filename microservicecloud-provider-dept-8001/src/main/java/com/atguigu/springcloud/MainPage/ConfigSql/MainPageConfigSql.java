@@ -14,7 +14,7 @@ public class MainPageConfigSql {
       
 	
 	//查询主页面的sql语句
-	public static String findMainPageSql (String role_no) {
+	public static String findMainPageSql (String role_no, String is_super) {
 		
 		//一个用户可能含有多个角色
 		role_no = StringUtil.conversionDataForIn(role_no);
@@ -22,8 +22,12 @@ public class MainPageConfigSql {
 		sql.append(FROM);
 		sql.append("sys_menu menu");
 		sql.append(WHERE);
-		sql.append("menu.menu_id IN (");
-		sql.append("SELECT sysau.item_id FROM sys_authorize sysau WHERE sysau.object_id IN ("+role_no+"))");
+		if (is_super.equals("1")) {  //超级管理员，查询所有的菜单，不考虑角色限制
+			sql.append("1=1");
+		} else {
+			sql.append("menu.menu_id IN (");
+			sql.append("SELECT sysau.item_id FROM sys_authorize sysau WHERE sysau.object_id IN ("+role_no+"))");
+		}
 		sql.append(AND);
 		sql.append("menu.enabled_mark = 1");
 		sql.append(ORDER_BY);

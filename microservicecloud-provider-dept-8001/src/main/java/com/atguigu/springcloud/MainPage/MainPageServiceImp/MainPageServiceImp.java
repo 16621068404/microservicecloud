@@ -47,8 +47,10 @@ public class MainPageServiceImp implements MainPageService {
 		if (user01 != null && user01.getRole_no() != null && !user01.getRole_no().equals("")) {
 			//角色ID
 			String role_no = user01.getRole_no();
+			//是否是超级管理员
+			String is_super = user01.getIs_super();
 			//根据角色id,到授权表中查询授权的菜单信息；
-		    String sql = MainPageConfigSql.findMainPageSql(role_no);
+		    String sql = MainPageConfigSql.findMainPageSql(role_no,is_super);
 			//=============菜单信息列表===============
 		    List<Mean> mean  = (List<Mean>) JDBC_ZSGC.query(jdbcBean,sql,Mean.class);
 			
