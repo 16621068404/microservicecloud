@@ -329,12 +329,101 @@ public class RoleController extends BaseContrller{
 				
       }
 	
+	/**
+	 * 跳转到角色成员界面（为成员分配角色，或者说给角色找成员）
+	 * 
+	 */
+	@RequestMapping(value = "/system_manage/role_manage/allotMember", method = RequestMethod.GET)
+	public ModelAndView allotMember(HttpServletRequest request, HttpServletResponse response) {
+		//获取参数
+		String roleId = request.getParameter("roleId");
+		return new ModelAndView("redirect:/views/system_manage/allot_member_view.html?roleId="+roleId);
+	}
+	
+	
+	/**
+	 * 
+	 * 查询所有用户,并把已经分配对应角色的用户标记起来
+	 * @param request
+	 * @param response
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/system_manage/role_manage/getRoleMember", method = RequestMethod.GET)
+	public void getRoleMember(HttpServletRequest request, HttpServletResponse response) {
+		
+		    List resultJson = new ArrayList();
+			//获取token,token中含有用户的基本信息；
+			String token = request.getParameter("token");
+			//角色ID 
+			String roleId = request.getParameter("roleId");
+			
+			
+			User user = new User();
+			try {
+				 //判断token是否失效
+				 if(token.equals("undefined")) {
+				     return;
+				 } else {
+					//读取token
+					String tokenInfo =  Base64Tool.getFromBase64(token.replaceAll(" ",""));
+				    //将token转化为Users对象
+					user = JsonUtils.readJson2Object(tokenInfo, User.class);
+				 }
+				 //查询所有的成员(用户成员)
+				 resultJson = roleInfoService.getRoleMember(user,roleId);
+			} catch (JsonParseException e) {
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				 writerJsonResult(request,response, resultJson);// 结果回写
+			}
+      }
 	
 	
 	
-	
-	
-	
+	/**
+	 * 
+	 * 给角色添加成员，保存成员-角色信息；
+	 * @param request
+	 * @param response
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/system_manage/role_manage/SaveMember", method = RequestMethod.POST)
+	public void saveMember(HttpServletRequest request, HttpServletResponse response) {
+		
+		    Object resultJson = new Object();
+			//获取token,token中含有用户的基本信息；
+			String token = request.getParameter("token");
+			//角色ID 
+			String role_no = request.getParameter("role_no");
+			//角色所赋予的用户ids
+			String user_ids = request.getParameter("user_ids");
+			User user = new User();
+			try {
+				 //判断token是否失效
+				 if(token.equals("undefined")) {
+				     return;
+				 } else {
+					//读取token
+					String tokenInfo =  Base64Tool.getFromBase64(token.replaceAll(" ",""));
+				    //将token转化为Users对象
+					user = JsonUtils.readJson2Object(tokenInfo, User.class);
+				 }
+				 //给角色添加成员，保存成员-角色信息；,保存用户有关角色的信息  (每一个成员，只能有一个角色)
+				 resultJson = roleInfoService.saveMember(user,role_no,user_ids);
+			} catch (JsonParseException e) {
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				 writerJsonResult(request,response, resultJson);// 结果回写
+			}
+      }
 	
 	
 	

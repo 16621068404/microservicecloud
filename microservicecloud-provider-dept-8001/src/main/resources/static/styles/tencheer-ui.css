@@ -170,7 +170,7 @@ textarea.form-control{padding-top:5px;}
 .sys_spec_text li{position:relative;outline:none;display:inline;float:left;height:35px;position:relative;margin:10px 10px 0px 0;outline:none;}
 .sys_spec_text li a{cursor:pointer;vertical-align:middle;text-align:center;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:35px;line-height:38px;width:80px;text-align:center;padding:0px 0px;border:1px solid #ccc;border-radius: 3px;background:#fff;display:inline-block;outline:none;}
 .sys_spec_text li a:hover{padding:0 0px;text-decoration:none;}
-.sys_spec_text li.active a{color: #ff5d5b;border: 1px solid #ff5d5b;padding:0 0px;background: url(/statics/images/duihao_03.png) right top no-repeat;}
+.sys_spec_text li.active a{color: #ff5d5b;border: 1px solid #ff5d5b;padding:0 0px;background: url(/images/duihao_03.png) right top no-repeat;}
 
 .sort_spec_text{padding-left:10px;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;user-select: none;}
 .sort_spec_text li{position:relative;outline:none;display:inline;float:left;height:35px;position:relative;margin:8px 8px 0 0;outline:none;}
@@ -182,10 +182,10 @@ textarea.form-control{padding-top:5px;}
 .print_spec_text li{position:relative;outline:none;display:inline;float:left;height:35px;position:relative;margin:8px 8px 0 0;outline:none;}
 .print_spec_text li a{cursor:pointer;vertical-align:middle;text-align:center;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:35px;line-height:38px;width:80px;text-align:center;padding:0px 0px;border:1px solid #ccc;border-radius: 3px;background:#fff;display:inline-block;outline:none;}
 .print_spec_text li a:hover{padding:0 0px;text-decoration:none;}
-.print_spec_text li.active a{color: #ff5d5b;border: 1px solid #ff5d5b;padding:0 0px;background: url(/statics/images/duihao_03.png) right top no-repeat;}
+.print_spec_text li.active a{color: #ff5d5b;border: 1px solid #ff5d5b;padding:0 0px;background: url(/images/duihao_03.png) right top no-repeat;}
 
 .card-box{width: 195px;height: 60px;float: left;border: 1px solid #ccc;background-color: #fff;border-radius: 3px;margin-left: 10px;margin-top: 10px;overflow: hidden;position: relative;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;user-select: none;cursor: pointer;}
-.card-box.active{border: 2px solid #ff5d5b;padding:0 0px;background: url(/statics/images/duihao_03.png) right top no-repeat;}
+.card-box.active{border: 2px solid #ff5d5b;padding:0 0px;background: url(/images/duihao_03.png) right top no-repeat;}
 .card-box-img{float: left;width: 60px;height: 60px;line-height: 58px;background-color: #EBEBEB;border-right: 1px solid #ccc;}
 .card-box-img img{margin-left: 9px;border-radius: 45px;}
 .card-box-content{float: left;padding-left: 6px;padding-top: 4px;}

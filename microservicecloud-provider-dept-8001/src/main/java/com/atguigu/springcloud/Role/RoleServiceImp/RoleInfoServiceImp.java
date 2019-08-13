@@ -22,6 +22,7 @@ import com.springcloud.entity.Billvalue;
 import com.springcloud.entity.Mean;
 import com.springcloud.entity.PageUtil;
 import com.springcloud.entity.Role;
+import com.springcloud.entity.RoleMember;
 import com.springcloud.entity.TreeGrid;
 import com.springcloud.entity.User;
 import com.springcloud.tool.JDBCUtils;
@@ -327,5 +328,189 @@ public class RoleInfoServiceImp implements RoleInfoService {
 		resultMap.put("message", "角色授权成功");
 		return resultMap;
 	}
+
+	/**
+	 * 
+	 * 查询所有用户,并把已经分配对应角色的用户标记起来
+	 * @param request
+	 * @param response
+	 */
+	@SuppressWarnings("rawtypes")
+	public List getRoleMember(User user, String roleId) {
+		List resultJson = new ArrayList();
+		//封装连接数据库信息
+		JDBCbean jdbcBean = JDBCUtils.encapsulationJDBC(user);
+		//查询当前登录用户的信息
+		user = findDLuUserInfo(user,jdbcBean);
+		//封装sql语句,查询所有用户信息
+		String allUserSql = RoleInfoConfigSql.findAllUserSql(user);     
+		// 执行查询功能，并返回查询数据
+		List<User> allUserData = (List<User>) JDBC_ZSGC.query(jdbcBean, allUserSql, User.class);
+		
+		//封装返回前端的参数
+		for (User user2 : allUserData) {
+			RoleMember roleMember = new RoleMember();
+			roleMember.setUserId(user2.getUser_no());
+			roleMember.setAccount(user2.getUser_logid());
+			roleMember.setUser_Name(user2.getUser_name());
+			roleMember.setDepartmentId(user2.getDepart_no());
+			roleMember.setDepartmentName(user2.getDepart_no());
+			roleMember.setGender(user2.getUser_sex());
+			roleMember.setIsdefault(0);
+			//判断该用户之前是否已经分配了这个角色；
+			if (user2.getRole_no() != null && !user2.getRole_no().equals("")) {
+				roleMember.setIscheck(user2.getRole_no().contains(roleId) ? 1 : 0);
+			} else {
+				roleMember.setIscheck(0);
+			}
+			
+			resultJson.add(roleMember);
+		}
+		
+		return resultJson;
+	}
+	
+	
+	/**
+	 * 查询当前登录用户的信息
+	 * @param user
+	 * @param jdbcBean
+	 * @return
+	 */
+	private User findDLuUserInfo(User user, JDBCbean jdbcBean) {
+		//根据用户id,查询用户信息；
+		//封装sql语句
+		String userNoSql = MainPageConfigSql.findUserNoSql(user.getUser_no());      //【客户信息方法】 
+		User userInfo = (User) JDBC_ZSGC.queryObject(jdbcBean,userNoSql,User.class);
+		//封装是否是超级管理员
+		user.setIs_super(userInfo.getIs_super());
+		user.setUser_name(userInfo.getUser_name());
+		return user;
+	}
+
+	/**
+	 * 	给角色添加成员，保存成员-角色信息；,保存用户有关角色的信息  (每一个成员，只能有一个角色)
+	 */
+	public Object saveMember(User user, String role_no, String user_ids) {
+		 Map resultMap = new HashMap();
+		//封装连接数据库信息
+		JDBCbean jdbcBean = JDBCUtils.encapsulationJDBC(user);
+		//查询当前登录用户的信息
+		user = findDLuUserInfo(user,jdbcBean);
+		//封装sql语句,查询所有包含该角色的用户信息
+		String allUserSql = RoleInfoConfigSql.findAllRoleUserSql(user,role_no);     
+		// 执行查询功能，并返回查询数据
+		List<User> allUserData = (List<User>) JDBC_ZSGC.query(jdbcBean, allUserSql, User.class);
+		
+		String [] user_Ids = user_ids.split(",");
+		
+		if (allUserData == null && allUserData.size() == 0) {
+			 //该角色，在此之前未分配过其他成员，页面传来的角色成员，全部执行新增操作；
+			  List<User>  addUserRole = new ArrayList<User>();
+			  for (int i = 0; i < user_Ids.length; i++) {
+					  User user1 = new User();
+					  user1.setUser_no(user_Ids[i]);
+					  user1.setRole_no(role_no);
+					  user1.setModify_username(user.getUser_name());
+					  addUserRole.add(user1);
+				}
+			  //该角色，在此之前未分配过其他成员，页面传来的角色成员，全部执行新增操作；
+			  String addUserRoleSql = RoleInfoConfigSql.addUserRoleSql(addUserRole);     
+			  int nus =  JDBC_ZSGC.update(addUserRoleSql, jdbcBean);
+			  if (nus > 0) {
+					System.out.println("角色-成员操作成功");
+					System.out.println("批量修改了"+nus+"条记录");
+					resultMap.put("type", 1);
+					resultMap.put("message", "角色-成员操作成功");
+				} else {
+					System.out.println("角色-成员操作失败");
+					resultMap.put("type", 3);
+					resultMap.put("message", "角色-成员操作失败");
+					return resultMap;
+				}
+			
+		} else {
+			  //获取要新增的；
+			  List<User>  addUserRole = new ArrayList<User>();
+			  for (int i = 0; i < user_Ids.length; i++) {
+				  Boolean flag = true;   // 默认是新增的角色用户
+				  for (int j = 0; j < allUserData.size(); j++) {
+					if (user_Ids[i].equals(allUserData.get(j).getUser_no())) {
+						flag = false;
+						break;
+	                }
+				  }
+				  if (flag) {
+					  User user1 = new User();
+					  user1.setUser_no(user_Ids[i]);
+					  user1.setRole_no(role_no);
+					  user1.setModify_username(user.getUser_name());
+					  addUserRole.add(user1);
+				  }
+				}
+			  //封装sql语句，执行新增用户角色的功能
+			  if (addUserRole != null && addUserRole.size() > 0) {
+				  String addUserRoleSql = RoleInfoConfigSql.addUserRoleSql(addUserRole);     
+				  int nus =  JDBC_ZSGC.update(addUserRoleSql, jdbcBean);
+				  if (nus > 0) {
+						System.out.println("角色-成员操作成功");
+						System.out.println("批量修改了"+nus+"条记录");
+						resultMap.put("type", 1);
+						resultMap.put("message", "角色-成员操作成功");
+					} else {
+						System.out.println("角色-成员操作失败");
+						resultMap.put("type", 3);
+						resultMap.put("message", "角色-成员操作失败");
+						return resultMap;
+					}
+			  }
+			
+			  //获取要删除的。
+			  List<User>  delUserRole = new ArrayList<User>();
+			  for (int i = 0; i < allUserData.size(); i++) {
+				  Boolean flag = true;    //默认是删除的角色用户
+				  for (int j = 0; j < user_Ids.length; j++) {
+					if (allUserData.get(i).getUser_no().equals(user_Ids[j])) {
+						flag = false;
+						break;
+	                }
+				  }
+				  if (flag) {
+					  User user1 = new User();
+					  user1.setUser_no(allUserData.get(i).getUser_no());
+					  user1.setRole_no(role_no);
+					  user1.setModify_username(user.getUser_name());
+					  delUserRole.add(user1);
+				  }
+				}
+			  //封装sql语句，执行要删除用户角色的权限
+			  if (delUserRole != null && delUserRole.size() > 0) {
+				  String delUserRoleSql = RoleInfoConfigSql.delUserRole(delUserRole);     
+				  int nus =  JDBC_ZSGC.update(delUserRoleSql, jdbcBean);
+				  if (nus > 0) {
+						System.out.println("角色-成员操作成功");
+						System.out.println("批量修改了"+nus+"条记录");
+						resultMap.put("type", 1);
+						resultMap.put("message", "角色-成员操作成功");
+					} else {
+						System.out.println("角色-成员操作失败");
+						resultMap.put("type", 3);
+						resultMap.put("message", "角色-成员操作失败");
+						return resultMap;
+					}
+			  }
+			
+		}
+		
+		resultMap.put("type", 1);
+		resultMap.put("message", "角色-成员操作成功");
+		return resultMap;
+	}
+
+	
+
+
+
+	
 
 }

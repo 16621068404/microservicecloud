@@ -1,10 +1,13 @@
 package com.atguigu.springcloud.Role.ConfigSql;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.springcloud.entity.Authorize;
 import com.springcloud.entity.PageUtil;
 import com.springcloud.entity.Role;
+import com.springcloud.entity.User;
 import com.springcloud.tool.StringUtil;
 
 public class RoleInfoConfigSql {
@@ -18,7 +21,9 @@ public class RoleInfoConfigSql {
      public static final String DESC = " desc";
      public static final String OFFSET = " offset ";
      public static final String SET = " set ";
-     
+     public static final String LEFT_JOIN = " LEFT JOIN ";
+     public static final String ON = " on ";
+     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
      
 
 	//封装sql语句,查询角色的总记录数
@@ -160,6 +165,78 @@ public class RoleInfoConfigSql {
 		  sql.append("),");
 		}	
 		return sql.toString().substring(0, sql.toString().length()-1);
+	}
+
+	//封装sql语句,查询所有用户信息
+	public static String findAllUserSql(User user) {
+		StringBuilder sql = new StringBuilder("SELECT use.user_no,use.user_logid,use.user_name,use.user_sex,use.role_no,dep.depart_no,dep.depart_name FROM sys_user use");
+		sql.append(LEFT_JOIN);
+		sql.append("sys_department dep");
+		sql.append(ON);
+		sql.append("use.depart_no = dep.depart_no");
+		//判断是否是管理员
+		if (user.getIs_super().equals("1")) {
+			//查询所有
+		} else {
+			sql.append(WHERE);
+			sql.append("is_super != '1'");
+		}
+		return sql.toString();
+	}
+
+	//封装sql语句,查询所有包含该角色的用户信息
+	public static String findAllRoleUserSql(User user, String role_no) {
+		StringBuilder sql = new StringBuilder("SELECT use.user_no,use.user_logid,use.user_name,use.user_sex,use.role_no,dep.depart_no,dep.depart_name FROM sys_user use");
+		sql.append(LEFT_JOIN);
+		sql.append("sys_department dep");
+		sql.append(ON);
+		sql.append("use.depart_no = dep.depart_no");
+		sql.append(WHERE);
+		sql.append("1 = 1");
+		//判断是否是管理员
+		if (user.getIs_super().equals("1")) {
+			//查询所有
+		} else {
+			sql.append(AND);
+			sql.append("is_super != '1'");
+		}
+		sql.append(AND);
+		sql.append("use.role_no like '%"+role_no+"%'");
+		return sql.toString();
+	}
+
+	//封装sql语句，执行新增用户角色的功能
+	public static String addUserRoleSql(List<User> addUserRole) {
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
+		StringBuilder str = new StringBuilder();
+		for (User user : addUserRole) {
+			str.append(user.getUser_no()).append(",");
+		}
+		StringBuilder sql = new StringBuilder("UPDATE sys_user");
+		sql.append(SET);
+		sql.append("modify_date ='").append(sdf.format(new Date())+"',");
+		sql.append("modify_username =").append(addUserRole.get(0).getModify_username() == null || addUserRole.get(0).getModify_username().equals("") ? null+"," : "'"+addUserRole.get(0).getModify_username()+"',");
+		sql.append("role_no ='").append(addUserRole.get(0).getRole_no()).append(",'");
+		sql.append(WHERE);
+		sql.append("user_no IN (" + StringUtil.conversionDataForIn(str.toString())+")");
+		return sql.toString();
+	}
+    
+	//封装sql语句，执行要删除用户角色的权限
+	public static String delUserRole(List<User> delUserRole) {
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
+		StringBuilder str = new StringBuilder();
+		for (User user : delUserRole) {
+			str.append(user.getUser_no()).append(",");
+		}
+		StringBuilder sql = new StringBuilder("UPDATE sys_user");
+		sql.append(SET);
+		sql.append("modify_date ='").append(sdf.format(new Date())+"',");
+		sql.append("modify_username =").append(delUserRole.get(0).getModify_username() == null || delUserRole.get(0).getModify_username().equals("") ? null+"," : "'"+delUserRole.get(0).getModify_username()+"',");
+		sql.append("role_no = null");
+		sql.append(WHERE);
+		sql.append("user_no IN (" + StringUtil.conversionDataForIn(str.toString())+")");
+		return sql.toString();
 	}
 	
 	
