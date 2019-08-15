@@ -54,18 +54,21 @@ public class XTreeKit {
         x.setValue(mean.getMenu_code());
         x.setImg(mean.getMenu_icon());
         x.setParentnodes(mean.getParent_id());
-        x.setShowcheck(true);
-        
-       for (Authorize authorize : authorizeData) {
-    	   if (authorize.getItem_id().equals(mean.getMenu_id())) {
-    		   x.setCheckstate(1);
-    		   break;  //跳出循环
-    	   } else {
-    		   x.setCheckstate(0);
-    	   }
-	   }
-      
-        x.setIsexpand(true);
+        x.setShowcheck(false);
+        if (authorizeData !=null && authorizeData.size() > 0) {
+	       for (Authorize authorize : authorizeData) {
+	    	   if (authorize.getItem_id().equals(mean.getMenu_id())) {
+	    		   x.setCheckstate(1);
+	    		   break;  //跳出循环
+	    	   } else {
+	    		   x.setCheckstate(0);
+	    	   }
+		   }
+        } else {
+        	x.setCheckstate(0);
+        }
+       
+       
         x.setChildNodes(getChild(mean.getMenu_id(),meanData,authorizeData));  //递增遍历所有子节点（无限层级）
         if (x.getChildNodes().size() == 0) {
         	 x.setHasChildren(false);

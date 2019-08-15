@@ -176,7 +176,7 @@ public class RoleInfoServiceImp implements RoleInfoService {
 	}
 
 	//对数据进行递归处理,封装树结构数据
-	private List<TreeGrid> fengZhuangTreeGrid(List<Mean> meanData, List<Authorize> authorizeData) {
+	public static List<TreeGrid> fengZhuangTreeGrid(List<Mean> meanData, List<Authorize> authorizeData) {
         List<TreeGrid> grid = XTreeKit.formatTree(meanData,authorizeData);
 		return grid;
 	}

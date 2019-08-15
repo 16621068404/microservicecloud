@@ -238,6 +238,18 @@ public class RoleInfoConfigSql {
 		sql.append("user_no IN (" + StringUtil.conversionDataForIn(str.toString())+")");
 		return sql.toString();
 	}
+
+	public static String findAllMeanInfo(String is_super) {
+		StringBuilder sql = new StringBuilder("SELECT * from sys_menu where 1 = 1 ");
+		//如果是超级管理员，可以看到【内部管控 id:】
+		if (is_super.equals("1")) {
+			//超级管理员
+		} else {
+		  sql.append(AND);
+		  sql.append("menu_id !='2FCBF5E7-5A66-4169-965C-A7BF1F113D31'");
+		}
+		return sql.toString();
+	}
 	
 	
 	
