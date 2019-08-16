@@ -39,6 +39,10 @@ public class TreeGrid implements Serializable{
 	
 //	@JSONField(name = "ChildNodes")
 	public List<TreeGrid> childNodes;		    //孩子节点   （必填 xTree插件中所需属性 没子节点该值为空集合）
+	
+	
+	
+	
 
 	
 	

@@ -167,7 +167,7 @@ function btn_add() {
 	if (!_itemId) {
 		return false;
 	}
-	var parentId = $("#gridTable").jqGridRowValue("ItemDetailId");
+	var parentId = $("#gridTable").jqGridRowValue("item_detail_id");
 	if (_isTree != 1) {
 		parentId = 0;
 	}
@@ -185,14 +185,14 @@ function btn_add() {
 };
 // 编辑
 function btn_edit() {
-	var keyValue = $("#gridTable").jqGridRowValue("ItemDetailId");
+	var keyValue = $("#gridTable").jqGridRowValue("item_detail_id");
 
 	if (checkedRow(keyValue)) {
 		dialogOpen({
 			id : "Form",
 			title : '编辑字典',
 			url : '/system_manage/dataitem_manage/DataItemDetailForm?keyValue='
-					+ keyValue,
+					+ keyValue+"&token="+token,
 			width : "500px",
 			height : "370px",
 			callBack : function(iframeId) {
@@ -206,7 +206,7 @@ function btn_delete() {
 	var keyValue = $("#gridTable").jqGridRowValue("item_detail_id");
 	if (keyValue) {
 		$.RemoveForm({
-			url : "/system_manage/dataitem_manage/RemoveDetailForm",
+			url : "/system_manage/dataitem_manage/RemoveDetailForm?token="+token,
 			param : {
 				keyValue : keyValue
 			},
@@ -221,7 +221,7 @@ function btn_delete() {
 }
 // 详细
 function btn_detail() {
-	var keyValue = $("#gridTable").jqGridRowValue("ItemDetailId");
+	var keyValue = $("#gridTable").jqGridRowValue("item_detail_id");
 	if (checkedRow(keyValue)) {
 		dialogOpen({
 			id : "Detail",

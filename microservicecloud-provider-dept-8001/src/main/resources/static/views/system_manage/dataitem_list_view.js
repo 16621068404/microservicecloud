@@ -1,4 +1,8 @@
+var token;
 $(function() {
+	//从cookie中读取token
+    //从cookie中读取token
+    token = getCookie("token");
 	InitialPage();
 	GetGrid();
 });
@@ -19,7 +23,7 @@ function GetGrid() {
 	var $gridTable = $("#gridTable");
 	$gridTable
 			.jqGrid({
-				url : "/system_manage/dataitem_manage/GetDataItemTreeList",
+				url : "/system_manage/dataitem_manage/GetDataItemTreeList?token="+token,
 				datatype : "json",
 				height : $(window).height() - 114.5,
 				autowidth : true,

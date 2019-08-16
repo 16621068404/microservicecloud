@@ -2,7 +2,7 @@ package com.atguigu.springcloud.Dictionary.Service;
 
 import java.util.Map;
 
-import com.springcloud.entity.PageUtil;
+import com.springcloud.entity.DictionaryDetail;
 import com.springcloud.entity.User;
 @SuppressWarnings("rawtypes")
 public interface DictionaryService {
@@ -13,5 +13,17 @@ public interface DictionaryService {
 	
 	//获取通用字典页面数据表格
 	Map getPageListJson(User user,String itemId, String keyword, String condition);
+
+    //保存字典明细信息
+	Map saveDictionaryDetailForm(User user, DictionaryDetail dictionaryDetail, String keyValue);
+
+	//查询字典明细信息
+	Object findDictionaryDetailForm(User user, String keyValue);
+
+	//删除字典明细信息
+	Object removeDetailForm(User user, String keyValue);
+
+	//获取通用字典分类页面数据表格
+	Map getDictionaryTreeList(User user);
 
 }

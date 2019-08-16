@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>分类管理</title>
+    <!--框架必需start-->
+
+    <script src="../../scripts/jquery/jquery-1.10.2.min.js"></script>
+    <link href="../../styles/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../scripts/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <script src="../../scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+    <link href="../../scripts/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../scripts/bootstrap/bootstrap.extension.css" rel="stylesheet" />
+    <script src="../../scripts/bootstrap/bootstrap.min.js"></script>
+
+    <script src="../../scripts/plugins/datepicker/WdatePicker.js"></script>
+
+    <link href="../../scripts/plugins/tree/tree.css" rel="stylesheet"/>
+    <link href="../../scripts/plugins/datetime/pikaday.css" rel="stylesheet"/>
+    <link href="../../styles/tencheer-ui.css" rel="stylesheet"/>
+
+    <script src="../../scripts/utils/base/tencheer.base.js"></script>
+    <script src="../../scripts/utils/base/tencheer.base.plugin.js"></script>
+    <script src="../../scripts/utils/base/tencheer.old.js"></script>
+    <script src="../../scripts/plugins/tree/tree.js"></script>
+    <script src="../../scripts/plugins/validator/validator.js"></script>
+    <script src="../../scripts/plugins/wizard/wizard.js"></script>
+    <script src="../../scripts/plugins/datetime/pikaday.js"></script>
+    <script src="./dataitem_form_view.js"></script>
+    
+    
+
+</head>
+<body>
+    <!--2017-07-05-->
+<form id="form1">
+
+   
+    <div style="margin-top: 20px; margin-right: 30px;">
+        <table class="form">
+            <tr>
+                <th class="formTitle">上级</th>
+                <td class="formValue">
+                    <div id="ParentId" type="selectTree" class="ui-select"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="formTitle">名称<font face="宋体">*</font></td>
+                <td class="formValue">
+                    <input id="ItemName" type="text" onblur="$.ExistField(this.id,'/system_manage/dataitem_manage/ExistItemName')" class="form-control" placeholder="请输入名称" isvalid="yes" checkexpession="NotNull" />
+                </td>
+            </tr>
+            <tr>
+                <td class="formTitle">编号<font face="宋体">*</font></td>
+                <td class="formValue">
+                    <input id="ItemCode" type="text" onblur="$.ExistField(this.id,'/system_manage/dataitem_manage/ExistItemCode')" class="form-control" placeholder="请输入编号" isvalid="yes" checkexpession="NotNull" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">排序<font face="宋体">*</font></th>
+                <td class="formValue">
+                    <input id="SortCode" type="text" class="form-control" isvalid="yes" checkexpession="Num" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle" style="height: 37px;"></th>
+                <td class="formValue">
+                    <div class="checkbox">
+                        <label>
+                            <input id="IsTree" type="checkbox" />
+                            树型
+                        </label>
+                        <label>
+                            <input id="EnabledMark" type="checkbox" checked="checked" />
+                            有效
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle" valign="top" style="padding-top: 4px;">备注
+                </th>
+                <td class="formValue">
+                    <textarea id="Description" class="form-control" style="height: 70px;"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+</body>
+</html>
