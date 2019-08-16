@@ -2,6 +2,7 @@ package com.atguigu.springcloud.Dictionary.Service;
 
 import java.util.Map;
 
+import com.springcloud.entity.Dictionary;
 import com.springcloud.entity.DictionaryDetail;
 import com.springcloud.entity.User;
 @SuppressWarnings("rawtypes")
@@ -25,5 +26,14 @@ public interface DictionaryService {
 
 	//获取通用字典分类页面数据表格
 	Map getDictionaryTreeList(User user);
+
+	//保存字典分类信息
+	Map saveDictionaryForm(User user, Dictionary dictionary, String keyValue);
+
+	//查询字典分类信息
+	Object getDataItemFormJson(User user, String keyValue);
+
+	//删除字典分类信息
+	Object removeDictionaryForm(User user, String keyValue);
 
 }

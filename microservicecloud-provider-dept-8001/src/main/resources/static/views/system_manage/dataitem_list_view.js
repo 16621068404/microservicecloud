@@ -141,7 +141,7 @@ function btn_delete() {
 	var keyValue = $("#gridTable").jqGridRowValue("ItemId");
 	if (keyValue) {
 		$.RemoveForm({
-			url : "/system_manage/dataitem_manage/RemoveDataItemForm",
+			url : "/system_manage/dataitem_manage/RemoveDataItemForm?token="+token,
 			param : {
 				keyValue : keyValue
 			},

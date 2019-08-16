@@ -19,7 +19,9 @@ import com.springcloud.entity.Billvalue;
 import com.springcloud.entity.Dictionary;
 import com.springcloud.entity.DictionaryDetail;
 import com.springcloud.entity.TreeGrid;
+import com.springcloud.entity.TreeGrid2;
 import com.springcloud.entity.User;
+import com.springcloud.tool.DTreeKit;
 import com.springcloud.tool.JDBCUtils;
 import com.springcloud.tool.JDBC_ZSGC;
 import com.springcloud.tool.JDBCbean;
@@ -28,6 +30,7 @@ import com.springcloud.tool.UUIDUtils;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Service
 public class DictionaryServiceImp implements DictionaryService{
+	
 	public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	
 	public static int rgt = 1000000;
@@ -203,64 +206,157 @@ public class DictionaryServiceImp implements DictionaryService{
 			// 执行查询功能，并返回查询数据
 			List<Dictionary> dictionaryData = (List<Dictionary>) JDBC_ZSGC.query(jdbcBean, dictionarySql, Dictionary.class);
 			//对数据进行递归处理,封装树结构数据
-			List<TreeGrid> grid = fengZhuangTreeGrid(dictionaryData);
+			List<TreeGrid2> grid = fengZhuangDictionaryTreeGrid(dictionaryData);
 			//封装前台页面需要的数据格式
 			List dictionaryList = new ArrayList();
 			int level = 1;
-			for (TreeGrid treeGrid : grid) {
-				Map treeMap = new HashMap();
-				treeMap.put("rgt", rgt--);
-				treeMap.put("lft", lft++);
-				treeMap.put("expanded", true);
-				treeMap.put("level", level);
-				treeMap.put("ItemId", treeGrid.getId());
-				treeMap.put("ItemName", treeGrid.getText());
-				if (treeGrid.getChildNodes() != null && treeGrid.getChildNodes().size() > 0) {
-					treeMap.put("isLeaf", false);
-					dictionaryList.add(treeMap);
-					//获取子节点的方法,并封装数据
-					getChildNodes(treeGrid.getChildNodes(), dictionaryList,level);
-				} else {
-					treeMap.put("isLeaf", true);
-					dictionaryList.add(treeMap);
-				}
-				
-				
+			for (TreeGrid2 treeGrid : grid) {
+				fengzhuangResult(treeGrid,dictionaryList,level);
 			}
-			resultMap.put("rows", dictionaryList);
-			
+			 resultMap.put("rows", dictionaryList);
 			 rgt = 1000000;
 		     lft = 1;
+			 return resultMap;
+		}
+
+		//封装数据方法;
+		private void fengzhuangResult(TreeGrid2 treeGrid,List dictionaryList,int level) {
+			Map treeMap = new HashMap();
+			treeMap.put("rgt", rgt--);
+			treeMap.put("lft", lft++);
+			treeMap.put("expanded", true);
+			treeMap.put("level", level);
+			treeMap.put("ItemId", treeGrid.getId());
+			treeMap.put("ItemName", treeGrid.getText());
+			treeMap.put("ItemCode", treeGrid.getValue());
+			treeMap.put("SortCode", treeGrid.getSortCode());
+			treeMap.put("IsTree", treeGrid.getIsTree());
+			treeMap.put("DeleteMark", treeGrid.getDeleteMark());
+			treeMap.put("EnabledMark", treeGrid.getEnabledMark());
+			treeMap.put("Description", treeGrid.getRemark());
+			if (treeGrid.getChildNodes() != null && treeGrid.getChildNodes().size() > 0) {
+				treeMap.put("isLeaf", false);
+				dictionaryList.add(treeMap);
+				//获取子节点的方法,并封装数据
+				getChildNodes(treeGrid.getChildNodes(), dictionaryList,level);
+			} else {
+				treeMap.put("isLeaf", true);
+				dictionaryList.add(treeMap);
+			}
+		}
+		
+		//获取子节点的方法;
+		private void getChildNodes(List<TreeGrid2> childNodes,List dictionaryList,int level) {
+			level++;   //层级加一
+			for (TreeGrid2 treeGrid : childNodes) {
+				fengzhuangResult(treeGrid,dictionaryList,level);
+             }
+		}
+		
+
+		 /**
+	     * 对数据进行递归处理,封装树结构数据
+	     * @param dictionaryData
+	     * @return
+	     */
+		public static List<TreeGrid2> fengZhuangDictionaryTreeGrid(List<Dictionary> dictionaryData) {
+	        List<TreeGrid2> grid = DTreeKit.formatTree(dictionaryData);
+			return grid;
+		}
+
+		//保存字典分类信息
+		public Map saveDictionaryForm(User user, Dictionary dictionary, String keyValue) {
+			Map resultMap = new HashMap();
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
+			// 封装连接数据库信息
+			JDBCbean jdbcBean = JDBCUtils.encapsulationJDBC(user);
 			
+			//封装sql语句
+			String userNoSql = MainPageConfigSql.findUserNoSql(user.getUser_no());      //【客户信息方法】 
+			User userInfo = (User) JDBC_ZSGC.queryObject(jdbcBean,userNoSql,User.class);
+			
+			//判断当前操作是字典明细的新增还是修改
+			if (keyValue != null && !keyValue.equals("")) {
+				 //========================执行修改功能==========================
+				 //封装sql语句，修改字典分类信息
+				String modify_date = sdf.format(new Date());
+				dictionary.setModify_date(modify_date);
+				dictionary.setModify_username(userInfo.getUser_name());
+				dictionary.setItem_id(keyValue);
+				String updateDictionarySql = DictionaryConfigSql.updateDictionaryInfo(dictionary);
+				int num = JDBC_ZSGC.update(updateDictionarySql, jdbcBean);
+				if (num > 0) {
+					System.out.println("修改成功");
+					resultMap.put("type", 1);
+					resultMap.put("message", "字典分类修改成功");
+				} else {
+					System.out.println("修改失败");
+					resultMap.put("type", 3);
+					resultMap.put("message", "字典分类修改失败");
+				}
+				
+			} else {
+				String create_date = sdf.format(new Date());
+				dictionary.setCreate_date(create_date);
+				dictionary.setCreate_username(userInfo.getUser_name());
+				//封装sql语句,保存字典分类信息
+				String saveDictionarySql = DictionaryConfigSql.saveDictionaryInfo(dictionary);
+				int num = JDBC_ZSGC.add(saveDictionarySql, jdbcBean);
+				if (num > 0) {
+					System.out.println("添加成功");
+						resultMap.put("type", 1);
+						resultMap.put("message", "字典分类添加成功");
+				} else {
+					System.out.println("添加失败");
+					resultMap.put("type", 3);
+					resultMap.put("message", "字典分类添加失败");
+				}
+			
+		}
 			return resultMap;
 		}
 
-		//获取子节点的方法;
-		private void getChildNodes(List<TreeGrid> childNodes,List dictionaryList,int level) {
-			level++;   //层级加一
-			for (TreeGrid treeGrid : childNodes) {
-					Map treeMap = new HashMap();
-					treeMap.put("rgt", rgt--);
-					treeMap.put("lft", lft++);
-					treeMap.put("expanded", true);
-					treeMap.put("level", level);
-					treeMap.put("ItemId", treeGrid.getId());
-					treeMap.put("ItemName", treeGrid.getText());
-					if (treeGrid.getChildNodes() != null && treeGrid.getChildNodes().size() > 0) {
-						treeMap.put("isLeaf", false);
-						dictionaryList.add(treeMap);
-						//获取子节点的方法,并封装数据
-						getChildNodes(treeGrid.getChildNodes(),dictionaryList,level);
-					} else {
-						treeMap.put("isLeaf", true);
-						dictionaryList.add(treeMap);
-					}
-					
-					
-             }
+		//查询字典分类信息
+		public Object getDataItemFormJson(User user, String keyValue) {
+			  Map resultMap = new HashMap();
+				//封装连接数据库信息
+				JDBCbean jdbcBean = JDBCUtils.encapsulationJDBC(user);
+				//封装sql语句，查询字典分类信息
+				String dictionarySql = DictionaryConfigSql.findDictionaryInfo(keyValue);
+				Dictionary dictionary = (Dictionary) JDBC_ZSGC.queryObject(jdbcBean, dictionarySql, Dictionary.class);
+				resultMap.put("ItemId", dictionary.getItem_id());
+				resultMap.put("ParentId", dictionary.getParent_id());
+				resultMap.put("ItemCode", dictionary.getItem_code());
+				resultMap.put("ItemName", dictionary.getItem_name());
+				resultMap.put("SortCode", dictionary.getSort_code());
+				resultMap.put("IsTree", dictionary.getIs_tree());
+				resultMap.put("IsNav", dictionary.getIs_nav());
+				resultMap.put("DeleteMark", dictionary.getDelete_mark());
+				resultMap.put("EnabledMark", dictionary.getEnabled_mark());
+				resultMap.put("Description", dictionary.getRemark());
+				return resultMap;
 		}
 
-	
+		//删除字典分类信息
+		public Object removeDictionaryForm(User user, String keyValue) {
+			Map resultMap = new HashMap();
+			//封装连接数据库信息
+			JDBCbean jdbcBean = JDBCUtils.encapsulationJDBC(user);
+			//封装sql语句，删除字典明细信息。
+			String delDictionarySql = DictionaryConfigSql.delDictionary(keyValue);
+			int num = JDBC_ZSGC.del(delDictionarySql, jdbcBean);
+			if (num > 0) {
+				System.out.println("删除成功");
+				resultMap.put("type", 1);
+				resultMap.put("message", "字典分类删除成功");
+			} else {
+				System.out.println("删除失败");
+				resultMap.put("type", 3);
+				resultMap.put("message", "字典分类删除失败");
+			}
+			return resultMap;
+		}
+
 
 		
 		

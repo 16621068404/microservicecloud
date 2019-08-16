@@ -1,13 +1,17 @@
 var keyValue = request('keyValue');
 var parentId = request('parentId');
+var token;
 $(function() {
+	//从cookie中读取token
+    //从cookie中读取token
+    token = getCookie("token");
 	initControl();
 })
 // 初始化控件
 function initControl() {
 	// 上级
 	$("#ParentId").ComboBoxTree({
-		url : "/system_manage/dataitem_manage/GetDataItemTreeJson",
+		url : "/system_manage/dataitem_manage/GetDataItemTreeJson?token="+token,
 		description : "==请选择==",
 		height : "230px",
 	});
@@ -15,7 +19,7 @@ function initControl() {
 	// 获取表单
 	if (!!keyValue) {
 		$.SetForm({
-			url : "/system_manage/dataitem_manage/GetDataItemFormJson",
+			url : "/system_manage/dataitem_manage/GetDataItemFormJson?token="+token,
 			param : {
 				keyValue : keyValue
 			},
@@ -38,7 +42,7 @@ function AcceptClick() {
 	}
 	$.SaveForm({
 		url : "/system_manage/dataitem_manage/SaveDataItemForm?keyValue="
-				+ keyValue,
+				+ keyValue+"&token="+token,
 		param : postData,
 		loading : "正在保存数据...",
 		success : function() {

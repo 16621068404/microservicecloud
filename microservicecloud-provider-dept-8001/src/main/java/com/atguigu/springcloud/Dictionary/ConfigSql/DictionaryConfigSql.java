@@ -1,5 +1,6 @@
 package com.atguigu.springcloud.Dictionary.ConfigSql;
 
+import com.springcloud.entity.Dictionary;
 import com.springcloud.entity.DictionaryDetail;
 
 public class DictionaryConfigSql {
@@ -93,6 +94,60 @@ public class DictionaryConfigSql {
 		sql.append("delete_mark = 1");
 		sql.append(WHERE);
 		sql.append("item_detail_id = '"+keyValue+"'");
+		return sql.toString();
+	}
+
+	//封装sql语句,保存字典分类信息
+	public static String saveDictionaryInfo(Dictionary dictionary) {
+		StringBuilder sql = new StringBuilder("insert into base_dataitem(item_id,parent_id,item_code,item_name,is_tree,sort_code,delete_mark,enabled_mark,remark,create_date,create_username) values ");
+		sql.append("(");
+		sql.append(dictionary.getItem_id() == null || dictionary.getItem_id().equals("") ? null+"," : "'"+dictionary.getItem_id()+"',");
+		sql.append(dictionary.getParent_id() == null || dictionary.getParent_id().equals("") ? null+"," : "'"+dictionary.getParent_id()+"',");
+		sql.append(dictionary.getItem_code() == null || dictionary.getItem_code().equals("") ? null+"," : "'"+dictionary.getItem_code()+"',");
+		sql.append(dictionary.getItem_name() == null || dictionary.getItem_name().equals("") ? null+"," : "'"+dictionary.getItem_name()+"',");
+		sql.append(dictionary.getIs_tree()+",");
+		sql.append(dictionary.getSort_code()+",");
+		sql.append(dictionary.getDelete_mark()+",");
+		sql.append(dictionary.getEnabled_mark()+",");
+		sql.append(dictionary.getRemark() == null || dictionary.getRemark().equals("") ? null+"," : "'"+dictionary.getRemark()+"',");
+		sql.append(dictionary.getCreate_date() == null || dictionary.getCreate_date().equals("") ? null+"," : "'"+dictionary.getCreate_date()+"',");
+		sql.append(dictionary.getCreate_username() == null || dictionary.getCreate_username().equals("") ? null : "'"+dictionary.getCreate_username()+"'");
+		sql.append(")");
+		return sql.toString();
+	}
+
+	//封装sql语句，查询字典分类信息
+	public static String findDictionaryInfo(String keyValue) {
+	StringBuilder sql = new StringBuilder("select * from base_dataitem WHERE item_id = '"+keyValue+"'");
+		return sql.toString();
+	}
+
+	// 封装sql语句，修改字典分类信息
+	public static String updateDictionaryInfo(Dictionary dictionary) {
+		StringBuilder sql = new StringBuilder("UPDATE base_dataitem");
+		sql.append(SET);
+		sql.append("parent_id =").append(dictionary.getParent_id() == null || dictionary.getParent_id().equals("") ? null+"," : "'"+dictionary.getParent_id()+"',");
+		sql.append("item_name =").append(dictionary.getItem_name() == null || dictionary.getItem_name().equals("") ? null+"," : "'"+dictionary.getItem_name()+"',");
+		sql.append("item_code =").append(dictionary.getItem_code() == null || dictionary.getItem_code().equals("") ? null+"," : "'"+dictionary.getItem_code()+"',");
+		sql.append("sort_code =").append(dictionary.getSort_code()+",");
+		sql.append("is_tree =").append(dictionary.getIs_tree()+",");
+		sql.append("enabled_mark =").append(dictionary.getEnabled_mark()+",");
+		sql.append("modify_date =").append(dictionary.getModify_date() == null || dictionary.getModify_date().equals("") ? null+"," : "'"+dictionary.getModify_date()+"',");
+		sql.append("modify_username =").append(dictionary.getModify_username() == null || dictionary.getModify_username().equals("") ? null+"," : "'"+dictionary.getModify_username()+"',");
+		sql.append("remark =").append(dictionary.getRemark() == null || dictionary.getRemark().equals("") ? null : "'"+dictionary.getRemark()+"'");
+		sql.append(WHERE);
+		sql.append("item_id = '"+dictionary.getItem_id()+"'");
+		return sql.toString();
+	}
+
+	//删除字典分类信息
+	public static String delDictionary(String keyValue) {
+		StringBuilder sql = new StringBuilder("UPDATE base_dataitem");
+		sql.append(SET);
+		sql.append("enabled_mark = 0,");
+		sql.append("delete_mark = 1");
+		sql.append(WHERE);
+		sql.append("item_id = '"+keyValue+"'");
 		return sql.toString();
 	}
 
