@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.springcloud.SysLog.Dao.SysLogDao">
+
+	<select id="queryCount" resultType="int" parameterType="PageUtil">
+		SELECT count(*) from sys_log where 1 = 1
+		<if test="columnsearch != null and columnsearch != ''">${columnsearch}</if>
+		<if test="begindate != null and begindate != '' and enddate != null and enddate != '' "> and operate_time BETWEEN to_date(#{begindate},'yyyy-mm-dd hh24:mi:ss') AND to_date(#{enddate},'yyyy-mm-dd hh24:mi:ss')</if>
+	</select>
+
+	<select id="querySysLogData" resultType="SysLog"
+		parameterType="PageUtil">
+		SELECT * from sys_log where 1 = 1
+		<if test="columnsearch != null and columnsearch != ''">${columnsearch}</if>
+		<if test="begindate != null and begindate != '' and enddate != null and enddate != '' "> and operate_time BETWEEN to_date(#{begindate},'yyyy-mm-dd hh24:mi:ss') AND to_date(#{enddate},'yyyy-mm-dd hh24:mi:ss')</if>
+		ORDER BY ${sidx}
+		${sord} LIMIT ${pageSize} offset
+		${tempVal}
+	</select>
+
+</mapper>
+ 
+

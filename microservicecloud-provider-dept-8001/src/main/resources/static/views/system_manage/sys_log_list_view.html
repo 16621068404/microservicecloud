@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>系统日志</title>
+    <!--框架必需start-->
+    <!--<script src="../../scripts/jquery/jquery-1.10.2.min.js"></script>-->
+    <script src="../../scripts/jquery/jquery-1.11.0.min.js"></script>
+    <link href="../../styles/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../scripts/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <script src="../../scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!--框架必需end-->
+    <!--bootstrap组件start-->
+    <link href="../../scripts/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../scripts/bootstrap/bootstrap.min.js"></script>
+    <script src="../../scripts/bootstrap/bootstrap-confirmation.js"></script>
+    <!--bootstrap组件end-->
+    <script src="../../scripts/plugins/layout/jquery.layout.js"></script>
+    <script src="../../scripts/plugins/datepicker/WdatePicker.js"></script>
+    <link href="../../scripts/plugins/jqgrid/css/jqgrid.css" rel="stylesheet"/>
+    <link href="../../scripts/plugins/tree/tree.css" rel="stylesheet"/>
+    <link href="../../scripts/plugins/datetime/pikaday.css" rel="stylesheet"/>
+    <link href="../../styles/tencheer-ui.css" rel="stylesheet"/>
+    <script src="../../scripts/utils/base/tencheer.base.js"></script>
+    <script src="../../scripts/utils/base/tencheer.base.plugin.js"></script>
+    <script src="../../scripts/utils/base/tencheer.old.js"></script>
+    <script src="../../scripts/utils/base/tencheer.base.extensions.js"></script>
+    <script src="../../scripts/plugins/tree/tree.js"></script>
+    <script src="../../scripts/plugins/validator/validator.js"></script>
+    <script src="../../scripts/plugins/wizard/wizard.js"></script>
+    <script src="../../scripts/plugins/datetime/pikaday.js"></script>
+    <script src="../../scripts/plugins/jqgrid/grid.locale-cn.js"></script>
+    <script src="../../scripts/plugins/jqgrid/jqgrid.full.js"></script>
+    <link href="../../scripts/plugins/datetime/jquery.datetimepicker.css" rel="stylesheet" />
+    <script src="../../scripts/plugins/datetime/jquery.datetimepicker.full.js"></script>
+    <script src="./sys_log_list_view.js"></script>
+    
+    <style>
+        body {
+            margin: 5px;
+            margin-bottom: 0px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="ajaxLoader" style="cursor: progress; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: #f1f1f1; z-index: 10000; overflow: hidden;">
+    </div>
+    
+<div class="titlePanel">
+    <div class="title-search">
+        <table style="width:100%">
+            <tr>
+                <td>
+                    <label for="txt__date" style="padding-left: 10px;text-align: right">查询时间:  </label>
+                </td>
+                <td>
+                    <input type="text" style="width: 160px;margin-left: 5px" class="form-control input-sm" id="date_begin"  placeholder="开始时间">
+                </td>
+                <td>
+                    <label for="txt_date" style="padding: 0px 5px;text-align: right">至</label>
+                </td>
+                <td>
+                    <input type="text" style="width: 160px;padding-left: 5px;margin-left: 5px" class="form-control input-sm" id="date_end"  placeholder="截止时间">
+                </td>
+
+                <td style="padding-left: 5px;">
+                    <a id="btn_Search" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;查询</a>
+                </td>
+                <td style="padding-left:5px;">
+                    <a id="btn_Clear" class="btn btn-primary"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;清除</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="toolbar">
+        <!--<div class="btn-group">-->
+        <!--<a id="btn_save" class="btn btn-success"  style="font-size: 11px"><i class="fa fa-plus" style="color: #fff"></i>&nbsp;审核</a>-->
+        <!--</div>-->
+    </div>
+</div>
+<div class="gridPanel">
+        <div id="myTabContent" class="tab-content">
+             <div class="tab-pane fade in active" id="gridList">
+                    <table id="gridTable"></table>
+                    <div id="gridPager"></div>
+                </div>
+        </div>
+</div>
+</body>
+</html>
+<script>
+    (function ($, tencheer) {
+        $(function () {
+            tencheer.childInit();
+        })
+    })(window.jQuery, tencheer)
+</script>

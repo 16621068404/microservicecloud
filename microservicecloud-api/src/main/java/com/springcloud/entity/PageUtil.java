@@ -1,6 +1,7 @@
 package com.springcloud.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 @SuppressWarnings("rawtypes")
 public class PageUtil implements Serializable{
@@ -32,7 +33,36 @@ public class PageUtil implements Serializable{
 	private String sidx;   // 要排序的字段
     
 	private List rows;     //返回数据
-    
+
+	private String columnsearch;  //多条件搜索字段信息
+
+	private String begindate;     //开始时间
+	
+	private String enddate;       //结束时间
+	
+	public String getBegindate() {
+		return begindate;
+	}
+
+	public void setBegindate(String begindate) {
+		this.begindate = begindate;
+	}
+
+	public String getEnddate() {
+		return enddate;
+	}
+
+	public void setEnddate(String enddate) {
+		this.enddate = enddate;
+	}
+	
+	public String getColumnsearch() {
+		return columnsearch;
+	}
+
+	public void setColumnsearch(String columnsearch) {
+		this.columnsearch = columnsearch;
+	}
     public List getRows() {
 		return rows;
 	}
