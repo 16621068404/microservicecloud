@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.springcloud.Company.Dao.CompanyDao">
+
+	<select id="findCustInfo" resultType="Company" parameterType="string">
+		select * from cust_list where cust_no = #{_parameter}
+	</select>
+	
+	
+	<update id="updateCompany"  parameterType="Company">
+		 UPDATE cust_list
+			 <trim prefix="set" suffixOverrides=",">
+			  <if test="cust_name != null and cust_name != ''">cust_name=#{cust_name},</if>
+			  <if test="cust_prop != null and cust_prop != ''">cust_prop=#{cust_prop},</if>
+			  <if test="cust_regadd != null and cust_regadd != ''">cust_regadd=#{cust_regadd},</if>
+			  <if test="cust_manager != null and cust_manager != ''">cust_manager=#{cust_manager},</if>
+			  <if test="cust_url != null and cust_url != ''">cust_url=#{cust_url},</if>
+			  <if test="cust_cash != null and cust_cash != ''">cust_cash=${cust_cash},</if>
+			  <if test="cust_mobile != null and cust_mobile != ''">cust_mobile=#{cust_mobile},</if>
+			  <if test="cust_tel != null and cust_tel != ''">cust_tel=#{cust_tel},</if>
+			  <if test="cust_fax != null and cust_fax != ''">cust_fax=#{cust_fax},</if>
+			  <if test="cust_email != null and cust_email != ''">cust_email=#{cust_email},</if>
+			  <if test="cust_wechat != null and cust_wechat != ''">cust_wechat=#{cust_wechat},</if>
+			  <if test="cust_qq != null and cust_qq != ''">cust_qq=#{cust_qq},</if>
+			 </trim>
+		 WHERE cust_no=#{cust_no}
+    </update>
+	
+	
+	<update id="updateCompanyContent" parameterType="Company">
+		  UPDATE cust_list
+			 <trim prefix="set" suffixOverrides=",">
+			  <if test="cust_content != null and cust_content != ''">cust_content=#{cust_content},</if>
+			  <if test="cust_logo != null and cust_logo != ''">cust_logo=#{cust_logo},</if>
+			 </trim>
+		 WHERE cust_no=#{cust_no}
+    </update>
+	
+	
+	
+	
+	
+
+</mapper>
+ 
+

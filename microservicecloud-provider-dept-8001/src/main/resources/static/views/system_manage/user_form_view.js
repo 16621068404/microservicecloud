@@ -3,7 +3,7 @@ var token;
 $(function() {
 	 //从cookie中读取token
      //从cookie中读取token
-    token = getCookie("token")
+    token = getCookie("token");
 	initControl();
 })
 // 初始化控件
