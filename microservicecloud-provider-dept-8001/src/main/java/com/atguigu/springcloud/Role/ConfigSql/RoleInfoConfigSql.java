@@ -248,6 +248,8 @@ public class RoleInfoConfigSql {
 		  sql.append(AND);
 		  sql.append("menu_id !='2FCBF5E7-5A66-4169-965C-A7BF1F113D31'");
 		}
+		 sql.append(AND);
+		 sql.append("delete_mark is null");
 		return sql.toString();
 	}
 	

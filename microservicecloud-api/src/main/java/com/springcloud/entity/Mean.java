@@ -23,8 +23,27 @@ public class Mean implements Serializable{
 	private String menu_icon;    //图标
 	private String menu_type;    //导航类型
 	private String url_address;  //访问地址
-	private String enabled_mark; //有效标记 1代表有效
-	private String is_split;     //显示分割线
+	private int enabled_mark; //有效标记 1代表有效
+	private int is_split;     //显示分割线
+	private int sort_code;       //显示顺序
+	private int delete_mark;     //删除标记
+	private String remark;       //菜单描述
+	private String create_date;  //创建日期
+	private String create_username;//创建用户
+	private String modify_date;  //修改日期
+	private String modify_username;//修改用户
+	private int is_expand;         //是否展开
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public Mean() {
 		super();

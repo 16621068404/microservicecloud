@@ -56,7 +56,7 @@ function GetGrid() {
 	var $gridTable = $('#gridTable');
 	$gridTable
 			.jqGrid({
-				url : "/system_manage/menu_manage/ModuleDataList",
+				url : "/system_manage/menu_manage/ModuleDataList?token="+token,
 				datatype : "json",
 				height : $(window).height() - 132,
 				autowidth : true,
@@ -173,7 +173,7 @@ function GetGrid() {
 				$gridTable.jqGrid(
 						'setGridParam',
 						{
-							url : "/system_manage/menu_manage/ModuleDataList",
+							url : "/system_manage/menu_manage/ModuleDataList?token="+token,
 							postData : {
 								parentid : _parentId,
 								condition : $("#queryCondition").find(
@@ -219,7 +219,7 @@ function btn_delete() {
 	var keyValue = $("#gridTable").jqGridRowValue("MenuId");
 	if (keyValue) {
 		$.RemoveForm({
-			url : "/system_manage/menu_manage/RemoveForm",
+			url : "/system_manage/menu_manage/RemoveForm?token="+token,
 			param : {
 				keyValue : keyValue
 			},
